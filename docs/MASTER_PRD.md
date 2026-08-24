@@ -49,7 +49,13 @@ Existing signals are insufficient because they can show claims, presentation, co
 
 For talent, Proofly makes specific skills legible through evidence and useful review. For companies, it makes relevant work easier to inspect and compare before a hiring decision. For reviewers, it makes high-quality human judgment visible, structured, and accountable.
 
-Proofly is not a resume site, a generic job board, or a generic freelance marketplace. It is an evidence-centered path from real work to qualified review to paid opportunity. It does not promise a universal talent score, automated hiring, or certainty about a person's future performance.
+## Differentiation
+
+> **Proofly is the evidence-centered bridge between real software work and a trusted hiring decision: it connects a versioned submission to qualified human review, explainable public proof, and a bounded paid trial—without becoming another resume profile, job board, open proposal marketplace, or opaque talent score.**
+
+Proofly is not a resume site, a generic job board, or a generic freelance marketplace. Its differentiation is the transparent, accountable chain from real work to qualified human review to explainable proof to bounded paid opportunity. LinkedIn, GitHub, Upwork, and curated networks each solve important parts of identity, technical context, project execution, payment, or screening; Proofly is designed to connect those parts for the narrow software-talent/startup wedge without treating any adjacent product's activity, ratings, or screening as automatic proof.
+
+This position is a product decision and validation hypothesis, not a claim that competitors cannot add similar capabilities. The dated evidence, parity map, white-space opportunities, copying risks, moat hypotheses, integration boundaries, and open validation needs are maintained in the [Competitor Analysis](COMPETITOR_MATRIX.md).
 
 ## Proof-to-opportunity loop
 
