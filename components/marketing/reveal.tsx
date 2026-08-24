@@ -1,28 +1,13 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
+// Phase 10 public foundation: preserve the approved editorial layout while keeping initial content static, immediate, and low-motion by default.
 import type { ReactNode } from "react";
 
-export function Reveal({
-  children,
-  delay = 0,
-  className,
-}: {
+type RevealProps = {
   children: ReactNode;
-  delay?: number;
   className?: string;
-}) {
-  const reduceMotion = useReducedMotion();
+  delay?: number;
+  immediate?: boolean;
+};
 
-  return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.32, delay, ease: [0.2, 0.8, 0.2, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
+export function Reveal({ children, className }: RevealProps) {
+  return <div className={className}>{children}</div>;
 }

@@ -186,6 +186,16 @@ Before public marketing implementation begins, the product, design, accessibilit
 
 Phase 08 is complete when a visitor can understand Proofly, select talent/company/reviewer intent, understand how real work becomes reviewable proof, understand privacy and human accountability, and reach the correct signup action without requiring a sales call or product demo. This document defines the UX contract; it does not claim that the public site has been built or that product behavior is implemented.
 
+## Phase 10 public foundation reconciliation
+
+The implemented public scope is currently the homepage `/`. Its required metadata is owned by `app/layout.tsx`; its title and description must remain unique, factual, and aligned to the approved homepage message. It renders an intentional canonical policy, Open Graph/Twitter image route, `robots.txt`, and sitemap. The sitemap includes `/` only when a valid `NEXT_PUBLIC_APP_URL` is configured; it must not advertise unimplemented, conditional, authenticated, preview, or internal routes.
+
+The homepage begins with a visible-on-focus skip link and follows `header → named primary navigation → main → labelled sections → footer` reading order. Decorative hero art has empty alternative text; evidence, review, and privacy art carries explanatory alternative text. The mobile header uses an explicit native disclosure rather than hiding the primary navigation with no replacement. All links and controls retain accessible names, keyboard focus, and touch-safe targets; the disabled sign-in affordance explains that authentication remains out of scope.
+
+Below `768px`, the asymmetric homepage collapses into one reading order and keeps the text and evidence preview available. The decorative hero atlas may be removed at that size, but the real preview component remains. At standard breakpoints `640px`, `768px`, `1024px`, `1280px`, and `1536px`, typography, gutters, navigation, preview, and CTA hierarchy must adapt without horizontal overflow, clipped text, or evidence hidden behind a horizontal interaction.
+
+The public page must preserve a static complete reading order when reduced motion is requested. Where reduced transparency is available, translucent navigation and panels resolve to opaque surfaces. These preference fallbacks are product comprehension requirements, not decorative options.
+
 ## References
 
 - [Master PRD](MASTER_PRD.md)
@@ -195,3 +205,4 @@ Phase 08 is complete when a visitor can understand Proofly, select talent/compan
 - [Domain Model](DOMAIN_MODEL.md)
 - [Design System](DESIGN_SYSTEM.md)
 - [Technical Architecture](TECHNICAL_ARCHITECTURE.md)
+- [Test Plan](TEST_PLAN.md)

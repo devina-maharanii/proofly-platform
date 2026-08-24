@@ -40,7 +40,7 @@ export function ProductPreview() {
         </span>
       </div>
 
-      <div className="preview-path" aria-label="Proof progression">
+      <div className="preview-path" role="group" aria-label="Proof progression">
         <span className="path-node path-node-complete">
           <Check size={12} aria-hidden="true" />
         </span>

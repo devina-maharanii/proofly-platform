@@ -84,7 +84,10 @@ jspm_packages/
 .parcel-cache
 
 # Next.js build output
-.next
+.next/
+.reports/
+test-results/
+playwright-report/
 next-env.d.ts
 
 # Nuxt.js build / generate output

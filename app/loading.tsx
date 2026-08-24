@@ -4,6 +4,7 @@ export default function Loading() {
       className="page-shell loading-shell"
       aria-busy="true"
       aria-label="Loading Proofly"
+      role="status"
     >
       <div className="loading-rule" />
       <p className="eyebrow">Loading the proof chain</p>

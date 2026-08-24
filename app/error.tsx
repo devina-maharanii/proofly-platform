@@ -2,7 +2,7 @@
 
 export default function GlobalError({ reset }: { reset: () => void }) {
   return (
-    <main className="error-shell">
+    <main className="error-shell" role="alert">
       <p className="eyebrow">A recoverable loading error</p>
       <h1>We could not load this proof context.</h1>
       <p>

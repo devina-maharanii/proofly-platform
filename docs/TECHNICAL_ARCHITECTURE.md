@@ -258,3 +258,19 @@ The architecture is intentionally realistic for a small team using Manus: one Ne
 ## Approval gate
 
 No feature implementation, database migration, provider integration, or UI work begins from this document until the relevant module boundary, data/RLS policy, API/event contract, test plan, environment contract, and operational owner are approved. Later phases must implement one module at a time without bypassing Next.js App Router, server/client boundaries, RLS, provider adapters, background-job safety, or human accountability.
+
+## Phase 10 public-page foundation
+
+### Metadata and crawler ownership
+
+The Next.js App Router owns public metadata at the route boundary. `app/layout.tsx` owns shared homepage metadata and viewport policy; implemented public routes own unique titles, descriptions, canonical paths, Open Graph/Twitter images, and robots behavior through route-level metadata exports. `app/seo.ts` is the single source for the working product name, approved public description, configured public origin, canonical URL construction, and indexable route registry. Product/Marketing owns the factual message; Engineering owns the implementation and deployment-safe origin configuration; Design owns share-image presentation; Legal/Policy approval is required before a factual offer, pricing, or market claim is exposed.
+
+`NEXT_PUBLIC_APP_URL` must be an HTTPS production origin before indexing is enabled. Without that configured origin, the homepage remains locally renderable but is deliberately noindex and omitted from `sitemap.xml`, preventing an accidental localhost canonical or unapproved public crawl target. Query parameters, private/authenticated paths, preview routes, administrative paths, and unimplemented public documentation routes never enter the sitemap. `robots.txt` supports crawler instructions but is not an authorization or privacy boundary.
+
+Structured data is intentionally absent in the implemented homepage. It may be added only when a reviewed organization, website, page, HowTo, or offer fact is actually represented in public content; review, aggregate-rating, job-posting, product, person, customer, and outcome schema must not be fabricated.
+
+### Public performance and accessibility boundary
+
+Public rendering remains server-first. `next/font` supplies local optimized font CSS; `next/image` reserves media geometry; only the hero media has priority; below-fold visual media lazy loads; motion remains isolated in a small client component; and Web Vitals reporting is inert unless a public endpoint is explicitly configured. Analytics or Web Vitals data is operational telemetry, not a source of truth for Proof, reputation, identity, hiring, or payment decisions.
+
+The public route release gate requires the production build, lint, strict TypeScript, unit tests, Playwright axe/keyboard/responsive checks, Lighthouse JSON artifact, browser console/network review, visual viewport matrix, and a complete scope/diff review. The performance targets, responsive bands, retained-motion rules, ownership, and evidence artifacts are defined by [`TEST_PLAN.md`](TEST_PLAN.md). The public release cannot proceed with a material metadata, privacy, accessibility, performance, security, or rollback gap.
