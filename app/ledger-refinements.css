@@ -1,0 +1,220 @@
+/* Evidence Ledger refinement: record-like linework, metadata stamps, and proof concepts carry hierarchy. */
+.brand-mark {
+  gap: 0.62rem;
+}
+.brand-glyph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--cobalt) 40%, var(--line));
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.brand-glyph::before {
+  width: 4px;
+  height: 22px;
+  border-radius: 1px;
+  background: var(--cobalt);
+  content: "";
+}
+.brand-glyph::after {
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  background: var(--ink);
+  content: "";
+}
+.brand-glyph img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.18;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+.dark .brand-glyph img {
+  mix-blend-mode: screen;
+}
+.brand-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  letter-spacing: -0.055em;
+}
+.brand-wordmark > span {
+  font-weight: 720;
+}
+.brand-wordmark em {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-style: normal;
+  font-weight: 560;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.nav-cta {
+  background: var(--cobalt);
+  color: #fff;
+}
+.nav-cta:hover {
+  background: var(--cobalt-strong);
+}
+.problem-section,
+.talent-section,
+.verification-section {
+  position: relative;
+  background-image: linear-gradient(
+    90deg,
+    transparent calc(var(--page-gutter) + 1px),
+    color-mix(in srgb, var(--line) 58%, transparent)
+      calc(var(--page-gutter) + 1px),
+    color-mix(in srgb, var(--line) 58%, transparent)
+      calc(var(--page-gutter) + 2px),
+    transparent calc(var(--page-gutter) + 2px)
+  );
+}
+.problem-detail::before,
+.talent-body::before {
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin-bottom: 1.3rem;
+  background: var(--cobalt);
+  content: "";
+}
+.company-image-wrap {
+  min-height: 420px;
+  padding: 1.25rem;
+  border-left: 2px solid var(--cobalt);
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--line) 50%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--line) 44%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 24px 24px;
+}
+.company-image {
+  opacity: 0.36;
+  filter: grayscale(0.25) saturate(0.58);
+}
+.review-record {
+  position: absolute;
+  right: 1.8rem;
+  bottom: 1.8rem;
+  width: min(88%, 320px);
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+.record-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.record-row {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 0.55rem;
+  padding: 0.72rem 0.1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-muted);
+}
+.record-row:last-child {
+  border-bottom: 0;
+}
+.record-row svg {
+  margin-top: 0.1rem;
+  color: var(--cobalt);
+}
+.record-row-complete svg {
+  color: var(--success);
+}
+.record-row span {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.record-row strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.76rem;
+  letter-spacing: -0.01em;
+}
+.verification-ledger {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--line) 32%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 100%;
+}
+.ledger-item {
+  background: color-mix(in srgb, var(--fog) 92%, transparent);
+}
+.ledger-item:first-child {
+  border-left: 2px solid var(--cobalt);
+}
+.trust-image-wrap {
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--fog) 22%, transparent);
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--fog) 12%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--fog) 12%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 28px 28px;
+}
+.trust-image {
+  border-radius: 4px;
+}
+.final-card {
+  border-left: 3px solid var(--cobalt);
+  border-radius: 8px;
+  box-shadow: none;
+}
+@media (max-width: 800px) {
+  .brand-wordmark em {
+    display: none;
+  }
+  .company-image-wrap {
+    min-height: 390px;
+  }
+  .review-record {
+    right: 1.2rem;
+    bottom: 1.2rem;
+  }
+}
