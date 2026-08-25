@@ -357,6 +357,57 @@
   letter-spacing: -0.045em;
 }
 
+.context-switcher,
+.context-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.context-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.context-option h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+}
+
+.context-option p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.context-option .button {
+  min-height: 38px;
+  padding: 0.42rem 0.7rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.context-option-error {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.context-selected {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--cobalt) 60%, var(--line));
+  border-radius: var(--radius-control);
+  color: var(--cobalt);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 767px) {
   .auth-page {
     padding: 1rem;
@@ -378,6 +429,15 @@
 
   .auth-choice .button {
     grid-column: 2;
+    justify-self: start;
+  }
+
+  .context-option {
+    grid-template-columns: 1fr;
+  }
+
+  .context-option .button,
+  .context-selected {
     justify-self: start;
   }
 }

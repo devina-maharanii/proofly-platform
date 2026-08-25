@@ -1,5 +1,5 @@
 /* Evidence Ledger Editorial: Proofly's homepage is an evidence-first, Swiss-editorial developer-tool surface. */
-/* Phase 10 public foundation: retain the approved editorial Proofly system while enforcing readable semantic color pairs across light, dark, motion-reduced, and responsive states. */
+/* Evidence Ledger Editorial / Phase 12: retain the approved proof-led masthead, strict cobalt-as-signal usage, and readable semantic color pairs across light, dark, motion-reduced, and responsive states. */
 @import "tailwindcss";
 
 :root {
@@ -112,9 +112,51 @@ button {
   font-weight: 700;
   letter-spacing: -0.04em;
 }
-.brand-mark img {
+.brand-glyph {
+  position: relative;
+  display: inline-block;
   width: 30px;
   height: 30px;
+  border-inline: 1px solid color-mix(in srgb, var(--cobalt) 74%, var(--line));
+}
+.brand-glyph::before {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 50%;
+  width: 1px;
+  background: var(--cobalt);
+  content: "";
+}
+.brand-glyph::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--fog);
+  border-radius: 50%;
+  background: var(--cobalt);
+  content: "";
+  transform: translate(-50%, -50%);
+}
+.brand-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  letter-spacing: -0.055em;
+}
+.brand-wordmark > span {
+  font-weight: 760;
+}
+.brand-wordmark em {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.58em;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .nav-links {
   display: flex;

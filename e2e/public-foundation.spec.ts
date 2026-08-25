@@ -70,9 +70,9 @@ test.describe("public marketing foundation", () => {
     } else {
       await expect(page.locator(".mobile-menu summary")).toBeVisible();
     }
-    await expect(page.getByRole("link", { name: "Get started" })).toHaveCount(
-      1
-    );
+    await expect(
+      page.locator(".nav-cta", { hasText: "Build your proof" })
+    ).toHaveCount(1);
   });
 
   test("keeps mobile navigation and evidence preview usable without horizontal overflow", async ({
