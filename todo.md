@@ -63,3 +63,11 @@
 - [x] Implement only the authenticated talent profile editor, public preview, draft/publish/hide actions, field visibility controls, validation, empty/saved/error states, and evidence-ready profile references.
 - [x] Add ownership, RLS, privacy, validation, lifecycle, accessibility, mobile, regression, formatting, lint, strict TypeScript, test, build, and final diff validation without GitHub sync, submissions, verification, scoring, or company profiles.
 - [x] Commit and push exactly one Phase 17 commit on `main`.
+
+## Phase 18 — Portfolio and Work Evidence
+
+- [x] Read the Phase 18 attachments, Phases 16 and 17 foundations, the security and data contracts, and all applicable Proofly source-of-truth documents.
+- [x] Define only the approved manual work-evidence model, types, attribution and ownership disclosures, version-aware lifecycle, visibility, privacy, and public-snapshot contract.
+- [x] Implement only Talent-owned evidence create/edit/preview/publish/hide/archive flows, evidence detail, public profile list, state labels, fallback states, and structured integrity prompts.
+- [x] Add ownership, RLS, attribution, privacy, lifecycle, validation, accessibility, mobile, regression, formatting, lint, strict TypeScript, test, build, and final diff validation without GitHub sync, plagiarism detection, rubrics, or verified reputation.
+- [x] Commit and push exactly one Phase 18 commit on `main`.

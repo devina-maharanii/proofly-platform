@@ -15,10 +15,13 @@ const protectedPaths = new Set([
   "/settings",
 ]);
 
+const isProtectedPath = (pathname: string) =>
+  protectedPaths.has(pathname) || pathname.startsWith("/profile/");
+
 export async function proxy(request: NextRequest) {
   const config = getPublicSupabaseConfig();
   if (!config) {
-    if (protectedPaths.has(request.nextUrl.pathname)) {
+    if (isProtectedPath(request.nextUrl.pathname)) {
       const signInUrl = request.nextUrl.clone();
       signInUrl.pathname = "/sign-in";
       signInUrl.search = "";
@@ -48,7 +51,7 @@ export async function proxy(request: NextRequest) {
   });
 
   const { data } = await supabase.auth.getClaims();
-  if (protectedPaths.has(request.nextUrl.pathname) && !data?.claims?.sub) {
+  if (isProtectedPath(request.nextUrl.pathname) && !data?.claims?.sub) {
     const signInUrl = request.nextUrl.clone();
     signInUrl.pathname = "/sign-in";
     signInUrl.search = "";
@@ -65,6 +68,7 @@ export const config = {
     "/auth/continue",
     "/onboarding",
     "/profile",
+    "/profile/:path*",
     "/reset-password",
     "/settings",
   ],

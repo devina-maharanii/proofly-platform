@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PublicTalentProfileView } from "@/components/profile/public-talent-profile";
+import { getPublicTalentWorkEvidence } from "@/lib/evidence/context";
 import { getPublicTalentProfile } from "@/lib/profile/context";
 
 type PublicProfilePageProps = Readonly<{ params: Promise<{ handle: string }> }>;
@@ -26,7 +27,10 @@ export default async function PublicProfilePage({
   params,
 }: PublicProfilePageProps) {
   const { handle } = await params;
-  const profile = await getPublicTalentProfile(handle);
+  const [profile, evidence] = await Promise.all([
+    getPublicTalentProfile(handle),
+    getPublicTalentWorkEvidence(handle),
+  ]);
   if (!profile) notFound();
-  return <PublicTalentProfileView profile={profile} />;
+  return <PublicTalentProfileView profile={profile} evidence={evidence} />;
 }

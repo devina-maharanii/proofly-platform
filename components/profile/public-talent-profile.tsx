@@ -1,12 +1,20 @@
 import Link from "next/link";
 
 import { BrandMark } from "@/components/marketing/brand-mark";
+import {
+  type PublicWorkEvidenceListItem,
+  workEvidenceTypeLabel,
+} from "@/lib/evidence/types";
 import { canonicalSkillLabel } from "@/lib/profile/types";
 import type { PublicTalentProfile } from "@/lib/profile/context";
 
 export function PublicTalentProfileView({
   profile,
-}: Readonly<{ profile: PublicTalentProfile }>) {
+  evidence,
+}: Readonly<{
+  profile: PublicTalentProfile;
+  evidence: PublicWorkEvidenceListItem[];
+}>) {
   return (
     <main id="main-content" className="public-profile-page">
       <header className="public-profile-header">
@@ -128,12 +136,33 @@ export function PublicTalentProfileView({
           aria-labelledby="public-proof-title"
         >
           <p className="profile-kicker">Evidence</p>
-          <h2 id="public-proof-title">{profile.proofStatus}</h2>
+          <h2 id="public-proof-title">Work evidence</h2>
           <p>
-            Work evidence can be linked here only after it exists in an approved
-            evidence phase. This profile does not turn activity or
-            self-description into proof.
+            These are contextual records the Talent chose to publish. They are
+            not independently verified proof.
           </p>
+          {evidence.length ? (
+            <ul className="public-evidence-list">
+              {evidence.map(item => (
+                <li key={item.publicId}>
+                  <p className="profile-index">
+                    {workEvidenceTypeLabel(item.evidenceType)}
+                  </p>
+                  <h3>{item.title}</h3>
+                  <p>{item.shortSummary}</p>
+                  <span>
+                    {item.userRole || "Role not shared"} · v{item.sourceVersion}{" "}
+                    · Not verified
+                  </span>
+                  <a href={`/evidence/${item.publicId}`}>Read evidence →</a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="public-profile-empty">
+              No work evidence has been published.
+            </p>
+          )}
         </section>
         {profile.links.length ? (
           <section

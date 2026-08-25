@@ -2,6 +2,7 @@
 
 import { useActionState, useMemo, useState } from "react";
 import Link from "next/link";
+import type { Route } from "next";
 
 import { AuthShell } from "@/components/auth/auth-shell";
 import {
@@ -270,6 +271,7 @@ export function TalentProfileEditor({
         <a href="#preferences">Preferences</a>
         <a href="#links">Links</a>
         <a href="#preview">Preview</a>
+        <Link href={"/profile/evidence" as Route}>Work evidence</Link>
       </nav>
       <div className="profile-layout">
         <form action={saveAction} className="profile-editor-form">
