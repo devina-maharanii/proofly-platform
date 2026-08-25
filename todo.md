@@ -47,3 +47,11 @@
 - [x] Implement only approved defense-in-depth server authorization, rate limits, file-access safeguards, audit boundaries, RLS hardening, and CI security checks.
 - [x] Add adversarial authorization, RLS, storage, rate-limit, privacy, security, accessibility, formatting, lint, strict TypeScript, test, build, and final diff validation.
 - [x] Commit and push exactly one Phase 15 commit on `main`.
+
+## Phase 16 — Skill Taxonomy
+
+- [x] Read the Phase 16 attachments, Phases 04 and 15 foundations, and all applicable Proofly source-of-truth documents.
+- [x] Define only the approved versioned software skill entities, families, levels, evidence vocabulary, relationships, and governed change lifecycle.
+- [x] Reconcile only `DOMAIN_MODEL.md`, `MASTER_PRD.md`, and `TECHNICAL_ARCHITECTURE.md` without building profiles, AI extraction, opaque scoring, schema, or product features.
+- [x] Verify all acceptance and scenario criteria, documentation consistency, complete diff scope, and the required commit state.
+- [x] Commit and push exactly one Phase 16 commit on `main`.

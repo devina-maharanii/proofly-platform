@@ -71,6 +71,26 @@ The loop starts when a talent participant chooses a relevant real-world challeng
 
 Human reviewers remain accountable for verification, and companies remain accountable for hiring. AI may support summarization, tagging, matching suggestions, or safety detection only when the use is approved, transparent, source-linked, and correctable; it cannot independently verify proof or decide hiring, rejection, payment, enforcement, disputes, or account actions.
 
+## Governed software skill language
+
+Proofly uses a governed, versioned skill taxonomy for the initial software-developer wedge. It gives talent, companies, reviewers, challenges, review rubrics, search, and future explainable matching one understandable capability vocabulary without turning taxonomy data into a full profile, automatic extraction system, or opaque ranking model. The initial release is **taxonomy version `1.0.0`** and is limited to five software families:
+
+| Family | Initial skill scope |
+|---|---|
+| Foundations | JavaScript, TypeScript, HTML, CSS, Web accessibility, HTTP and web fundamentals, and Git |
+| Frontend | React, Next.js, State management, Component design, Responsive layout, Performance optimization, and Testing |
+| Backend | Node.js, API design, Authentication, Authorization, Data validation, Background jobs, and Observability |
+| Data and infrastructure | PostgreSQL, Data modeling, SQL, Cloud deployment, CI/CD, Caching, and Security fundamentals |
+| Product engineering | Requirements interpretation, Debugging, Technical communication, Code review, Documentation, and Collaboration |
+
+The language uses the descriptive levels **Familiar**, **Working**, **Independent**, **Advanced**, and **Reviewer**. A level always states its evidence context and difficulty; it is not a numeric score or whole-person conclusion. “Reviewer” describes the ability to evaluate a skill against a defined rubric, not reviewer approval, elevated access, or an automated authority to verify proof. A person can hold different evidence-backed levels across related skills.
+
+Skill evidence is deliberately separate from verified proof. The permitted evidence types are self-claim, imported work, open-source activity, practice challenge, company challenge, reviewer assessment, paid project outcome, and endorsement with context. Each records the source, context, difficulty rationale or rubric/challenge reference, visibility, and taxonomy version. Only a valid human-reviewed proof chain can create verified proof; self-reported or imported evidence remains visibly unverified until it meets the applicable review rules.
+
+Skills may have explicit parent/child, related, prerequisite, and common-project-context relationships. A challenge or rubric may require several exact skills and transparent, purpose-bound weights. Those weights explain the work requirement; they never calculate a universal talent score or independently decide discovery, verification, hiring, or payment. A company search must preserve the difference between a contextual claim and verified proof and show the evidence source and taxonomy version behind any visible result.
+
+Taxonomy is governed data. A person can suggest a missing skill or clarification, but cannot directly change canonical skill records, challenge requirements, rubrics, proofs, search results, or future matching inputs. Governed review publishes a new version with the proposer, owner, qualified domain review, reason, and compatibility impact recorded. Definitions are revised rather than silently overwritten. Deprecated skills remain readable in historical proof with their original key, label, definition revision, taxonomy version, and any documented successor mapping. This taxonomy discipline supports evidence quality; it does not claim that the taxonomy or level model has been validated by research.
+
 ## Non-goals for the first release
 
 The first release is not:
@@ -80,6 +100,7 @@ The first release is not:
 - A generic freelance marketplace with proposal volume, race-to-the-bottom dynamics, or open-ended unpaid work.
 - A course library or certificate platform competing on completion alone.
 - A universal or opaque talent score that collapses evidence, identity, risk, or reputation into one ranking.
+- A full talent profile, automatic skill extraction, or unreviewed taxonomy editing feature introduced merely because the governed skill language exists.
 - A system that fully automates proof verification, hiring, rejection, reviewer approval, payments, enforcement, disputes, or account decisions.
 - A platform for every profession before each category has a credible evidence model and qualified reviewers.
 - A claim that every country, language, payment route, or legal workflow is supported at launch.
@@ -120,6 +141,8 @@ The product boundary is defined by the evidence chain and by accountable human d
 **In scope for the first release:** bounded software work, structured submissions, independently reviewed proof, explainable evidence-led discovery, applications, paid trials, and the auditable transition to contract where the approved market and payment model support it.
 
 **Outside the first-release boundary:** unsupported markets, unapproved payment or payout flows, regulated identity decisions recreated inside Proofly, public exposure of private evidence, automatic inference of ability or trustworthiness, and any client-side or AI-generated claim treated as verification truth.
+
+The Phase 16 skill taxonomy is product infrastructure for contextual evidence and future explainable consumers. It does not authorize a profile surface, user-controlled canonical vocabulary, automatic AI skill extraction, opaque candidate scoring, a matching decision, or any new implementation feature.
 
 Public proof can exist only after a valid submission and completed human review, with the appropriate consent and visibility decision. Private submission materials remain restricted to authorized participants. Payment truth comes from verified provider state, not client claims. Reputation changes reference auditable events. Corrections create new records or versions rather than rewriting history.
 

@@ -33,8 +33,13 @@ Every core entity has one canonical definition and one owning domain module. A m
 |---|---|---|---|
 | **Organization** | A company or team tenant with members, projects, and financial responsibility | Organizations | Organization record; organization administrators manage membership. |
 | **Membership** | A versioned relationship between one `Person` and one `Organization` with role assignments and status | Organizations | The organization governs membership; the person controls their account. |
-| **Skill** | A capability in the Proofly taxonomy with evidence expectations and related skills | Skills | Taxonomy owner; not a reputation score. |
-| **Skill level** | A defined level within a `Skill` with its evidence requirements | Skills | Taxonomy owner; never inferred from activity alone. |
+| **Skill family** | A governed grouping of software capabilities used to make the taxonomy understandable without implying a career ladder | Skills | Taxonomy owner; not a person category or assessment. |
+| **Skill** | A stable, governed software capability with a canonical key, definition revision, evidence expectations, and relationships | Skills | Taxonomy owner; not a reputation score, profile field, or automatic inference. |
+| **Skill level** | A descriptive, contextual capability statement attached to an exact skill and evidence context | Skills | Taxonomy owner; never inferred from activity alone or collapsed into a universal rank. |
+| **Skill relation** | A versioned parent/child, related, prerequisite, or common-project-context connection between exact skills | Skills | Taxonomy owner; relations inform navigation and explainable matching, not a rigid career ladder. |
+| **Skill evidence link** | A contextual link from an exact skill revision to evidence, submission, review, proof, or permitted external reference | Skills | Source module remains authoritative; the link does not create verified proof or a full profile. |
+| **Taxonomy version** | The immutable released catalog of skill families, skills, revisions, levels, relations, and retirement mappings | Skills | Taxonomy owner; historical references retain their recorded version. |
+| **Taxonomy suggestion** | A user-submitted proposal for a missing skill or clarification that has not changed the canonical vocabulary | Skills | Suggesting person can submit; only governed review can publish canonical data. |
 | **Project** | A defined piece of work with requirements, evaluation criteria, budget, and lifecycle state | Projects | Organization scope; company members act through membership. |
 | **Challenge** | A `Project` intended to create comparable evidence across multiple participants | Projects | Organization scope; retains Project ownership and lifecycle rules. |
 | **Application** | A talent request to participate in a project or opportunity | Projects | Talent submits it; project organization provides the opportunity context. |
@@ -59,6 +64,63 @@ Every core entity has one canonical definition and one owning domain module. A m
 
 The canonical domain model also relies on `EvidenceItem`, `SubmissionVersion`, `Attachment`, `ReviewerAssignment`, `ReviewDecision`, `ProofRelation`, `ReputationEvent`, `ContractVersion`, `PaymentAttempt`, `LedgerEntry`, `CaseEvidence`, and `EnforcementAction` defined by the data and trust contracts. These supporting records must not create a second definition for a core entity or bypass the owner listed above.
 
+## Phase 16 — governed software skill taxonomy
+
+The Skills module owns a **versioned vocabulary**, not a full talent profile, automatic classifier, or ranking engine. The initial software-developer wedge uses taxonomy version **`1.0.0`** as a stable vocabulary identifier. A `Skill` has a permanent canonical key, family, display label, definition revision, status, evidence expectations, and relations. A `TaxonomyVersion` records the exact released set; a proof, challenge requirement, rubric, search filter, or future matching explanation must retain the exact canonical key and taxonomy version it used.
+
+### Initial software skill families
+
+| Family | Initial canonical skills |
+|---|---|
+| **Foundations** | JavaScript; TypeScript; HTML; CSS; Web accessibility; HTTP and web fundamentals; Git |
+| **Frontend** | React; Next.js; State management; Component design; Responsive layout; Performance optimization; Testing |
+| **Backend** | Node.js; API design; Authentication; Authorization; Data validation; Background jobs; Observability |
+| **Data and infrastructure** | PostgreSQL; Data modeling; SQL; Cloud deployment; CI/CD; Caching; Security fundamentals |
+| **Product engineering** | Requirements interpretation; Debugging; Technical communication; Code review; Documentation; Collaboration |
+
+These families are navigation and discovery groupings only. A skill can have several relationships and project contexts without being forced into one linear learning path, seniority ladder, or universal ranking.
+
+### Levels and contextual evidence
+
+Levels describe what evidence shows in a stated context; they are not numeric scores, badges, identity signals, hiring recommendations, or whole-person labels. A person may be **Independent** in React UI work and **Working** in backend observability without contradiction.
+
+| Level | Descriptive meaning | Evidence boundary |
+|---|---|---|
+| **Familiar** | Can explain the concept and follow examples. | Context must state what was explained or followed; it is not verified proof by itself. |
+| **Working** | Can complete bounded tasks with normal support. | Evidence records the bounded task, support/context, and difficulty rationale. |
+| **Independent** | Can design and deliver a feature in context. | Evidence records the feature scope, constraints, and outcome/review context. |
+| **Advanced** | Can handle ambiguity, tradeoffs, and system impact. | Evidence records the tradeoffs, affected system context, and review or outcome basis. |
+| **Reviewer** | Can evaluate the skill using a defined rubric. | This describes skill-assessment capability only; it does not grant reviewer approval, administrator access, or authority to verify proof. |
+
+A `SkillEvidenceLink` is a contextual relationship—not a profile implementation—between an exact skill revision and a source such as an `EvidenceItem`, `SubmissionVersion`, `ReviewDecision`, or permitted imported reference. It records the evidence type, stated level where applicable, work/project context, difficulty rationale or rubric/challenge reference, visibility, source version, and verification state. The source remains authoritative; the link never rewrites source evidence or creates a verified result by itself.
+
+### Evidence vocabulary and proof boundary
+
+| Evidence type | Meaning | Verification boundary |
+|---|---|---|
+| **Self-claim** | A person's contextual statement about a skill. | A claim remains a claim and is not verified proof. |
+| **Imported work** | A permitted reference to work imported from another source. | Provenance and access are evaluated separately; import alone is not proof. |
+| **Open-source activity** | A contextual reference to permitted public contribution activity. | Activity is not automatic authorship, ability, or proof. |
+| **Practice challenge** | Work completed in a bounded practice context. | It becomes verified proof only through the applicable review rules. |
+| **Company challenge** | Work completed against a company challenge. | It becomes verified proof only through the applicable review rules. |
+| **Reviewer assessment** | A qualified human assessment against a defined rubric. | It supports proof only when the assignment, conflicts, rubric version, and review rules are valid. |
+| **Paid project outcome** | A contextual outcome from compensated work. | It remains an outcome reference unless the applicable evidence/review policy verifies it. |
+| **Endorsement with context** | An attributed statement about observed work. | It never upgrades a claim into verified proof alone. |
+
+`Proof` remains the governed, review-backed evidence record defined elsewhere in this model. No evidence type, self-reported level, imported activity, endorsement, taxonomy relationship, identity assurance, or AI output can independently create verified proof.
+
+### Relationships, requirements, and future consumers
+
+`SkillRelation` uses only the explicit relation types **parent**, **child**, **related**, **prerequisite**, and **common project context**. A `Challenge` may reference several skills and may assign a transparent, purpose-bound requirement weight to each; the challenge must also state the taxonomy version and never turn those weights into a person score. `Review rubric` criteria reference exact skill revisions and their evidence expectations. Future discovery and matching may query skill keys, levels in context, relations, stated requirements, and the separately visible verification state, but must explain the source evidence and must not present unverified claims as verified proof.
+
+### Versioning, governance, and historical meaning
+
+The initial published version is `1.0.0`. A patch version clarifies non-semantic wording, a minor version adds compatible governed skills or relations, and a major version changes a definition, relationship meaning, or replacement model in a way that requires consumers to review compatibility. Every change records a change identifier, proposer, decision owner, reason, affected skill keys/revisions, relationship changes, review record, publication version, and a historical mapping when applicable. Published taxonomy records are immutable; corrections create a new revision and never silently overwrite an earlier definition.
+
+A new canonical skill, definition revision, relation, or deprecation follows `draft -> review -> published` under the Skills-module governance workflow. At least the taxonomy owner and a qualified software-domain reviewer must approve publication; privacy, security, or policy review is additionally required when a change affects evidence meaning, visibility, or an authorization boundary. A `TaxonomySuggestion` follows `submitted -> triaged -> accepted`, `rejected`, or `deferred`. Any person may suggest a missing skill or clarification, but a suggestion cannot directly modify canonical data, published challenge requirements, review rubrics, proofs, search results, or matching inputs.
+
+Deprecation means “not available for new canonical use,” not deletion. A deprecated skill retains its key, label, definition revision, taxonomy version, and optional successor mapping so historical proof remains readable and interpretable. Renaming a skill used by published proof is prohibited; a replacement requires a new revision or successor relationship plus a documented historical mapping. Taxonomy governance produces an append-only audit record and never rewrites proof, review, submission, or reputation history.
+
 ## Relationships and ownership boundaries
 
 | Relationship | Rule |
@@ -66,6 +128,11 @@ The canonical domain model also relies on `EvidenceItem`, `SubmissionVersion`, `
 | Person ↔ Organization | A `Membership` joins one person to one organization with a versioned role assignment. One person may have multiple memberships and roles. |
 | Organization → Project | A project has exactly one owning organization. A company member may act on it only through an active, authorized membership. |
 | Project → Challenge | A challenge is a project subtype or purpose, not a separate job/gig concept. It retains the project's organization, requirements, rubric context, and lifecycle. |
+| Skill family → Skill → Taxonomy version | A released taxonomy version contains immutable family, skill, definition-revision, and relation references; a skill key remains stable across later revisions. |
+| Skill ↔ Skill | A relation is explicitly parent/child, related, prerequisite, or common project context and is versioned with the taxonomy. |
+| Skill ↔ Evidence/Submission/Review/Proof | Contextual `SkillEvidenceLink` records the exact skill revision, evidence type, level/context where applicable, and verification state; the source evidence and proof chain remain authoritative. |
+| Challenge/Review rubric → Skill | Requirements and rubric criteria reference exact skill keys/revisions and taxonomy version; transparent requirement weights describe that challenge/rubric only and are never a talent score. |
+| Person → Taxonomy suggestion | A person may submit a non-canonical suggestion; governed review, not the suggestion, controls canonical publication. |
 | Project → Workspace | A project may create one or more workspaces. Workspace membership and access grants determine who can view or act on private work. |
 | Project → Application | An application belongs to one talent, one project, and one organization context. It is a request, not an acceptance, hire, or contract. |
 | Workspace/Challenge → Submission | A submission is versioned and belongs to one authorized workspace/task or challenge. Private evidence is restricted to authorized participants. |
@@ -253,6 +320,11 @@ If a payment succeeds while an application request is retried, the idempotency k
 12. A `Dispute` or `Report` references source truth and cannot silently rewrite project, review, proof, contract, payment, or audit history.
 13. Every state transition validates prior state, actor, organization scope, policy version, required evidence, and idempotency where applicable; invalid transitions fail without partial mutation.
 14. Every public or organization-visible record has an explicit visibility decision, retention class, and deletion/revocation behavior.
+15. A skill reference on evidence, a challenge, a review rubric, a proof, search result, or future match retains its canonical key, definition revision, and taxonomy version; later changes cannot silently alter historical meaning.
+16. A skill level is contextual to evidence and task difficulty. It cannot be inferred from activity, combined into a universal talent score, or used as identity, risk, trust, or hiring truth.
+17. Only a valid human-reviewed proof chain can represent verified proof. A self-claim, import, open-source activity, endorsement, paid outcome, relationship, or AI-generated suggestion remains distinct until it passes the applicable rules.
+18. A taxonomy suggestion cannot mutate canonical vocabulary or downstream requirement, rubric, proof, search, or matching data without governed review and publication.
+19. A deprecated skill remains readable in historical proof and audit history. Replacement, rename, or correction creates a documented successor/revision mapping rather than rewriting history.
 
 ## Naming rules and prohibited synonyms
 
@@ -264,6 +336,11 @@ Use one canonical term per concept in product copy, domain services, API/event c
 | **Talent** | Person acting to prove skills and pursue an opportunity | Candidate, applicant, freelancer, contractor, or developer when the Proofly role is meant |
 | **Company member** | Person acting for an organization through membership | Company, employer, organization owner, or hiring manager as a base entity |
 | **Organization** | Company or team tenant and owner of company-scoped records | Company account, employer profile, workspace, or team member |
+| **Skill family** | Governed grouping of related software skills | A career level, profile segment, or a score category |
+| **Skill** | Stable canonical software capability in a released taxonomy | Resume keyword, personality trait, automatic inference, or proof by itself |
+| **Skill level** | Contextual descriptive statement attached to a skill/evidence context | A universal numeric rank, identity signal, or hiring decision |
+| **Taxonomy version** | Immutable released vocabulary version | A user-editable preference or hidden model version |
+| **Taxonomy suggestion** | User-submitted request for taxonomy review | A direct canonical taxonomy edit or verification request |
 | **Project** | Defined piece of work with requirements and lifecycle | Job, gig, task, ticket, listing, or contract |
 | **Challenge** | Project intended to create comparable evidence | Job, assessment, test, contest, or generic project when comparability is not intended |
 | **Application** | Talent request to participate in a project/opportunity | Proposal, bid, offer, acceptance, hire, or contract |
@@ -292,6 +369,7 @@ The domain model reconciles with the approved contracts as follows:
 | Contract surface | Canonical alignment |
 |---|---|
 | Product/PRD language | Use talent, company member, reviewer, organization, project, challenge, application, submission, review, proof, paid trial, contract, payment, payout, dispute, and report with the definitions above. The first-release loop remains real work → human review → proof → paid opportunity. |
+| Skills language | Use versioned skill families, skill keys, definition revisions, contextual levels, evidence types, explicit relations, and governed taxonomy changes. Skills are capability vocabulary; they are not a full profile or universal score. |
 | Data model | Persist explicit owner/scope, visibility, lifecycle, version, retention, actor, and audit fields. Public proof references an exact submission version and review decision; private evidence remains restricted. |
 | API boundaries | Identity owns session and consent; Organizations owns membership; Projects owns projects/applications; Workspaces owns submissions/access; Reviews owns assignments/rubrics/decisions; Proof owns publication/revocation/reputation; Engagements owns contract versions/milestones; Payments owns provider truth; Trust/Admin owns reports/disputes/enforcement. |
 | Event families | Emit versioned, privacy-classified events in the canonical families `membership.*`, `project.*`, `application.*`, `workspace.*`, `submission.*`, `review.*`, `proof.*`, `reputation.*`, `contract.*`, `milestone.*`, `payment.*`, `payout.*`, `report.*`, and `dispute.*` only after the corresponding domain command succeeds. |
@@ -311,6 +389,12 @@ No database implementation begins before this domain model is approved. Later sc
 | User leaves an organization while owning an active project | Revoke membership-derived access, retain organization ownership, preserve authorship/audit history, and require an authorized organization administrator to reassign management or restrict the project. |
 | Payment succeeds but an application request is retried | Deduplicate provider event and request idempotency key; keep payment/provider state authoritative and prevent duplicate application, contract, payment, payout, or notification side effects. |
 | Dispute opens after a contract is completed | Allow `completed -> disputed` when policy permits; preserve completed contract and payment history, open a linked restricted case, and resolve through auditable case/appeal transitions. |
+| A person proposes a new skill | Create a `TaxonomySuggestion` with context and rationale; keep canonical taxonomy unchanged while it is triaged, reviewed, accepted, rejected, or deferred. |
+| A skill definition changes | Publish a new definition revision and taxonomy version with owner, reviewer, reason, compatibility impact, and historical mapping; do not silently change prior references. |
+| Published proof references a deprecated skill | Keep the original skill key, label, definition revision, and taxonomy version readable; show any successor as context only and preserve the historic reference. |
+| Talent has different levels across related skills | Record each level only with its own skill, evidence type, work context, and difficulty/rubric basis; do not average, promote, or collapse them into one person score. |
+| Challenge needs several skills with different weights | Reference each exact skill revision and transparent challenge-specific requirement weight; explain the weights in the challenge/rubric without turning them into a candidate ranking. |
+| Company searches for a skill | Return the visible evidence state, source context, taxonomy version, and proof distinction. Self-claims and other unverified evidence must never be presented as verified proof. |
 
 ## References and approval gate
 
