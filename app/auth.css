@@ -449,3 +449,329 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Phase 13 onboarding: precision-editorial progress rail, cobalt evidence markers, calm private-data density. */
+.onboarding-form,
+.onboarding-unavailable,
+.onboarding-complete {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.onboarding-progress {
+  display: grid;
+  gap: 0.7rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.onboarding-progress > p,
+.onboarding-save-note,
+.onboarding-optional {
+  margin: 0;
+  color: var(--ink-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.onboarding-progress ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.onboarding-progress li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem;
+  align-items: center;
+  min-width: 0;
+  color: var(--ink-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.57rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.onboarding-progress li span:first-child {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-size: 0.6rem;
+}
+
+.onboarding-progress li[data-current="true"],
+.onboarding-progress li[data-complete="true"] {
+  color: var(--ink);
+}
+
+.onboarding-progress li[data-current="true"] span:first-child {
+  border-color: var(--cobalt);
+  background: var(--cobalt);
+  color: var(--fog);
+}
+
+.onboarding-progress li[data-complete="true"] span:first-child {
+  border-color: color-mix(in srgb, var(--cobalt) 60%, var(--line));
+  color: var(--cobalt);
+}
+
+.onboarding-step-title {
+  padding-bottom: 0.9rem;
+}
+
+.onboarding-form select,
+.onboarding-form textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.onboarding-form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.onboarding-form select[aria-invalid="true"],
+.onboarding-form textarea[aria-invalid="true"] {
+  border-color: var(--danger, #b42318);
+}
+
+.onboarding-check-group {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.onboarding-check-group legend {
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: 680;
+}
+
+.onboarding-check-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.onboarding-check {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  width: fit-content;
+  color: var(--ink-muted);
+  font-size: 0.79rem;
+  line-height: 1.45;
+}
+
+.onboarding-check-list .onboarding-check {
+  width: auto;
+  min-height: 3rem;
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface-subtle);
+}
+
+.onboarding-check input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--cobalt);
+}
+
+.onboarding-responsibility,
+.onboarding-review,
+.onboarding-complete {
+  position: relative;
+  display: grid;
+  gap: 0.7rem;
+  padding: 1rem 0 0 1rem;
+  border-left: 2px solid var(--cobalt);
+}
+
+.onboarding-responsibility {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.onboarding-responsibility h3,
+.onboarding-review h3,
+.onboarding-complete h2 {
+  margin: 0;
+  font-size: 1.18rem;
+  letter-spacing: -0.035em;
+}
+
+.onboarding-responsibility p:not(.onboarding-state),
+.onboarding-review > p:not(.onboarding-state),
+.onboarding-complete > p:not(.onboarding-state) {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.onboarding-state {
+  width: fit-content;
+  margin: 0;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--cobalt) 55%, var(--line));
+  border-radius: var(--radius-control);
+  color: var(--cobalt);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.onboarding-state[data-state="needs_review"],
+.onboarding-state[data-state="pending"] {
+  color: var(--ink-muted);
+}
+
+.onboarding-review dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.onboarding-review dl div {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.7rem 0.75rem 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.onboarding-review dt {
+  color: var(--ink-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.onboarding-review dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.onboarding-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+}
+
+.onboarding-actions .button:last-child:only-child {
+  margin-left: auto;
+}
+
+.onboarding-return-later {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cobalt);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.onboarding-return-later:disabled {
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+
+.onboarding-completion-checklist {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.8rem 0 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  list-style: none;
+}
+
+.onboarding-completion-checklist li {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.onboarding-completion-checklist li span {
+  color: var(--cobalt);
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 700;
+}
+
+.onboarding-complete .button,
+.onboarding-unavailable .button {
+  width: fit-content;
+}
+
+@media (max-width: 767px) {
+  .onboarding-progress ol {
+    grid-template-columns: repeat(5, max-content);
+    justify-content: space-between;
+    gap: 0.2rem;
+  }
+
+  .onboarding-progress li {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .onboarding-progress li span:last-child {
+    max-width: 3.5rem;
+    text-align: center;
+  }
+
+  .onboarding-check-list,
+  .onboarding-review dl {
+    grid-template-columns: 1fr;
+  }
+
+  .onboarding-actions {
+    justify-content: stretch;
+  }
+
+  .onboarding-actions .button,
+  .onboarding-actions .button:last-child:only-child {
+    width: 100%;
+    margin-left: 0;
+  }
+}

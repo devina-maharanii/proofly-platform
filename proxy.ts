@@ -7,7 +7,11 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getPublicSupabaseConfig } from "@/lib/supabase/config";
 
-const protectedPaths = new Set(["/auth/continue", "/reset-password"]);
+const protectedPaths = new Set([
+  "/auth/continue",
+  "/onboarding",
+  "/reset-password",
+]);
 
 export async function proxy(request: NextRequest) {
   const config = getPublicSupabaseConfig();
@@ -55,5 +59,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/continue", "/reset-password"],
+  matcher: ["/auth/continue", "/onboarding", "/reset-password"],
 };

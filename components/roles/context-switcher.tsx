@@ -3,10 +3,11 @@
 /** Proofly Phase 12 context switcher: displays only server-derived capabilities and memberships; all changes are re-authorized server-side. */
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import Link from "next/link";
+import type { Route } from "next";
 
 import {
   initialRoleActionState,
-  requestReviewerCapabilityAction,
   setActiveContextAction,
 } from "@/lib/roles/actions";
 import type { RoleContext } from "@/lib/roles/types";
@@ -73,11 +74,6 @@ function ContextOption({
 export function RoleContextSwitcher({
   context,
 }: Readonly<{ context: RoleContext }>) {
-  const [requestState, requestAction] = useActionState(
-    requestReviewerCapabilityAction,
-    initialRoleActionState
-  );
-
   return (
     <div className="context-switcher">
       <div className="context-list" aria-label="Available role contexts">
@@ -88,6 +84,22 @@ export function RoleContextSwitcher({
           selected={context.active?.role === "talent"}
           actionLabel="Use talent context"
         />
+
+        <article className="context-option">
+          <div>
+            <h3>Talent onboarding</h3>
+            <p>
+              Save a few private preferences before a future proof path. This
+              does not publish a profile.
+            </p>
+          </div>
+          <Link
+            className="button button-secondary"
+            href={"/onboarding" as Route}
+          >
+            Continue onboarding
+          </Link>
+        </article>
 
         {context.memberships.map(membership => (
           <ContextOption
@@ -104,6 +116,24 @@ export function RoleContextSwitcher({
           />
         ))}
 
+        {context.memberships.length === 0 ? (
+          <article className="context-option">
+            <div>
+              <h3>Company onboarding</h3>
+              <p>
+                Create one private organization context before selecting future
+                company actions.
+              </p>
+            </div>
+            <Link
+              className="button button-secondary"
+              href={"/onboarding?role=company_member" as Route}
+            >
+              Set up organization
+            </Link>
+          </article>
+        ) : null}
+
         {context.capabilities.includes("reviewer") ? (
           <ContextOption
             role="reviewer"
@@ -113,25 +143,26 @@ export function RoleContextSwitcher({
             actionLabel="Use reviewer context"
           />
         ) : (
-          <form className="context-option" action={requestAction}>
+          <article className="context-option">
             <div>
               <h3>Reviewer access</h3>
               <p>
                 {context.reviewerRequestStatus === "pending"
                   ? "Your request is pending qualified human review."
-                  : "Request review access without granting it to yourself."}
+                  : "Prepare your expertise request before qualified human review considers access."}
               </p>
             </div>
-            <PendingButton
-              className="button button-secondary"
-              disabled={context.reviewerRequestStatus === "pending"}
-              label={
-                context.reviewerRequestStatus === "pending"
-                  ? "Request pending"
-                  : "Request reviewer access"
-              }
-            />
-          </form>
+            {context.reviewerRequestStatus === "pending" ? (
+              <span className="context-selected">Request pending</span>
+            ) : (
+              <Link
+                className="button button-secondary"
+                href={"/onboarding?role=reviewer" as Route}
+              >
+                Prepare reviewer request
+              </Link>
+            )}
+          </article>
         )}
 
         {context.capabilities.includes("administrator") ? (
@@ -144,17 +175,6 @@ export function RoleContextSwitcher({
           />
         ) : null}
       </div>
-
-      {requestState.status !== "idle" && requestState.message ? (
-        <p
-          className="auth-status"
-          data-status={requestState.status}
-          role={requestState.status === "error" ? "alert" : "status"}
-          aria-live="polite"
-        >
-          {requestState.message}
-        </p>
-      ) : null}
     </div>
   );
 }

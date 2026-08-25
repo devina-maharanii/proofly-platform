@@ -53,7 +53,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
       description="Sign in to manage your own account session. This does not select a product role or publish any information."
     >
       <div className="auth-card-header">
-        <h2>Sign in</h2>
+        <h2>Open your account context</h2>
         <p>Use the email and password associated with your account.</p>
       </div>
       {notice ? (
@@ -68,7 +68,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
       ) : null}
       <AuthForm
         action={signInAction}
-        submitLabel="Sign in"
+        submitLabel="Continue to account context"
         showPassword
         next={next}
       />

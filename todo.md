@@ -23,3 +23,11 @@
 - [x] Implement role-aware navigation, organization switching, capability-request onboarding handoff, and safe permission responses without building role dashboards.
 - [x] Add authorization/RLS fixtures and tests for all Phase 12 scenarios, then run formatting, lint, strict TypeScript, browser checks, production build, and complete diff review.
 - [x] Commit and push exactly one Phase 12 commit on `main`.
+
+## Phase 13 — Onboarding Flow
+
+- [x] Read the Phase 13 attachments, Phase 11 and 12 foundations, and all applicable Proofly source-of-truth documents.
+- [x] Define and migrate only the approved common and role-specific onboarding state, secure draft persistence, privacy-safe events, and RLS boundaries.
+- [x] Implement authenticated progressive Talent, Company, and Reviewer onboarding with validation, resume/skip behavior, completion checklist, and first-action handoff.
+- [x] Add onboarding, authorization, privacy, accessibility, responsive, formatting, lint, strict TypeScript, test, build, and final diff validation.
+- [x] Commit and push exactly one Phase 13 commit on `main`.

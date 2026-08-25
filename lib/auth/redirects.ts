@@ -9,6 +9,7 @@ const allowedAuthDestinations = new Set([
   "/forgot-password",
   "/reset-password",
   "/auth/continue",
+  "/onboarding",
   "/get-started",
 ]);
 
