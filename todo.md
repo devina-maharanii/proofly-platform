@@ -39,3 +39,11 @@
 - [x] Implement authenticated personal settings navigation and forms with validated save/reset, recent-auth safeguards, explicit session and connected-account controls, and request-based export/deletion flows.
 - [x] Add privacy, authorization, sensitive-action, accessibility, responsive, regression, formatting, lint, strict TypeScript, test, build, and final diff validation.
 - [x] Commit and push exactly one Phase 14 commit on `main`.
+
+## Phase 15 — Permissions and Security
+
+- [x] Read the Phase 15 attachments, Phase 11, 12, and 14 foundations, and all applicable Proofly source-of-truth documents.
+- [x] Define the approved permission matrix, RLS and storage policy map, server authorization contract, rate-limit map, audit catalog, threat priorities, and security test matrix.
+- [x] Implement only approved defense-in-depth server authorization, rate limits, file-access safeguards, audit boundaries, RLS hardening, and CI security checks.
+- [x] Add adversarial authorization, RLS, storage, rate-limit, privacy, security, accessibility, formatting, lint, strict TypeScript, test, build, and final diff validation.
+- [x] Commit and push exactly one Phase 15 commit on `main`.

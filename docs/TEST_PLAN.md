@@ -66,3 +66,20 @@ The following values are **release decisions**, not claims about a particular us
 ## Cross-cutting release conditions
 
 Public release remains blocked by a high-severity security, privacy, payment, trust, or accessibility issue; a broken primary journey; unverified production configuration; inactive error monitoring; an undocumented rollback path; or missing evidence for a required gate. Later feature phases add RLS, provider, domain lifecycle, event, AI, internationalization, payment, and trust tests without weakening these public-page checks.
+
+## Phase 15 security and authorization matrix
+
+| Test layer | Required adversarial case | Expected safety property |
+| --- | --- | --- |
+| Pure permission policy | Mutate a client-supplied user ID, organization ID, role, or admin flag | No derived server fact changes; cross-user/cross-organization access is denied |
+| Organization permissions | Removed member, matching organization viewer, billing member, and owner | Only the explicitly allowed active matching membership may act |
+| Reviewer policy | Self-review, unassigned review, declared conflict, withdrawn/completed work | Review is denied unless assignment, reviewer context, and conflict/state checks all pass |
+| Server boundary | Import or source scan for browser-side privileged credentials and non-server role resolution | Publishable session configuration only reaches the browser; privileged and authorization adapters remain server-only |
+| Current RLS contract | Every current table has RLS; owner/membership policies and RPC grants are constrained | Client direct mutation and ordinary-user elevation are absent |
+| File contract | Traversal key, wrong owner prefix, public bucket, unsupported MIME, zero/oversize, pending/rejected scan | Validation fails without revealing a private object or issuing a URL |
+| Webhook contract | Invalid/old signature, body bound, duplicate provider event, malformed ID | Forged/stale/replayed input is rejected before side effect |
+| Rate limits | Exact limit, different actor/address hash, reset-window behavior | Repeated high-risk requests stop safely without storing raw actor/address keys |
+| Route protection | Unauthenticated `/settings`, `/onboarding`, `/auth/continue`, and recovery path | Protected boundary redirects fail closed and exposes no private server-rendered content |
+| CI release gate | Formatting, lint, strict typecheck, unit/security tests, build, dependency audit, secret scan | Main cannot accept an unreviewed source secret or high-severity dependency finding |
+
+The Phase 15 evidence set includes source-policy tests, SQL/RLS/grant contract tests, storage and webhook contract tests, protected-route browser regression, `pnpm security:check`, `pnpm audit:prod`, format check, lint, strict type check, unit tests, accessibility regression, production build, `git diff --check`, Supabase advisor review, and a complete scope review. Storage, payment, messaging, search, and provider integration tests remain contracts—not fabricated product tests—until their approved modules exist.

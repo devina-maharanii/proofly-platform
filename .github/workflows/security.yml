@@ -1,0 +1,48 @@
+name: Security and quality
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify security and quality gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.13.0
+          cache: pnpm
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+          run_install: false
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Scan tracked source for secrets
+        run: pnpm security:check
+      - name: Audit production dependencies
+        run: pnpm audit:prod
+      - name: Lint
+        run: pnpm lint
+      - name: Check strict TypeScript
+        run: pnpm typecheck
+      - name: Run unit and security tests
+        run: pnpm test
+      - name: Build production application
+        run: pnpm build

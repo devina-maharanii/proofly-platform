@@ -17,8 +17,10 @@
     "test": "vitest run",
     "test:a11y": "playwright test",
     "lighthouse:home": "lighthouse http://127.0.0.1:3101 --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=.reports/lighthouse-home.json --chrome-flags=\"--headless=new --no-sandbox\"",
-    "format": "prettier --write app components lib tests e2e proxy.ts playwright.config.ts vitest.config.ts package.json tsconfig.json next.config.ts postcss.config.mjs eslint.config.mjs ideas.md",
-    "format:check": "prettier --check app components lib tests e2e proxy.ts playwright.config.ts vitest.config.ts package.json tsconfig.json next.config.ts postcss.config.mjs eslint.config.mjs ideas.md"
+    "format": "prettier --write app components lib tests e2e scripts .github proxy.ts playwright.config.ts vitest.config.ts package.json tsconfig.json next.config.ts postcss.config.mjs eslint.config.mjs ideas.md",
+    "format:check": "prettier --check app components lib tests e2e scripts .github proxy.ts playwright.config.ts vitest.config.ts package.json tsconfig.json next.config.ts postcss.config.mjs eslint.config.mjs ideas.md",
+    "security:check": "node scripts/security-check.mjs",
+    "audit:prod": "pnpm audit --prod --audit-level high"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.5",

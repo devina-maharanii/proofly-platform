@@ -2,11 +2,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 import {
   createServerSupabaseClient,
   getVerifiedAuthSession,
 } from "@/lib/supabase/server";
+import {
+  securityRateLimiter,
+  type SecurityRateLimitAction,
+} from "@/lib/security/rate-limit";
 
 import { getAccountSettingsContext } from "./context";
 import {
@@ -35,6 +40,34 @@ function errorState(
   fieldErrors?: Record<string, string>
 ): SettingsFormState {
   return { status: "error", message, fieldErrors };
+}
+
+async function requestAddress() {
+  const requestHeaders = await headers();
+  return (
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    requestHeaders.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
+async function enforceSettingsRateLimit(
+  action: SecurityRateLimitAction
+): Promise<SettingsFormState | null> {
+  const session = await getVerifiedAuthSession();
+  if (!session) {
+    return errorState("Your session has expired. Sign in again to continue.");
+  }
+  const result = securityRateLimiter.check(
+    action,
+    session.userId,
+    await requestAddress()
+  );
+  return result.ok
+    ? null
+    : errorState(
+        `Too many account requests. Try again in about ${result.retryAfterSeconds} seconds.`
+      );
 }
 
 async function currentSettings(): Promise<PersonalSettings | null> {
@@ -105,6 +138,8 @@ export async function saveProfileAction(
       "Check the highlighted fields.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("mutation");
+  if (rateLimitFailure) return rateLimitFailure;
   const existing = await currentSettings();
   if (!existing)
     return errorState("Your session has expired. Sign in again to continue.");
@@ -133,6 +168,8 @@ export async function savePrivacyAction(
       "Check the highlighted privacy controls.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("mutation");
+  if (rateLimitFailure) return rateLimitFailure;
   const existing = await currentSettings();
   if (!existing)
     return errorState("Your session has expired. Sign in again to continue.");
@@ -161,6 +198,8 @@ export async function saveNotificationsAction(
       "Check the notification choices.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("mutation");
+  if (rateLimitFailure) return rateLimitFailure;
   const existing = await currentSettings();
   if (!existing)
     return errorState("Your session has expired. Sign in again to continue.");
@@ -185,6 +224,8 @@ export async function changePasswordAction(
   });
   if (!parsed.success)
     return errorState("Check the password fields.", fieldErrors(parsed.error));
+  const rateLimitFailure = await enforceSettingsRateLimit("sensitive-account");
+  if (rateLimitFailure) return rateLimitFailure;
   const confirmationFailure = await verifyCurrentPassword(
     parsed.data.currentPassword
   );
@@ -217,6 +258,8 @@ export async function revokeOtherSessionsAction(
       "Enter your current password.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("sensitive-account");
+  if (rateLimitFailure) return rateLimitFailure;
   const confirmationFailure = await verifyCurrentPassword(
     parsed.data.currentPassword
   );
@@ -248,6 +291,8 @@ export async function disconnectGithubAction(
       "Enter your current password.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("sensitive-account");
+  if (rateLimitFailure) return rateLimitFailure;
   const confirmationFailure = await verifyCurrentPassword(
     parsed.data.currentPassword
   );
@@ -290,6 +335,8 @@ export async function requestDataRightAction(
       "Confirm the request and enter your current password.",
       fieldErrors(parsed.error)
     );
+  const rateLimitFailure = await enforceSettingsRateLimit("sensitive-account");
+  if (rateLimitFailure) return rateLimitFailure;
   const confirmationFailure = await verifyCurrentPassword(
     parsed.data.currentPassword
   );

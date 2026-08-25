@@ -259,6 +259,18 @@ The architecture is intentionally realistic for a small team using Manus: one Ne
 
 No feature implementation, database migration, provider integration, or UI work begins from this document until the relevant module boundary, data/RLS policy, API/event contract, test plan, environment contract, and operational owner are approved. Later phases must implement one module at a time without bypassing Next.js App Router, server/client boundaries, RLS, provider adapters, background-job safety, or human accountability.
 
+## Phase 15 enforced permission and security boundary
+
+The implemented Phase 15 policy layer is deliberately generic because future domain records are not yet approved. [`SECURITY_RULES.md`](SECURITY_RULES.md) is the detailed permission matrix and current RLS map. Pure policy functions receive only server-derived actor, active-context, membership, capability, ownership, visibility, and workflow facts; a `server-only` adapter creates that actor from the verified request session and `getRoleContext()`. A client may request an action, but it cannot select the actor, organization, role, owner, resource visibility, reviewer assignment, billing authority, or administrator capability.
+
+Current protected route boundaries remain exact and fail closed: `/auth/continue`, `/onboarding`, `/reset-password`, and `/settings` redirect an unauthenticated request to sign-in; their server components and actions independently verify a session before private data or mutation. The current public schema has RLS enabled on every released table and permits owner/active-membership reads only. Current writes are restricted to narrowly reviewed self-service functions that derive `auth.uid()` themselves. No Phase 15 migration creates future records, a browser write policy, a public storage bucket, a privileged browser client, or an administrator bypass.
+
+The file contract is private-by-default, validates a user-bound object key, allowlisted MIME type, bounded size, clean scan state, and current source-resource authorization before a server could issue a short-lived URL. No storage bucket, file route, or signed URL issuance exists yet. The webhook contract requires bounded body size, timestamped HMAC verification with timing-safe comparison, provider event uniqueness, and durable replay receipts before acknowledgement; no provider webhook route exists yet. The local replay primitive is appropriate for tests and one-process development only, so a released provider handler must add a transactionally unique receipt record in its own approved phase.
+
+Sensitive account actions now apply a server-side hashed actor/address limiter in addition to password confirmation and existing authentication limits. The limiter is intentionally documented as process-local; a horizontally scaled production deployment must supply a durable shared counter before treating it as a complete distributed abuse control. Search, messaging, uploads, storage, payment, and provider actions are deny-by-default contracts until their modules, RLS policies, audit catalogue entries, and test matrices are approved.
+
+GitHub Actions now runs formatting, strict TypeScript, lint, unit/security tests, production build, a tracked-source secret check, and production dependency audit on pushes and pull requests to `main`. The secret checker reports only a file name and rule label; it never prints a suspected secret. Dependency audit is a release signal rather than authorization evidence, and high-severity findings block the workflow for remediation or explicit security review.
+
 ## Phase 10 public-page foundation
 
 ### Metadata and crawler ownership
