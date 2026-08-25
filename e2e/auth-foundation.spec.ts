@@ -97,6 +97,9 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
 
     await page.goto("/reset-password");
     await expect(page).toHaveURL(/\/sign-in\?next=%2Freset-password/);
+
+    await page.goto("/settings");
+    await expect(page).toHaveURL(/\/sign-in\?next=%2Fsettings/);
   });
 
   test("retains auth reading order without horizontal overflow on a narrow screen", async ({

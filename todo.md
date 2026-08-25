@@ -31,3 +31,11 @@
 - [x] Implement authenticated progressive Talent, Company, and Reviewer onboarding with validation, resume/skip behavior, completion checklist, and first-action handoff.
 - [x] Add onboarding, authorization, privacy, accessibility, responsive, formatting, lint, strict TypeScript, test, build, and final diff validation.
 - [x] Commit and push exactly one Phase 13 commit on `main`.
+
+## Phase 14 — Account Settings
+
+- [x] Read the Phase 14 attachments, Phase 11 through 13 foundations, and all applicable Proofly source-of-truth documents.
+- [x] Define and migrate only the approved personal-settings, privacy, notification, connected-account, session, data-rights, sensitive-event, and RLS boundaries.
+- [x] Implement authenticated personal settings navigation and forms with validated save/reset, recent-auth safeguards, explicit session and connected-account controls, and request-based export/deletion flows.
+- [x] Add privacy, authorization, sensitive-action, accessibility, responsive, regression, formatting, lint, strict TypeScript, test, build, and final diff validation.
+- [x] Commit and push exactly one Phase 14 commit on `main`.

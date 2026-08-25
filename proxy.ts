@@ -11,6 +11,7 @@ const protectedPaths = new Set([
   "/auth/continue",
   "/onboarding",
   "/reset-password",
+  "/settings",
 ]);
 
 export async function proxy(request: NextRequest) {
@@ -59,5 +60,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/continue", "/onboarding", "/reset-password"],
+  matcher: ["/auth/continue", "/onboarding", "/reset-password", "/settings"],
 };

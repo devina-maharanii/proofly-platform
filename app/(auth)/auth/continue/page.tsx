@@ -59,6 +59,9 @@ export default async function AuthContinuePage({
         project, payment, review, or administrator privilege.
       </p>
       <div className="auth-session-actions">
+        <a className="button button-secondary" href="/settings">
+          Account settings
+        </a>
         <form action={signOutAction}>
           <button className="button button-primary" type="submit">
             Sign out from this device
