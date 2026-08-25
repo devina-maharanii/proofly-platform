@@ -81,3 +81,6 @@ Use a bold **proof marker**: a cobalt vertical rule interrupted by a small graph
 - The proof marker pairs a cobalt line-and-node glyph with an editorial `/ evidence` wordmark rather than default brand text.
 - Primary navigation and final actions name a role or evidence decision; generic `Get started` language is excluded from prominent surfaces.
 - Every major visual panel carries an inspectable proof concept such as a source, state, review, privacy boundary, provenance cue, or next action.
+- Authentication surfaces use the same proof rail, compact mono evidence stamps, and intentional cobalt signal line as the public evidence ledger.
+- The auth wordmark always pairs the cobalt vertical marker and graphite node with the custom Proofly `/ evidence` treatment; a generic letter-in-a-box is prohibited.
+- Account-entry actions name the specific evidence decision: building proof, inspecting evidence, or requesting reviewer context rather than generic selection language.

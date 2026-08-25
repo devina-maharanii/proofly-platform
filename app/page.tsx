@@ -58,10 +58,16 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={0.12} className="hero-actions">
-              <a className="button button-primary" href="#talent">
+              <a
+                className="button button-primary"
+                href="/get-started?role=talent"
+              >
                 Build your proof <ArrowDownRight size={18} aria-hidden="true" />
               </a>
-              <a className="button button-secondary" href="#companies">
+              <a
+                className="button button-secondary"
+                href="/get-started?role=company"
+              >
                 Hire from evidence <ArrowUpRight size={18} aria-hidden="true" />
               </a>
             </Reveal>
@@ -354,24 +360,26 @@ export default function Home() {
               Start with a role. Keep the evidence visible.
             </h2>
             <p>
-              This public homepage explains the path. Account creation, sign-in,
-              and role workflows are intentionally not implemented in Phase 09.
+              Create and verify an account first. Role-specific workflows begin
+              only after their own approved phases.
             </p>
             <div className="final-actions">
-              <button type="button" className="button button-primary" disabled>
+              <a
+                className="button button-primary"
+                href="/get-started?role=talent"
+              >
                 Build your proof <ArrowDownRight size={18} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
                 className="button button-secondary"
-                disabled
+                href="/get-started?role=company"
               >
                 Hire from evidence <ArrowUpRight size={18} aria-hidden="true" />
-              </button>
+              </a>
             </div>
             <p className="final-note">
-              Role-specific signup is a planned public route, not a live Phase
-              09 behavior.
+              Account creation is role-neutral. Selecting an interest does not
+              authorize a product role.
             </p>
           </Reveal>
         </section>

@@ -66,13 +66,11 @@ test.describe("public marketing foundation", () => {
       page.getByRole("button", { name: /switch to (dark|light) theme/i })
     ).toHaveCount(1);
     if (testInfo.project.name === "desktop") {
-      await expect(
-        page.getByRole("button", { name: "Sign in" })
-      ).toBeDisabled();
+      await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
     } else {
       await expect(page.locator(".mobile-menu summary")).toBeVisible();
     }
-    await expect(page.getByRole("link", { name: "Choose a role" })).toHaveCount(
+    await expect(page.getByRole("link", { name: "Get started" })).toHaveCount(
       1
     );
   });

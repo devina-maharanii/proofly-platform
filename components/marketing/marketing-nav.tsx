@@ -28,20 +28,11 @@ export function MarketingNav() {
         </div>
         <div className="nav-actions">
           <ThemeToggle />
-          <button
-            type="button"
-            className="nav-sign-in"
-            disabled
-            aria-describedby="sign-in-note"
-          >
+          <a className="nav-sign-in" href="/sign-in">
             Sign in
-          </button>
-          <span id="sign-in-note" className="sr-only">
-            Sign in is an intentional Phase 09 placeholder. Authentication is
-            not built in this phase.
-          </span>
-          <a className="nav-cta" href="#final-cta">
-            Choose a role
+          </a>
+          <a className="nav-cta" href="/get-started">
+            Get started
           </a>
         </div>
       </nav>
