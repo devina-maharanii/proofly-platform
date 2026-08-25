@@ -40,6 +40,11 @@ export type VerifiedAuthSession = Readonly<{
   email: string | null;
 }>;
 
+export type VerifiedAuthAccess = VerifiedAuthSession &
+  Readonly<{
+    accessToken: string;
+  }>;
+
 export async function getVerifiedAuthSession(): Promise<VerifiedAuthSession | null> {
   const supabase = await createServerSupabaseClient();
   if (!supabase) {
@@ -58,5 +63,22 @@ export async function getVerifiedAuthSession(): Promise<VerifiedAuthSession | nu
   return {
     userId: subject,
     email: typeof email === "string" ? email : null,
+  };
+}
+
+export async function getVerifiedAuthAccess(): Promise<VerifiedAuthAccess | null> {
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return null;
+  const [{ data: claimsData, error: claimsError }, { data: sessionData }] =
+    await Promise.all([supabase.auth.getClaims(), supabase.auth.getSession()]);
+  const claims = claimsData?.claims;
+  const subject = claims?.sub;
+  const accessToken = sessionData.session?.access_token;
+  if (claimsError || typeof subject !== "string" || !accessToken) return null;
+  const email = claims?.email;
+  return {
+    userId: subject,
+    email: typeof email === "string" ? email : null,
+    accessToken,
   };
 }

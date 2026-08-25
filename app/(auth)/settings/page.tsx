@@ -11,8 +11,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+  searchParams,
+}: Readonly<{ searchParams: Promise<{ github?: string }> }>) {
   const context = await getAccountSettingsContext();
   if (!context) redirect("/sign-in?next=/settings&error=session-expired");
-  return <AccountSettings context={context} />;
+  const { github } = await searchParams;
+  return <AccountSettings context={context} githubOAuthStatus={github ?? ""} />;
 }

@@ -1,5 +1,7 @@
 /** Proofly Phase 14: private personal-account settings; no organization, marketplace, billing, or reviewer-payout state. */
 
+import type { GithubIntegrationContext } from "@/lib/github/types";
+
 export type PrivacyVisibility = "private" | "public";
 export type ProofVisibility = "private" | "restricted";
 
@@ -90,6 +92,8 @@ export type AccountSettingsContext = Readonly<{
   mfaEnabled: boolean;
   settings: PersonalSettings;
   identities: readonly ConnectedIdentity[];
+  activeTalentContext: boolean;
+  github: GithubIntegrationContext;
   dataRightsRequests: readonly DataRightsRequest[];
   securityEvents: readonly AccountSecurityEvent[];
 }>;

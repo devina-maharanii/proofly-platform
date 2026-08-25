@@ -14,6 +14,13 @@ import {
   saveProfileAction,
 } from "@/lib/settings/actions";
 import {
+  disconnectGithubContextAction,
+  hideGithubRepositoryAction,
+  refreshGithubAction,
+  removeGithubRepositoryAction,
+  selectGithubRepositoryAction,
+} from "@/lib/github/actions";
+import {
   initialSettingsFormState,
   type AccountSettingsContext,
   type SettingsFormState,
@@ -82,7 +89,8 @@ function SecurityEventLabel({ eventType }: Readonly<{ eventType: string }>) {
 
 export function AccountSettings({
   context,
-}: Readonly<{ context: AccountSettingsContext }>) {
+  githubOAuthStatus = "",
+}: Readonly<{ context: AccountSettingsContext; githubOAuthStatus?: string }>) {
   const [profileState, profileAction] = useActionState(
     saveProfileAction,
     initialSettingsFormState
@@ -107,6 +115,26 @@ export function AccountSettings({
     disconnectGithubAction,
     initialSettingsFormState
   );
+  const [githubRefreshState, githubRefreshAction] = useActionState(
+    refreshGithubAction,
+    initialSettingsFormState
+  );
+  const [githubSelectState, githubSelectAction] = useActionState(
+    selectGithubRepositoryAction,
+    initialSettingsFormState
+  );
+  const [githubHideState, githubHideAction] = useActionState(
+    hideGithubRepositoryAction,
+    initialSettingsFormState
+  );
+  const [githubRemoveState, githubRemoveAction] = useActionState(
+    removeGithubRepositoryAction,
+    initialSettingsFormState
+  );
+  const [githubDisconnectState, githubDisconnectAction] = useActionState(
+    disconnectGithubContextAction,
+    initialSettingsFormState
+  );
   const [rightsState, rightsAction] = useActionState(
     requestDataRightAction,
     initialSettingsFormState
@@ -114,6 +142,51 @@ export function AccountSettings({
   const githubConnected = context.identities.some(
     identity => identity.provider === "github"
   );
+  const githubOAuthMessage: Record<
+    string,
+    { status: "success" | "error"; message: string }
+  > = {
+    importing: {
+      status: "success",
+      message:
+        "GitHub consent was recorded. The initial public-repository import is running in the background.",
+    },
+    denied: {
+      status: "error",
+      message:
+        "GitHub authorization was cancelled. No GitHub context was connected.",
+    },
+    invalid: {
+      status: "error",
+      message:
+        "This GitHub authorization link was expired or invalid. Start a new connection when ready.",
+    },
+    "configuration-unavailable": {
+      status: "error",
+      message: "GitHub context is not configured yet. Try again later.",
+    },
+    "provider-unavailable": {
+      status: "error",
+      message:
+        "GitHub could not be reached. No public context was changed; try again later.",
+    },
+    "unexpected-scope": {
+      status: "error",
+      message:
+        "GitHub returned broader access than Proofly accepts. No context was connected.",
+    },
+    "session-expired": {
+      status: "error",
+      message:
+        "Your session expired before GitHub connection could begin. Sign in again to continue safely.",
+    },
+    "rate-limited": {
+      status: "error",
+      message:
+        "Too many GitHub connection requests were made. Wait a moment, then try again.",
+    },
+  };
+  const callbackState = githubOAuthMessage[githubOAuthStatus];
 
   return (
     <AuthShell
@@ -500,16 +573,17 @@ export function AccountSettings({
         aria-labelledby="connections-title"
       >
         <div className="settings-heading">
-          <p className="settings-index">05 / connected identities</p>
+          <p className="settings-index">05 / connected accounts and context</p>
           <h2 id="connections-title">Connected accounts</h2>
           <p>
-            Connections are sign-in identities, not proof of work. Removing one
-            can change how you regain access.
+            A sign-in identity and imported GitHub context are separate. GitHub
+            activity is contextual information, not verified Proofly evidence or
+            an automatic skill assessment.
           </p>
         </div>
         <div className="settings-readout">
           <p>
-            <strong>GitHub</strong>
+            <strong>GitHub sign-in identity</strong>
             <span>{githubConnected ? "Connected" : "Not connected"}</span>
           </p>
         </div>
@@ -537,10 +611,223 @@ export function AccountSettings({
           </form>
         ) : (
           <p className="settings-copy">
-            No GitHub identity is currently connected. Future provider
-            connections are not configured here.
+            No GitHub sign-in identity is currently connected.
           </p>
         )}
+
+        <div className="github-context-panel">
+          <div className="github-context-heading">
+            <div>
+              <p className="settings-index">GitHub / optional work context</p>
+              <h3>Selected public GitHub work</h3>
+            </div>
+            <span
+              className="github-context-status"
+              data-status={context.github.status ?? "not-connected"}
+            >
+              {context.github.status
+                ? context.github.status.replaceAll("_", " ")
+                : "not connected"}
+            </span>
+          </div>
+          {!context.activeTalentContext ? (
+            <div className="github-context-empty">
+              <p>
+                GitHub work context is available only while a Talent context is
+                active. It is separate from any connected sign-in identity.
+              </p>
+            </div>
+          ) : !context.github.connected ? (
+            <div className="github-context-empty">
+              <p>
+                Connect only public GitHub profile and repository context.
+                Proofly does not request private repositories or write access.
+                You choose each repository that may appear on your public Talent
+                profile.
+              </p>
+              {callbackState ? (
+                <p
+                  className="settings-status"
+                  data-status={callbackState.status}
+                  role="status"
+                >
+                  {callbackState.message}
+                </p>
+              ) : null}
+              <a className="button button-primary" href="/api/github/connect">
+                Connect GitHub context
+              </a>
+              <p className="settings-copy">
+                Imported activity is never verified proof, a reputation score,
+                or an employment claim.
+              </p>
+            </div>
+          ) : (
+            <>
+              {callbackState ? (
+                <p
+                  className="settings-status"
+                  data-status={callbackState.status}
+                  role="status"
+                >
+                  {callbackState.message}
+                </p>
+              ) : null}
+              <dl className="github-context-meta">
+                <div>
+                  <dt>Connected account</dt>
+                  <dd>
+                    {context.github.profileUrl ? (
+                      <a href={context.github.profileUrl} rel="noreferrer">
+                        @{context.github.username}
+                      </a>
+                    ) : (
+                      `@${context.github.username}`
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Last synchronized</dt>
+                  <dd>
+                    {context.github.lastSyncedAt
+                      ? new Date(context.github.lastSyncedAt).toLocaleString()
+                      : "Import in progress"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Source status</dt>
+                  <dd>Contextual · not verified</dd>
+                </div>
+              </dl>
+              {context.github.retryAfterAt ? (
+                <p
+                  className="settings-status"
+                  data-status="error"
+                  role="status"
+                >
+                  GitHub limited requests. Refresh is available again after{" "}
+                  {new Date(context.github.retryAfterAt).toLocaleString()}.
+                </p>
+              ) : null}
+              <form
+                action={githubRefreshAction}
+                className="settings-form github-refresh-form"
+              >
+                <p className="settings-copy">
+                  Refresh checks the public repository snapshot again. It does
+                  not publish new repositories automatically.
+                </p>
+                <button className="button button-secondary" type="submit">
+                  Refresh GitHub context
+                </button>
+                <FormStatus state={githubRefreshState} />
+              </form>
+              <div className="github-context-repositories">
+                <div>
+                  <h4>Imported public repositories</h4>
+                  <p className="settings-copy">
+                    Select a repository to show it as source-labelled context on
+                    your public profile. Hide or remove it at any time.
+                  </p>
+                </div>
+                {context.github.repositories.length ? (
+                  <ul className="github-context-list">
+                    {context.github.repositories.map(repository => (
+                      <li key={repository.id}>
+                        <div>
+                          <a href={repository.sourceUrl} rel="noreferrer">
+                            {repository.fullName}
+                          </a>
+                          <span>
+                            {repository.selectedPublic
+                              ? "Selected publicly · contextual only"
+                              : "Private to you · not selected"}
+                          </span>
+                          {repository.description ? (
+                            <p>{repository.description}</p>
+                          ) : null}
+                          <small>{repository.contributionContext}</small>
+                        </div>
+                        <div className="github-context-actions">
+                          {repository.selectedPublic ? (
+                            <form action={githubHideAction}>
+                              <input
+                                type="hidden"
+                                name="repositoryId"
+                                value={repository.id}
+                              />
+                              <button
+                                className="button button-secondary"
+                                type="submit"
+                              >
+                                Hide
+                              </button>
+                            </form>
+                          ) : (
+                            <form action={githubSelectAction}>
+                              <input
+                                type="hidden"
+                                name="repositoryId"
+                                value={repository.id}
+                              />
+                              <button
+                                className="button button-secondary"
+                                type="submit"
+                              >
+                                Select publicly
+                              </button>
+                            </form>
+                          )}
+                          <form action={githubRemoveAction}>
+                            <input
+                              type="hidden"
+                              name="repositoryId"
+                              value={repository.id}
+                            />
+                            <button
+                              className="button button-danger"
+                              type="submit"
+                            >
+                              Remove imported data
+                            </button>
+                          </form>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="settings-copy">
+                    No public repository snapshot is available yet. Wait for the
+                    current import or refresh manually later.
+                  </p>
+                )}
+                <FormStatus state={githubSelectState} />
+                <FormStatus state={githubHideState} />
+                <FormStatus state={githubRemoveState} />
+              </div>
+              <form
+                action={githubDisconnectAction}
+                className="settings-form settings-danger"
+              >
+                <h4>Disconnect GitHub work context</h4>
+                <p className="settings-copy">
+                  This revokes future GitHub access, removes stored provider
+                  tokens, removes imported repositories, and immediately removes
+                  selected GitHub context from your public profile. It does not
+                  affect a separately connected GitHub sign-in identity.
+                </p>
+                <label>
+                  <span>Type DISCONNECT to confirm</span>
+                  <input name="confirmation" autoComplete="off" required />
+                </label>
+                <button className="button button-danger" type="submit">
+                  Disconnect GitHub context
+                </button>
+                <FormStatus state={githubDisconnectState} />
+              </form>
+            </>
+          )}
+        </div>
       </section>
 
       <section

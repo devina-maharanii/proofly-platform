@@ -5,15 +5,18 @@ import {
   type PublicWorkEvidenceListItem,
   workEvidenceTypeLabel,
 } from "@/lib/evidence/types";
+import type { PublicGithubContext } from "@/lib/github/types";
 import { canonicalSkillLabel } from "@/lib/profile/types";
 import type { PublicTalentProfile } from "@/lib/profile/context";
 
 export function PublicTalentProfileView({
   profile,
   evidence,
+  github,
 }: Readonly<{
   profile: PublicTalentProfile;
   evidence: PublicWorkEvidenceListItem[];
+  github: PublicGithubContext | null;
 }>) {
   return (
     <main id="main-content" className="public-profile-page">
@@ -164,6 +167,65 @@ export function PublicTalentProfileView({
             </p>
           )}
         </section>
+        {github?.repositories.length ? (
+          <section
+            className="public-profile-section public-profile-github"
+            aria-labelledby="public-github-title"
+          >
+            <p className="profile-kicker">Source context / GitHub</p>
+            <h2 id="public-github-title">Selected public GitHub work</h2>
+            <p className="public-profile-limit">
+              These repositories are public GitHub context selected by the
+              Talent. They are not Proofly-reviewed proof, skill verification,
+              or an employment claim.
+            </p>
+            <dl className="public-github-meta">
+              <div>
+                <dt>Source account</dt>
+                <dd>
+                  <a href={github.profileUrl} rel="noreferrer">
+                    @{github.username}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt>Last synchronized</dt>
+                <dd>
+                  {github.lastSyncedAt
+                    ? new Date(github.lastSyncedAt).toLocaleDateString()
+                    : "Not available"}
+                </dd>
+              </div>
+              <div>
+                <dt>Context status</dt>
+                <dd>Not verified</dd>
+              </div>
+            </dl>
+            <ul className="public-github-repositories">
+              {github.repositories.map(repository => (
+                <li key={repository.sourceUrl}>
+                  <p className="profile-index">
+                    GitHub repository · contextual
+                  </p>
+                  <h3>
+                    <a href={repository.sourceUrl} rel="noreferrer">
+                      {repository.fullName}
+                    </a>
+                  </h3>
+                  {repository.description ? (
+                    <p>{repository.description}</p>
+                  ) : null}
+                  <span>
+                    {repository.primaryLanguage || "Language not reported"} ·{" "}
+                    {repository.isFork ? "Fork" : "Repository"}
+                    {repository.isArchived ? " · Archived" : ""}
+                  </span>
+                  <small>{repository.contributionContext}</small>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         {profile.links.length ? (
           <section
             className="public-profile-section"

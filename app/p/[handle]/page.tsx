@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { PublicTalentProfileView } from "@/components/profile/public-talent-profile";
 import { getPublicTalentWorkEvidence } from "@/lib/evidence/context";
+import { getPublicGithubContext } from "@/lib/github/context";
 import { getPublicTalentProfile } from "@/lib/profile/context";
 
 type PublicProfilePageProps = Readonly<{ params: Promise<{ handle: string }> }>;
@@ -27,10 +28,17 @@ export default async function PublicProfilePage({
   params,
 }: PublicProfilePageProps) {
   const { handle } = await params;
-  const [profile, evidence] = await Promise.all([
+  const [profile, evidence, github] = await Promise.all([
     getPublicTalentProfile(handle),
     getPublicTalentWorkEvidence(handle),
+    getPublicGithubContext(handle),
   ]);
   if (!profile) notFound();
-  return <PublicTalentProfileView profile={profile} evidence={evidence} />;
+  return (
+    <PublicTalentProfileView
+      profile={profile}
+      evidence={evidence}
+      github={github}
+    />
+  );
 }

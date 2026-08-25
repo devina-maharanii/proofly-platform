@@ -5,6 +5,9 @@ import {
   createServerSupabaseClient,
   getVerifiedAuthSession,
 } from "@/lib/supabase/server";
+import { getGithubIntegrationContext } from "@/lib/github/context";
+import { emptyGithubIntegrationContext } from "@/lib/github/types";
+import { authorizeActiveContext } from "@/lib/roles/context";
 
 import {
   defaultNotificationPreferences,
@@ -86,9 +89,10 @@ function normalizeSettings(
 }
 
 export async function getAccountSettingsContext(): Promise<AccountSettingsContext | null> {
-  const [session, supabase] = await Promise.all([
+  const [session, supabase, talentAuthorization] = await Promise.all([
     getVerifiedAuthSession(),
     createServerSupabaseClient(),
+    authorizeActiveContext({ role: "talent" }),
   ]);
   if (!session || !supabase) return null;
 
@@ -99,6 +103,7 @@ export async function getAccountSettingsContext(): Promise<AccountSettingsContex
     userResult,
     factorsResult,
     identitiesResult,
+    github,
   ] = await Promise.all([
     supabase.from("personal_settings").select("*").maybeSingle(),
     supabase
@@ -114,6 +119,12 @@ export async function getAccountSettingsContext(): Promise<AccountSettingsContex
     supabase.auth.getUser(),
     supabase.auth.mfa.listFactors(),
     supabase.auth.getUserIdentities(),
+    talentAuthorization.ok
+      ? getGithubIntegrationContext(session.userId)
+      : Promise.resolve({
+          ...emptyGithubIntegrationContext,
+          configured: false,
+        }),
   ]);
 
   const factors = factorsResult.data?.all ?? [];
@@ -138,6 +149,8 @@ export async function getAccountSettingsContext(): Promise<AccountSettingsContex
       settingsResult.data as Record<string, unknown> | null
     ),
     identities,
+    activeTalentContext: talentAuthorization.ok,
+    github,
     dataRightsRequests: (requestsResult.data ?? []).flatMap(row =>
       (row.request_type === "export" || row.request_type === "deletion") &&
       (row.status === "requested" ||

@@ -521,6 +521,67 @@
   color: var(--ink-muted);
   line-height: 1.55;
 }
+.public-profile-github {
+  border-top: 3px solid var(--cobalt);
+}
+.public-github-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 1rem 0 0;
+  padding-block: 0.8rem;
+  border-block: 1px solid var(--line);
+}
+.public-github-meta div {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 9rem;
+}
+.public-github-meta dt,
+.public-github-repositories span,
+.public-github-repositories small {
+  color: var(--ink-muted);
+  font: 600 0.67rem var(--font-geist-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.public-github-meta dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.public-github-meta a,
+.public-github-repositories a {
+  color: var(--cobalt);
+}
+.public-github-repositories {
+  display: grid;
+  gap: 0;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.public-github-repositories li {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.public-github-repositories h3,
+.public-github-repositories p {
+  margin: 0;
+}
+.public-github-repositories h3 {
+  font-size: 0.98rem;
+}
+.public-github-repositories p:not(.profile-index) {
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+.public-github-repositories small {
+  line-height: 1.45;
+}
 .public-profile-links a {
   color: var(--cobalt);
   font-weight: 700;

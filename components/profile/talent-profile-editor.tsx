@@ -675,15 +675,17 @@ export function TalentProfileEditor({
               <h2 id="links-title">Link only what you choose</h2>
               <p>
                 Portfolio links are private until you explicitly mark each one
-                public. GitHub connection is not enabled in this phase.
+                public. Optional GitHub context is selected and managed from
+                Connected accounts, separately from these profile links.
               </p>
             </div>
             <div className="profile-github-surface">
               <strong>GitHub connection</strong>
               <span>
-                Not connected — this integration arrives in a later approved
-                phase.
+                Import only public repository context after explicit consent.
+                GitHub activity remains unverified context, not proof of skill.
               </span>
+              <a href="/settings#connections">Manage GitHub context →</a>
             </div>
             <button
               type="button"

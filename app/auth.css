@@ -954,6 +954,142 @@
   border-color: color-mix(in srgb, var(--danger, #b42318) 45%, var(--line));
 }
 
+/* Phase 19 GitHub context: source-labelled public-work ledger, never a proof score. */
+.github-context-panel {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  padding: 1.25rem 0 0;
+  border-top: 2px solid var(--cobalt);
+}
+.github-context-heading,
+.github-context-meta,
+.github-context-list > li,
+.github-context-actions {
+  display: flex;
+  gap: 1rem;
+}
+.github-context-heading {
+  align-items: start;
+  justify-content: space-between;
+}
+.github-context-heading h3,
+.github-context-repositories h4,
+.github-context-panel h4 {
+  margin: 0.25rem 0 0;
+}
+.github-context-status {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.github-context-status[data-status="connected"] {
+  border-color: color-mix(in srgb, var(--success, #117a65) 60%, var(--line));
+  color: var(--success, #117a65);
+}
+.github-context-status[data-status="rate_limited"],
+.github-context-status[data-status="failed"] {
+  border-color: color-mix(in srgb, var(--danger, #b42318) 60%, var(--line));
+  color: var(--danger, #b42318);
+}
+.github-context-empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px dashed var(--line-strong);
+  background: var(--surface-subtle);
+}
+.github-context-empty p,
+.github-context-list p,
+.github-context-list small {
+  margin: 0;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+.github-context-empty p {
+  max-width: 62rem;
+}
+.github-context-meta {
+  flex-wrap: wrap;
+  margin: 0;
+  border-block: 1px solid var(--line);
+}
+.github-context-meta div {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 10rem;
+  padding: 0.8rem 0;
+}
+.github-context-meta dt,
+.github-context-list span,
+.github-context-list small {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.67rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.github-context-meta dt,
+.github-context-list span {
+  color: var(--ink-muted);
+}
+.github-context-meta dd {
+  margin: 0;
+}
+.github-context-meta a,
+.github-context-list a {
+  color: var(--cobalt);
+}
+.github-refresh-form {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.github-context-repositories {
+  display: grid;
+  gap: 0.9rem;
+}
+.github-context-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.github-context-list > li {
+  justify-content: space-between;
+  align-items: start;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.github-context-list > li > div:first-child {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 50rem;
+}
+.github-context-list > li > div:first-child > a {
+  font-weight: 700;
+}
+.github-context-actions {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+.github-context-actions form,
+.github-context-actions .button {
+  margin: 0;
+}
+.github-context-actions .button {
+  min-height: 2.3rem;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.76rem;
+}
+
 @media (max-width: 640px) {
   .settings-grid,
   .settings-split,
@@ -967,5 +1103,12 @@
   }
   .settings-event-log time {
     text-align: left;
+  }
+  .github-context-heading,
+  .github-context-list > li {
+    flex-direction: column;
+  }
+  .github-context-actions {
+    justify-content: start;
   }
 }

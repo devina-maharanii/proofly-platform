@@ -71,3 +71,11 @@
 - [x] Implement only Talent-owned evidence create/edit/preview/publish/hide/archive flows, evidence detail, public profile list, state labels, fallback states, and structured integrity prompts.
 - [x] Add ownership, RLS, attribution, privacy, lifecycle, validation, accessibility, mobile, regression, formatting, lint, strict TypeScript, test, build, and final diff validation without GitHub sync, plagiarism detection, rubrics, or verified reputation.
 - [x] Commit and push exactly one Phase 18 commit on `main`.
+
+## Phase 19 — GitHub Integration
+
+- [x] Read the Phase 19 attachments, Phases 15, 17, and 18 foundations, GitHub’s current official provider guidance, the security and data contracts, and all applicable Proofly source-of-truth documents.
+- [x] Define only the narrow GitHub consent, OAuth state/callback, server-only token, normalized snapshot, repository selection, privacy, sync, rate-limit, partial-failure, idempotency, and revocation contract.
+- [x] Implement only optional Talent GitHub linking, selected public context, initial/manual synchronization, status/error states, disconnect/data deletion, and source/timestamp presentation without private-repository access, write permissions, proof verification, scores, employer inference, or webhooks.
+- [x] Add consent, authorization, token-boundary, callback-state, privacy, sync, stale-data, rate-limit, failure, idempotency, accessibility, formatting, lint, strict TypeScript, test, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 19 commit on `main`.
