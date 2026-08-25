@@ -84,7 +84,7 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
     ).toHaveAttribute("href", "/sign-up?intent=talent");
   });
 
-  test("rejects unauthenticated access to protected session, onboarding, and reset-password boundaries", async ({
+  test("rejects unauthenticated access to protected session, onboarding, profile, and reset-password boundaries", async ({
     page,
   }) => {
     await page.goto("/auth/continue");
@@ -93,6 +93,10 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
 
     await page.goto("/onboarding?role=reviewer");
     await expect(page).toHaveURL(/\/sign-in\?next=%2Fonboarding/);
+    await expect(page.getByText(/session has expired/i)).toBeVisible();
+
+    await page.goto("/profile");
+    await expect(page).toHaveURL(/\/sign-in\?next=%2Fprofile/);
     await expect(page.getByText(/session has expired/i)).toBeVisible();
 
     await page.goto("/reset-password");

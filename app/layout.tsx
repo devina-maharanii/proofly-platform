@@ -7,6 +7,7 @@ import { siteConfig } from "./seo";
 import "./globals.css";
 import "./ledger-refinements.css";
 import "./foundation.css";
+import "./profile.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

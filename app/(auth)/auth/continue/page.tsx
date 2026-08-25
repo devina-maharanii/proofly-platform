@@ -55,10 +55,15 @@ export default async function AuthContinuePage({
       ) : null}
       {context ? <RoleContextSwitcher context={context} /> : null}
       <p className="auth-footnote">
-        Selecting a context is reversible. It does not create a profile,
-        project, payment, review, or administrator privilege.
+        Selecting a context is reversible. It does not publish a profile, create
+        a project, payment, review, or administrator privilege.
       </p>
       <div className="auth-session-actions">
+        {context?.active?.role === "talent" ? (
+          <a className="button button-primary" href="/profile">
+            Edit Talent profile
+          </a>
+        ) : null}
         <a className="button button-secondary" href="/settings">
           Account settings
         </a>

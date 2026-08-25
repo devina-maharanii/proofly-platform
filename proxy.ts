@@ -10,6 +10,7 @@ import { getPublicSupabaseConfig } from "@/lib/supabase/config";
 const protectedPaths = new Set([
   "/auth/continue",
   "/onboarding",
+  "/profile",
   "/reset-password",
   "/settings",
 ]);
@@ -60,5 +61,11 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/continue", "/onboarding", "/reset-password", "/settings"],
+  matcher: [
+    "/auth/continue",
+    "/onboarding",
+    "/profile",
+    "/reset-password",
+    "/settings",
+  ],
 };

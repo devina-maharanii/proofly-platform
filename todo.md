@@ -55,3 +55,11 @@
 - [x] Reconcile only `DOMAIN_MODEL.md`, `MASTER_PRD.md`, and `TECHNICAL_ARCHITECTURE.md` without building profiles, AI extraction, opaque scoring, schema, or product features.
 - [x] Verify all acceptance and scenario criteria, documentation consistency, complete diff scope, and the required commit state.
 - [x] Commit and push exactly one Phase 16 commit on `main`.
+
+## Phase 17 — Talent Profile
+
+- [x] Read the Phase 17 attachments, Phases 12, 14, 15, and 16 foundations, the design system, and all applicable Proofly source-of-truth documents.
+- [x] Establish the approved secure profile persistence capability and define only the talent-profile model, owner-only draft writes, publish/hide lifecycle, visibility contract, canonical claimed skills, and completion guidance.
+- [x] Implement only the authenticated talent profile editor, public preview, draft/publish/hide actions, field visibility controls, validation, empty/saved/error states, and evidence-ready profile references.
+- [x] Add ownership, RLS, privacy, validation, lifecycle, accessibility, mobile, regression, formatting, lint, strict TypeScript, test, build, and final diff validation without GitHub sync, submissions, verification, scoring, or company profiles.
+- [x] Commit and push exactly one Phase 17 commit on `main`.
