@@ -954,3 +954,156 @@
     justify-items: start;
   }
 }
+
+/* Phase 21 style: company context is a legible public record, not a job board, social directory, or generic startup landing page. */
+.company-preview-surface .profile-preview-meta dd {
+  max-width: 16rem;
+  overflow-wrap: anywhere;
+}
+.company-public-page .public-profile-intro {
+  border-top: 3px solid var(--cobalt);
+}
+.company-public-intro h1 {
+  max-width: 58rem;
+}
+.company-public-work {
+  border-top: 3px solid var(--ink);
+}
+.company-public-hiring {
+  border-top: 3px solid var(--cobalt);
+  background: color-mix(in srgb, var(--cobalt) 3%, var(--surface));
+}
+.company-public-copy {
+  max-width: 48rem;
+  margin: 1rem 0 0;
+  line-height: 1.65;
+}
+.company-public-context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.company-public-context-grid > div {
+  min-width: 0;
+  padding: 1rem 1rem 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.company-public-context-grid > div:nth-child(even) {
+  padding-left: 1rem;
+  padding-right: 0;
+  border-left: 1px solid var(--line);
+}
+.company-public-context-grid h3,
+.company-public-principles h3 {
+  margin: 0;
+  font: 600 0.7rem/1.35 var(--font-geist-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.company-public-context-grid p,
+.company-public-principles p {
+  margin: 0.5rem 0 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.company-public-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  list-style: none;
+}
+.company-public-tags li {
+  padding: 0.26rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+.company-public-detail-list {
+  display: grid;
+  gap: 0;
+  margin: 1rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.company-public-detail-list div {
+  display: grid;
+  grid-template-columns: minmax(8.5rem, 0.42fr) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.company-public-detail-list dt {
+  color: var(--ink-muted);
+  font: 600 0.68rem/1.35 var(--font-geist-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.company-public-detail-list dd {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.company-public-principles {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-left: 2px solid var(--cobalt);
+  background: var(--surface-subtle);
+}
+.company-public-members {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.company-public-members li {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.company-public-members strong {
+  font-size: 0.88rem;
+}
+.company-public-members span {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.company-public-boundary {
+  border-style: dashed;
+  background: var(--surface-subtle);
+}
+.company-public-boundary > p:not(.profile-kicker) {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+.company-public-boundary a {
+  display: inline-block;
+  margin-top: 0.3rem;
+  color: var(--cobalt);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+@media (max-width: 680px) {
+  .company-public-context-grid {
+    grid-template-columns: 1fr;
+  }
+  .company-public-context-grid > div:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .company-public-detail-list div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+}

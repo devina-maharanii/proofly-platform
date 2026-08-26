@@ -80,6 +80,11 @@
 - [x] Add consent, authorization, token-boundary, callback-state, privacy, sync, stale-data, rate-limit, failure, idempotency, accessibility, formatting, lint, strict TypeScript, test, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 19 commit on `main`.
 
+### Phase 19 post-release environment activation
+
+- [x] Confirm the user has bulk-saved all four managed Edge Function secrets without exposing their values.
+- [ ] Verify the deployed OAuth callback configuration and authenticated consent-start boundary, then report the remaining user-session connection test.
+
 ## Phase 20 — Public Proof Profile
 
 - [x] Read the Phase 20 attachments, Phases 17–19 public foundations, design system, public/profile/data/security/API/event contracts, and all applicable Proofly source-of-truth documents.
@@ -88,3 +93,11 @@
 - [x] Add visibility, privacy, proof-state, metadata, canonical/noindex, sharing, accessibility, keyboard, mobile, formatting, lint, strict TypeScript, test, build, security, and final diff validation.
 - [x] Classify the local public-route loading-shell observation: it also reproduces on the existing Phase 18 evidence unavailable route; deterministic server-response and production-build checks validate Phase 20’s unavailable response instead.
 - [x] Commit and push exactly one Phase 20 commit on `main`.
+
+## Phase 21 — Company Profile
+
+- [x] Read the Phase 21 attachments, Phases 12/14/15/20 foundations, design system, company/domain/data/security/API/event contracts, and relevant project guidance.
+- [x] Define the approved organization-owned company profile, authority, member attribution, proposal, public visibility, stable-handle, lifecycle, metadata, and noindex contract without projects, search, hiring, billing, or private-workspace administration.
+- [x] Implement only the company data model, editor, modular preview, authorized owner/member actions, attribution controls, draft/ready/publish/hide lifecycle, public route, and public company renderer.
+- [x] Add authorization, RLS, attribution-history, privacy, lifecycle, validation, public metadata, keyboard, mobile, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 21 commit on `main`.

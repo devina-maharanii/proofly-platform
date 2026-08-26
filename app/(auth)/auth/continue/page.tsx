@@ -64,6 +64,11 @@ export default async function AuthContinuePage({
             Edit Talent profile
           </a>
         ) : null}
+        {context?.active?.role === "company_member" ? (
+          <a className="button button-primary" href="/company/profile">
+            Edit company profile
+          </a>
+        ) : null}
         <a className="button button-secondary" href="/settings">
           Account settings
         </a>
