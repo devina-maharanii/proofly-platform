@@ -84,7 +84,7 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
     ).toHaveAttribute("href", "/sign-up?intent=talent");
   });
 
-  test("rejects unauthenticated access to protected session, onboarding, profile, evidence, application, company-receipt, and reset-password boundaries", async ({
+  test("rejects unauthenticated access to protected session, onboarding, profile, evidence, application, company-receipt, workspace, and reset-password boundaries", async ({
     page,
   }) => {
     await page.goto("/auth/continue");
@@ -118,6 +118,11 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
     );
     await expect(page).toHaveURL(
       /\/sign-in\?next=%2Fcompany%2Fapplications%2F123e4567-e89b-42d3-a456-426614174000/
+    );
+
+    await page.goto("/workspaces/123e4567-e89b-42d3-a456-426614174000");
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fworkspaces%2F123e4567-e89b-42d3-a456-426614174000/
     );
 
     await page.goto("/projects/prj_0123456789abcdef01234567/apply");

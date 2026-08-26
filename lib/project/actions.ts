@@ -334,11 +334,11 @@ export async function transitionCompanyProjectAction(
   const currentToNextCopy: Partial<Record<ProjectState, string>> = {
     published: "The project is available at its stable direct address.",
     accepting_applications:
-      "The project now states that it is accepting applications, but application submission is not built in this phase.",
+      "The project now accepts the focused Talent application flow. Review and acceptance controls remain outside this surface.",
     paused:
       "The project is paused; its public page is retained only as a paused context record.",
     in_progress:
-      "The project is marked in progress. This phase does not create workspaces or participant access.",
+      "The project is marked in progress. An authorized workspace shell remains participant-scoped and must be created from an accepted application.",
     closed: "The project is closed and its public route no longer resolves.",
     archived: "The project is archived for authorized organization records.",
   };

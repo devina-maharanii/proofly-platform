@@ -2077,3 +2077,197 @@
     gap: 0.25rem;
   }
 }
+
+/* Phase 25 style: a calm private execution ledger keeps project context, state, privacy limits, and one safe next action visible at every viewport. */
+.workspace-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.34fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.workspace-main,
+.workspace-aside {
+  display: grid;
+  gap: 1rem;
+}
+.workspace-summary,
+.workspace-next-action {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-subtle);
+  padding: 1.25rem;
+}
+.workspace-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr);
+  gap: 1rem;
+}
+.workspace-summary h2,
+.workspace-next-action h2 {
+  margin: 0.15rem 0 0;
+}
+.workspace-summary dl,
+.workspace-review-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+}
+.workspace-summary dl div,
+.workspace-review-list div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.42fr) 1fr;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+.workspace-summary dl div:last-child,
+.workspace-review-list div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.workspace-summary dt,
+.workspace-review-list dt {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+.workspace-summary dd,
+.workspace-review-list dd {
+  margin: 0;
+  font-weight: 600;
+}
+.workspace-brief-grid,
+.workspace-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.workspace-brief-grid article,
+.workspace-entry-grid article,
+.workspace-participants,
+.workspace-context-copy,
+.workspace-dimensions,
+.workspace-task-list,
+.workspace-activity-list {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.workspace-brief-grid article,
+.workspace-entry-grid article,
+.workspace-participants,
+.workspace-context-copy {
+  padding: 1rem;
+}
+.workspace-brief-grid h3,
+.workspace-entry-grid h3,
+.workspace-participants h3,
+.workspace-context-copy h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+.workspace-context-copy {
+  display: grid;
+  gap: 0.45rem;
+}
+.workspace-context-copy p {
+  margin: 0 0 0.65rem;
+}
+.workspace-participants {
+  margin-top: 1rem;
+}
+.workspace-participants ul,
+.workspace-dimensions,
+.workspace-task-list,
+.workspace-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.workspace-participants li,
+.workspace-dimensions li,
+.workspace-activity-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--line);
+  padding: 0.7rem 0;
+}
+.workspace-participants li:first-child,
+.workspace-dimensions li:first-child,
+.workspace-activity-list li:first-child {
+  border-top: 0;
+}
+.workspace-participants li span,
+.workspace-dimensions li span,
+.workspace-activity-list li span {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+}
+.workspace-task-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--line);
+  padding: 1rem;
+}
+.workspace-task-list li:first-child {
+  border-top: 0;
+}
+.workspace-task-list h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.workspace-task-list p,
+.workspace-next-action p,
+.workspace-boundary-card p {
+  color: var(--ink-muted);
+}
+.workspace-state-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin-top: 1rem;
+}
+.workspace-state-control label {
+  display: grid;
+  gap: 0.4rem;
+}
+.workspace-state-control .profile-status {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.workspace-next-action .button {
+  margin-top: 0.35rem;
+}
+@media (max-width: 900px) {
+  .workspace-layout,
+  .workspace-summary {
+    grid-template-columns: 1fr;
+  }
+  .workspace-aside {
+    order: -1;
+  }
+}
+@media (max-width: 640px) {
+  .workspace-brief-grid,
+  .workspace-entry-grid,
+  .workspace-state-control {
+    grid-template-columns: 1fr;
+  }
+  .workspace-task-list li,
+  .workspace-participants li,
+  .workspace-dimensions li,
+  .workspace-activity-list li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .workspace-summary dl div,
+  .workspace-review-list div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-/** Phase 22 style: a dense but calm precision-editorial organization workspace; every control makes scope, fairness, and decision context legible without simulating applications, messages, reviews, workspaces, contracts, or payments. */
+/** Phase 25 style: a dense but calm precision-editorial organization project editor; it keeps scope, fairness, and lifecycle legible while linking only to an authorized workspace shell, never messaging, reviews, contracts, payments, or AI tools. */
 import Link from "next/link";
 import { useActionState, useMemo, useState } from "react";
 
@@ -307,9 +307,9 @@ function ProjectPreview({
         </dl>
         <p className="profile-proof-boundary">
           <strong>Scope boundary:</strong> this page provides project context
-          only. It does not let talent apply, send a message, access a
-          workspace, submit work, receive a review, accept an invitation, form a
-          contract, or receive payment.
+          only. Application and workspace access require their own authorized
+          relationship; this page does not grant access to private work, review,
+          messaging, contracts, or payments.
         </p>
       </div>
     </section>
@@ -376,7 +376,10 @@ function LifecycleControls({
         </div>
         <div>
           <dt>Accepting applications</dt>
-          <dd>State-only; application submission is not available yet.</dd>
+          <dd>
+            Eligible talent can use the focused application flow; organization
+            review remains separate.
+          </dd>
         </div>
         <div>
           <dt>Closed or archived</dt>

@@ -132,3 +132,11 @@
 - [x] Implement only the focused Talent application draft, evidence selection, concise project questions, terms confirmation, preview, submit, waiting/status, withdrawal, and authorized company receipt surfaces.
 - [x] Add and run application validation, duplicate/deadline/state checks, snapshot privacy, evidence visibility, RLS, company authorization, retention, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 24 commit on `main`.
+
+## Phase 25 — Project Workspace
+
+- [x] Read the Phase 25 attachments, Phases 04/15/22/23/24 foundations, master guide, and all relevant product, data, security, API/event, privacy, design, and test contracts.
+- [x] Define protected workspace ownership, participant membership, allowed workspace state transitions, private project-context boundary, activity/audit rules, reviewer material scope, and explicitly deferred workflows.
+- [x] Implement only the protected workspace shell, overview, focused work/review/activity context, approved participant permissions, safe task/file/submission entry points, states, loading/empty/error/denied behavior, and responsive navigation.
+- [x] Add and run workspace authorization, RLS, state, activity, privacy, retention, reviewer-scope, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 25 commit on `main`.

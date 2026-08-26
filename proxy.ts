@@ -21,6 +21,7 @@ const isProtectedPath = (pathname: string) =>
   pathname.startsWith("/profile/") ||
   pathname.startsWith("/applications/") ||
   pathname.startsWith("/company/applications/") ||
+  pathname.startsWith("/workspaces/") ||
   /^\/projects\/prj_[a-f0-9]{20,40}\/apply$/.test(pathname);
 
 export async function proxy(request: NextRequest) {
@@ -79,6 +80,7 @@ export const config = {
     "/applications",
     "/applications/:path*",
     "/company/applications/:path*",
+    "/workspaces/:path*",
     "/projects/:path*/apply",
   ],
 };
