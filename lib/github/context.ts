@@ -6,6 +6,7 @@
 import "server-only";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { isValidPublicHandle } from "@/lib/profile/handle";
 
 import {
   emptyGithubIntegrationContext,
@@ -189,7 +190,7 @@ function normalizePublicRepository(
 export async function getPublicGithubContext(
   handle: string
 ): Promise<PublicGithubContext | null> {
-  if (!/^[a-z0-9](?:[a-z0-9-]{1,38})[a-z0-9]$/.test(handle)) return null;
+  if (!isValidPublicHandle(handle)) return null;
   const supabase = await createServerSupabaseClient();
   if (!supabase) return null;
   const { data, error } = await supabase.rpc(

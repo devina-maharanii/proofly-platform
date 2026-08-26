@@ -79,3 +79,12 @@
 - [x] Implement only optional Talent GitHub linking, selected public context, initial/manual synchronization, status/error states, disconnect/data deletion, and source/timestamp presentation without private-repository access, write permissions, proof verification, scores, employer inference, or webhooks.
 - [x] Add consent, authorization, token-boundary, callback-state, privacy, sync, stale-data, rate-limit, failure, idempotency, accessibility, formatting, lint, strict TypeScript, test, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 19 commit on `main`.
+
+## Phase 20 — Public Proof Profile
+
+- [x] Read the Phase 20 attachments, Phases 17–19 public foundations, design system, public/profile/data/security/API/event contracts, and all applicable Proofly source-of-truth documents.
+- [x] Define the stable `/talent/[handle]` handle, visibility, public-state, verified-proof, GitHub-context, contact-action, share-link, metadata, canonical, sitemap, and noindex contract without search, messaging, ranking, or hiring workflow scope.
+- [x] Implement only the approved stable public route/renderer, truthful identity/evidence/proof/GitHub context, limited/hidden/draft/not-found states, share/copy link, primary company action boundary, and SEO presentation.
+- [x] Add visibility, privacy, proof-state, metadata, canonical/noindex, sharing, accessibility, keyboard, mobile, formatting, lint, strict TypeScript, test, build, security, and final diff validation.
+- [x] Classify the local public-route loading-shell observation: it also reproduces on the existing Phase 18 evidence unavailable route; deterministic server-response and production-build checks validate Phase 20’s unavailable response instead.
+- [x] Commit and push exactly one Phase 20 commit on `main`.

@@ -82,7 +82,7 @@ const refreshEvidence = () => {
   revalidatePath("/profile/evidence/new");
   revalidatePath("/profile/evidence/[evidenceId]", "page");
   revalidatePath("/evidence/[publicId]", "page");
-  revalidatePath("/p/[handle]", "page");
+  revalidatePath("/talent/[handle]", "page");
 };
 
 export async function saveWorkEvidenceAction(

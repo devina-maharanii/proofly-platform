@@ -877,7 +877,7 @@ export function TalentProfileEditor({
             )}
             {publication?.state === "published" ? (
               <a
-                href={`/p/${publication.handle}`}
+                href={`/talent/${publication.handle}`}
                 className="profile-public-link"
               >
                 Open public profile <span aria-hidden="true">↗</span>

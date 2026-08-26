@@ -106,7 +106,7 @@ async function githubRequest(
 
 function refreshPaths() {
   revalidatePath("/settings");
-  revalidatePath("/p/[handle]", "page");
+  revalidatePath("/talent/[handle]", "page");
 }
 
 export async function refreshGithubAction(

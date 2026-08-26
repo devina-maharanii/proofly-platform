@@ -1,44 +1,10 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+/** Phase 20 compatibility route: permanent redirect to the stable public evidence profile. */
+import { permanentRedirect } from "next/navigation";
 
-import { PublicTalentProfileView } from "@/components/profile/public-talent-profile";
-import { getPublicTalentWorkEvidence } from "@/lib/evidence/context";
-import { getPublicGithubContext } from "@/lib/github/context";
-import { getPublicTalentProfile } from "@/lib/profile/context";
-
-type PublicProfilePageProps = Readonly<{ params: Promise<{ handle: string }> }>;
-
-export async function generateMetadata({
+export default async function LegacyPublicProfilePage({
   params,
-}: PublicProfilePageProps): Promise<Metadata> {
+}: Readonly<{ params: Promise<{ handle: string }> }>) {
   const { handle } = await params;
-  const profile = await getPublicTalentProfile(handle);
-  return profile
-    ? {
-        title: `${profile.displayName} | Proofly`,
-        description: profile.headline,
-      }
-    : {
-        title: "Profile not found | Proofly",
-        robots: { index: false, follow: false },
-      };
-}
-
-export default async function PublicProfilePage({
-  params,
-}: PublicProfilePageProps) {
-  const { handle } = await params;
-  const [profile, evidence, github] = await Promise.all([
-    getPublicTalentProfile(handle),
-    getPublicTalentWorkEvidence(handle),
-    getPublicGithubContext(handle),
-  ]);
-  if (!profile) notFound();
-  return (
-    <PublicTalentProfileView
-      profile={profile}
-      evidence={evidence}
-      github={github}
-    />
-  );
+  const target = `/talent/${encodeURIComponent(handle)}`;
+  permanentRedirect(target as never);
 }

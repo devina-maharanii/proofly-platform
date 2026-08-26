@@ -67,7 +67,7 @@ async function profileCommand() {
 
 function refreshProfile() {
   revalidatePath("/profile");
-  revalidatePath("/p/[handle]", "page");
+  revalidatePath("/talent/[handle]", "page");
 }
 
 export async function saveTalentProfileAction(
@@ -123,7 +123,9 @@ export async function saveTalentProfileAction(
     return failure(
       error.code === "23505"
         ? "That public address is already in use. Choose a different one."
-        : "Your private draft could not be saved safely. Try again."
+        : error.code === "23514"
+          ? "That public address is reserved. Choose a different one."
+          : "Your private draft could not be saved safely. Try again."
     );
   }
   refreshProfile();

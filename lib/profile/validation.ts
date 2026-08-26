@@ -5,6 +5,11 @@ import {
   profileFieldVisibilities,
   talentClaimLevels,
 } from "./types";
+import {
+  isReservedPublicHandle,
+  isValidPublicHandle,
+  normalizePublicHandle,
+} from "./handle";
 
 const secureUrl = z
   .string()
@@ -27,12 +32,13 @@ export const talentProfileInputSchema = z
       .trim()
       .toLowerCase()
       .max(40)
-      .refine(
-        value => !value || /^[a-z0-9](?:[a-z0-9-]{1,38})[a-z0-9]$/.test(value),
-        {
-          message: "Use 3–40 lowercase letters, numbers, and hyphens.",
-        }
-      ),
+      .refine(value => !value || isValidPublicHandle(value), {
+        message: "Use 3–40 lowercase letters, numbers, and hyphens.",
+      })
+      .refine(value => !value || !isReservedPublicHandle(value), {
+        message: "That public address is reserved. Choose a different one.",
+      })
+      .transform(normalizePublicHandle),
     displayName: z.string().trim().max(80),
     profileImageUrl: secureUrl,
     profileImageVisibility: z.enum(profileFieldVisibilities),

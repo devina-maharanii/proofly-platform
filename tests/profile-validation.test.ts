@@ -102,4 +102,18 @@ describe("Phase 17 Talent profile validation", () => {
       ).success
     ).toBe(false);
   });
+
+  it("normalizes a handle and rejects reserved stable-route words", () => {
+    const normalized = talentProfileInputSchema.safeParse(
+      validProfile({ handle: "  Alex-Dev  " })
+    );
+    expect(normalized.success).toBe(true);
+    if (normalized.success) expect(normalized.data.handle).toBe("alex-dev");
+
+    for (const handle of ["talent", "settings", "api", "p"]) {
+      expect(
+        talentProfileInputSchema.safeParse(validProfile({ handle })).success
+      ).toBe(false);
+    }
+  });
 });

@@ -16,6 +16,7 @@ import {
   type TalentProfilePublication,
   type TalentProfileSkill,
 } from "./types";
+import { isValidPublicHandle, publicHandlePattern } from "./handle";
 
 function text(value: unknown, fallback = "") {
   return typeof value === "string" ? value : fallback;
@@ -226,15 +227,23 @@ export type PublicTalentProfile = Readonly<{
     status: "claimed";
   }>;
   links: Array<{ linkType: string; label: string; url: string }>;
-  proofStatus: "No verified proof yet";
   publishedAt: string | null;
 }>;
+
+export type PublicTalentProfileSitemapEntry = Readonly<{
+  handle: string;
+  updatedAt: string | null;
+}>;
+
+export function publicTalentProfilePath(handle: string) {
+  return `/talent/${encodeURIComponent(handle)}`;
+}
 
 export async function getPublicTalentProfile(
   handle: string
 ): Promise<PublicTalentProfile | null> {
   const supabase = await createServerSupabaseClient();
-  if (!supabase || !/^[a-z0-9](?:[a-z0-9-]{1,38})[a-z0-9]$/.test(handle)) {
+  if (!supabase || !isValidPublicHandle(handle)) {
     return null;
   }
   const { data, error } = await supabase.rpc("get_public_talent_profile", {
@@ -294,7 +303,26 @@ export async function getPublicTalentProfile(
     targetOpportunityType: text(row.target_opportunity_type),
     skills,
     links,
-    proofStatus: "No verified proof yet",
     publishedAt: text(row.published_at) || null,
   };
+}
+
+export async function getPublicTalentProfileSitemap(): Promise<
+  PublicTalentProfileSitemapEntry[]
+> {
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase.rpc(
+    "get_public_talent_profile_sitemap",
+    { maximum_count: 5000 }
+  );
+  if (error || !Array.isArray(data)) return [];
+  return data.flatMap(item => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+    const row = item as Record<string, unknown>;
+    const handle = text(row.handle);
+    if (!publicHandlePattern.test(handle) || !isValidPublicHandle(handle))
+      return [];
+    return [{ handle, updatedAt: text(row.updated_at) || null }];
+  });
 }

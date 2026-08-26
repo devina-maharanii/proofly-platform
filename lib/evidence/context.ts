@@ -7,6 +7,7 @@ import {
 } from "@/lib/supabase/server";
 
 import type { CanonicalSkillKey } from "@/lib/profile/types";
+import { isValidPublicHandle } from "@/lib/profile/handle";
 
 import {
   emptyWorkEvidence,
@@ -356,7 +357,7 @@ export async function getPublicWorkEvidence(
 export async function getPublicTalentWorkEvidence(
   handle: string
 ): Promise<PublicWorkEvidenceListItem[]> {
-  if (!/^[a-z0-9](?:[a-z0-9-]{1,38})[a-z0-9]$/.test(handle)) return [];
+  if (!isValidPublicHandle(handle)) return [];
   const supabase = await createServerSupabaseClient();
   if (!supabase) return [];
   const { data, error } = await supabase.rpc(
