@@ -8,6 +8,7 @@ import "./globals.css";
 import "./ledger-refinements.css";
 import "./foundation.css";
 import "./profile.css";
+import "./reviewer.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

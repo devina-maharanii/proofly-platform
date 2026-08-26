@@ -51,6 +51,7 @@ export async function getRoleContext(): Promise<RoleContext | null> {
     membershipsResult,
     activeResult,
     reviewerRequestResult,
+    reviewerApplicationResult,
   ] = await Promise.all([
     supabase
       .from("role_capabilities")
@@ -72,6 +73,11 @@ export async function getRoleContext(): Promise<RoleContext | null> {
       .select("status")
       .eq("user_id", session.userId)
       .eq("requested_role", "reviewer")
+      .maybeSingle(),
+    supabase
+      .from("reviewer_applications")
+      .select("state")
+      .eq("user_id", session.userId)
       .maybeSingle(),
   ]);
 
@@ -101,8 +107,10 @@ export async function getRoleContext(): Promise<RoleContext | null> {
   const requestedRole = activeResult.data?.active_role;
   const requestedOrganizationId =
     activeResult.data?.active_organization_id ?? null;
+  const reviewerApplicationState = reviewerApplicationResult.data?.state;
   const active =
     includesValue(activeContextRoles, requestedRole) &&
+    (requestedRole !== "reviewer" || reviewerApplicationState === "active") &&
     isActiveContextValid(
       requestedRole,
       requestedOrganizationId,
@@ -119,6 +127,17 @@ export async function getRoleContext(): Promise<RoleContext | null> {
     capabilities,
     memberships,
     active,
+    reviewerApplicationState:
+      reviewerApplicationState === "requested" ||
+      reviewerApplicationState === "in_screening" ||
+      reviewerApplicationState === "needs_more_evidence" ||
+      reviewerApplicationState === "approved" ||
+      reviewerApplicationState === "active" ||
+      reviewerApplicationState === "paused" ||
+      reviewerApplicationState === "suspended" ||
+      reviewerApplicationState === "rejected"
+        ? reviewerApplicationState
+        : null,
     reviewerRequestStatus:
       reviewerRequestStatus === "pending" ||
       reviewerRequestStatus === "approved" ||

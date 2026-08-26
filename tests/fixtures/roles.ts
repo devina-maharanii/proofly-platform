@@ -7,6 +7,7 @@ export const talentContext: RoleContext = {
   capabilities: ["talent"],
   memberships: [],
   active: { role: "talent", organizationId: null },
+  reviewerApplicationState: null,
   reviewerRequestStatus: null,
 };
 
@@ -32,6 +33,7 @@ export const multiOrganizationContext: RoleContext = {
     role: "company_member",
     organizationId: "11111111-1111-4111-8111-111111111111",
   },
+  reviewerApplicationState: null,
   reviewerRequestStatus: "pending",
 };
 
@@ -40,6 +42,7 @@ export const reviewerContext: RoleContext = {
   userId: "reviewer-user",
   capabilities: ["talent", "reviewer"],
   active: { role: "reviewer", organizationId: null },
+  reviewerApplicationState: "active",
 };
 
 export const administratorContext: RoleContext = {
@@ -47,4 +50,5 @@ export const administratorContext: RoleContext = {
   userId: "administrator-user",
   capabilities: ["talent", "administrator"],
   active: { role: "administrator", organizationId: null },
+  reviewerApplicationState: null,
 };

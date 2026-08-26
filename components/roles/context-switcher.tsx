@@ -134,11 +134,12 @@ export function RoleContextSwitcher({
           </article>
         ) : null}
 
-        {context.capabilities.includes("reviewer") ? (
+        {context.capabilities.includes("reviewer") &&
+        context.reviewerApplicationState === "active" ? (
           <ContextOption
             role="reviewer"
             title="Reviewer"
-            detail="Approved reviewer context. Assignment eligibility and conflict checks remain separate safeguards."
+            detail="Active reviewer context. Every private opportunity still requires matching expertise, capacity, conflict, organization, and material checks."
             selected={context.active?.role === "reviewer"}
             actionLabel="Use reviewer context"
           />
@@ -147,32 +148,59 @@ export function RoleContextSwitcher({
             <div>
               <h3>Reviewer access</h3>
               <p>
-                {context.reviewerRequestStatus === "pending"
-                  ? "Your request is pending qualified human review."
-                  : "Prepare your expertise request before qualified human review considers access."}
+                {context.reviewerApplicationState === "needs_more_evidence"
+                  ? "More evidence is needed before human screening can continue."
+                  : context.reviewerApplicationState === "approved"
+                    ? "Your application is approved. Activate access only when you are ready for ongoing eligibility checks."
+                    : context.reviewerApplicationState === "paused"
+                      ? "Reviewer access is paused. Private review material remains protected."
+                      : context.reviewerApplicationState === "suspended"
+                        ? "Reviewer access is suspended under the current policy state."
+                        : context.reviewerApplicationState === "rejected"
+                          ? "This reviewer application was not approved. The private record remains available under its retention policy."
+                          : context.reviewerApplicationState ===
+                                "in_screening" ||
+                              context.reviewerRequestStatus === "pending"
+                            ? "Your private application is in qualified human screening."
+                            : "Prepare practical evidence, canonical expertise, availability, conflicts, and the conduct agreement before human screening considers access."}
               </p>
             </div>
-            {context.reviewerRequestStatus === "pending" ? (
-              <span className="context-selected">Request pending</span>
-            ) : (
-              <Link
-                className="button button-secondary"
-                href={"/onboarding?role=reviewer" as Route}
-              >
-                Prepare reviewer request
-              </Link>
-            )}
+            <Link
+              className="button button-secondary"
+              href={"/reviewer/application" as Route}
+            >
+              Review application
+            </Link>
           </article>
         )}
 
         {context.capabilities.includes("administrator") ? (
-          <ContextOption
-            role="administrator"
-            title="Administrator"
-            detail="Elevated operational context. It does not bypass RLS, privacy, or auditable policy controls."
-            selected={context.active?.role === "administrator"}
-            actionLabel="Use administrator context"
-          />
+          <>
+            <ContextOption
+              role="administrator"
+              title="Administrator"
+              detail="Elevated operational context. It does not bypass RLS, privacy, or auditable policy controls."
+              selected={context.active?.role === "administrator"}
+              actionLabel="Use administrator context"
+            />
+            {context.active?.role === "administrator" ? (
+              <article className="context-option">
+                <div>
+                  <h3>Reviewer screening</h3>
+                  <p>
+                    Open the private reviewer queue to record controlled
+                    lifecycle decisions.
+                  </p>
+                </div>
+                <Link
+                  className="button button-secondary"
+                  href={"/admin/reviewers" as Route}
+                >
+                  Open queue
+                </Link>
+              </article>
+            ) : null}
+          </>
         ) : null}
       </div>
     </div>

@@ -38,6 +38,16 @@ export type RoleContext = Readonly<{
   capabilities: readonly PlatformRole[];
   memberships: readonly OrganizationMembershipContext[];
   active: ActiveRoleContext | null;
+  reviewerApplicationState:
+    | "requested"
+    | "in_screening"
+    | "needs_more_evidence"
+    | "approved"
+    | "active"
+    | "paused"
+    | "suspended"
+    | "rejected"
+    | null;
   reviewerRequestStatus:
     "pending" | "approved" | "declined" | "withdrawn" | null;
 }>;

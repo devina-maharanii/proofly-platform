@@ -148,3 +148,11 @@
 - [x] Implement only authorized task list/detail/assignment/state, private file upload/download/version records, and focused versioned submission draft/preview/submit/revise/resubmit surfaces with loading, recovery, denied, and mobile/keyboard behavior.
 - [x] Add and run task, storage ownership, signed-file access, upload validation, file-version, submission state/version, privacy, RLS, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 26 commit on `main`.
+
+## Phase 27 — Reviewer Onboarding
+
+- [x] Read the Phase 27 attachments, Phases 12/15/16/18/24 foundations, master guide, and all relevant product, domain, data, security, API/event, privacy, economics, AI-governance, design, and test contracts.
+- [x] Define reviewer profile/application, canonical-skill expertise, evidence, conflict/blocked-relationship, policy agreement, approval/suspension lifecycle, audit, admin-only queue, review-eligibility guard, and explicitly deferred workflows.
+- [x] Implement only reviewer application/profile/evidence/conflict surfaces, policy agreement, private admin review queue and state controls, reviewer opportunity access guard, respectful recovery states, and responsive keyboard-safe behavior.
+- [x] Add and run reviewer application, state, conflict, self-review, blocked-organization, policy, admin authorization, RLS, audit, privacy, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 27 commit on `main`.

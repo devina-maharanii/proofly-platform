@@ -14,12 +14,17 @@ const protectedPaths = new Set([
   "/reset-password",
   "/settings",
   "/applications",
+  "/reviewer/application",
+  "/reviewer/opportunities",
+  "/admin/reviewers",
 ]);
 
 const isProtectedPath = (pathname: string) =>
   protectedPaths.has(pathname) ||
   pathname.startsWith("/profile/") ||
   pathname.startsWith("/applications/") ||
+  pathname.startsWith("/reviewer/") ||
+  pathname.startsWith("/admin/reviewers") ||
   pathname.startsWith("/company/applications/") ||
   pathname.startsWith("/workspaces/") ||
   /^\/projects\/prj_[a-f0-9]{20,40}\/apply$/.test(pathname);
@@ -79,6 +84,8 @@ export const config = {
     "/settings",
     "/applications",
     "/applications/:path*",
+    "/reviewer/:path*",
+    "/admin/reviewers/:path*",
     "/company/applications/:path*",
     "/workspaces/:path*",
     "/projects/:path*/apply",
