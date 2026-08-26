@@ -140,3 +140,11 @@
 - [x] Implement only the protected workspace shell, overview, focused work/review/activity context, approved participant permissions, safe task/file/submission entry points, states, loading/empty/error/denied behavior, and responsive navigation.
 - [x] Add and run workspace authorization, RLS, state, activity, privacy, retention, reviewer-scope, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 25 commit on `main`.
+
+## Phase 26 — Tasks, Files, and Submissions
+
+- [x] Read the Phase 26 attachments, Phases 15/18/22/24/25 foundations, master guide, and all relevant product, data, security, API/event, privacy, storage, design, and test contracts.
+- [x] Define workspace-task ownership and state rules, private file/version/storage boundary, malware/scan posture, signed-access model, submission states/versioning, ownership confirmation, retention, audit rules, and explicitly deferred workflows.
+- [x] Implement only authorized task list/detail/assignment/state, private file upload/download/version records, and focused versioned submission draft/preview/submit/revise/resubmit surfaces with loading, recovery, denied, and mobile/keyboard behavior.
+- [x] Add and run task, storage ownership, signed-file access, upload validation, file-version, submission state/version, privacy, RLS, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 26 commit on `main`.

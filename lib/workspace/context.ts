@@ -13,6 +13,11 @@ import type {
   WorkspaceState,
   WorkspaceTask,
   WorkspaceTaskState,
+  WorkspaceFile,
+  WorkspaceFileVersion,
+  WorkspaceSubmission,
+  WorkspaceSubmissionVersion,
+  WorkspaceTaskDetail,
 } from "./types";
 
 const text = (value: unknown, fallback = "") =>
@@ -47,9 +52,17 @@ const knownMemberStatus = (value: unknown): WorkspaceMemberStatus =>
   value === "removed" ? "removed" : "active";
 
 const knownTaskState = (value: unknown): WorkspaceTaskState =>
-  ["not_started", "in_progress", "blocked", "completed"].includes(text(value))
+  [
+    "backlog",
+    "ready",
+    "in_progress",
+    "blocked",
+    "in_review",
+    "done",
+    "cancelled",
+  ].includes(text(value))
     ? (value as WorkspaceTaskState)
-    : "not_started";
+    : "backlog";
 
 const stringOrNull = (value: unknown) =>
   typeof value === "string" ? value : null;
@@ -226,5 +239,214 @@ export async function getProjectWorkspace(
   const { data, error } = await supabase.rpc("get_project_workspace", {
     requested_workspace_id: workspaceId,
   });
-  return error ? null : workspace(data);
+  const parsed = error ? null : workspace(data);
+  if (!parsed) return null;
+  const { data: capabilityData, error: capabilityError } = await supabase.rpc(
+    "get_project_workspace_capabilities",
+    { requested_workspace_id: workspaceId }
+  );
+  const capabilities = capabilityError ? null : record(capabilityData);
+  if (!capabilities) return null;
+  return {
+    ...parsed,
+    permissions: {
+      canChangeState: capabilities.can_change_state === true,
+      canManageTasks: capabilities.can_manage_tasks === true,
+      canUploadFiles: capabilities.can_upload_files === true,
+      canCreateSubmission: capabilities.can_create_submission === true,
+      reviewMaterialAssigned: capabilities.review_material_assigned === true,
+    },
+  };
+}
+
+const number = (value: unknown, fallback = 0) =>
+  typeof value === "number" && Number.isFinite(value) ? value : fallback;
+
+const knownScanState = (value: unknown): WorkspaceFileVersion["scanState"] =>
+  ["pending", "clean", "rejected"].includes(text(value))
+    ? (value as WorkspaceFileVersion["scanState"])
+    : "pending";
+
+const workspaceFiles = (value: unknown): WorkspaceFile[] =>
+  Array.isArray(value)
+    ? value.flatMap(item => {
+        const row = record(item);
+        const id = text(row?.id);
+        const displayName = text(row?.display_name);
+        if (!id || !displayName) return [];
+        const versions = Array.isArray(row?.versions)
+          ? row.versions.flatMap(version => {
+              const versionRow = record(version);
+              const versionId = text(versionRow?.id);
+              return versionId
+                ? [
+                    {
+                      id: versionId,
+                      versionNumber: number(versionRow?.version_number, 1),
+                      originalFilename: text(versionRow?.original_filename),
+                      contentType: text(versionRow?.content_type),
+                      sizeBytes: number(versionRow?.size_bytes),
+                      scanState: knownScanState(versionRow?.scan_state),
+                      accessScope:
+                        versionRow?.access_scope === "review_material"
+                          ? ("review_material" as const)
+                          : ("participants" as const),
+                      createdAt: stringOrNull(versionRow?.created_at),
+                      canDownload: versionRow?.can_download === true,
+                    },
+                  ]
+                : [];
+            })
+          : [];
+        return [
+          {
+            id,
+            taskId: stringOrNull(row?.task_id),
+            displayName,
+            description: text(row?.description),
+            lifecycleState:
+              row?.lifecycle_state === "archived" ? "archived" : "active",
+            isOwnedByCurrentActor: row?.is_owned_by_current_actor === true,
+            createdAt: stringOrNull(row?.created_at),
+            updatedAt: stringOrNull(row?.updated_at),
+            versions,
+          },
+        ];
+      })
+    : [];
+
+const submission = (value: unknown): WorkspaceSubmission | null => {
+  const row = record(value);
+  const id = text(row?.id);
+  const workspaceId = text(row?.workspace_id);
+  const states = [
+    "draft",
+    "submitted",
+    "under_review",
+    "changes_requested",
+    "resubmitted",
+    "accepted",
+    "rejected",
+  ] as const;
+  const state = states.includes(text(row?.state) as (typeof states)[number])
+    ? (text(row?.state) as (typeof states)[number])
+    : null;
+  if (!row || !id || !workspaceId || !state) return null;
+  const versions: WorkspaceSubmissionVersion[] = Array.isArray(row.versions)
+    ? row.versions.flatMap(item => {
+        const version = record(item);
+        const versionId = text(version?.id);
+        if (!versionId) return [];
+        const files = Array.isArray(version?.files)
+          ? version.files.flatMap(file => {
+              const fileRow = record(file);
+              const fileId = text(fileRow?.id);
+              const parentId = text(fileRow?.file_id);
+              return fileId && parentId
+                ? [
+                    {
+                      id: fileId,
+                      fileId: parentId,
+                      displayName: text(fileRow?.display_name),
+                      versionNumber: number(fileRow?.version_number, 1),
+                      originalFilename: text(fileRow?.original_filename),
+                      contentType: text(fileRow?.content_type),
+                      sizeBytes: number(fileRow?.size_bytes),
+                      scanState: knownScanState(fileRow?.scan_state),
+                      canDownload: fileRow?.can_download === true,
+                    },
+                  ]
+                : [];
+            })
+          : [];
+        return [
+          {
+            id: versionId,
+            versionNumber: number(version?.version_number, 1),
+            summary: text(version?.summary),
+            problemInterpretation: text(version?.problem_interpretation),
+            approachAndDecisions: text(version?.approach_and_decisions),
+            deliverables: text(version?.deliverables),
+            demoOrRepositoryLink: stringOrNull(
+              version?.demo_or_repository_link
+            ),
+            knownLimitations: text(version?.known_limitations),
+            completionContext: text(version?.completion_context),
+            ownershipConfirmed: version?.ownership_confirmed === true,
+            attributionConfirmed: version?.attribution_confirmed === true,
+            createdAt: stringOrNull(version?.created_at),
+            files,
+          },
+        ];
+      })
+    : [];
+  return {
+    id,
+    workspaceId,
+    taskId: stringOrNull(row.task_id),
+    state,
+    currentVersionNumber: number(row.current_version_number, 1),
+    canEdit: row.can_edit === true,
+    versions,
+  };
+};
+
+export async function getWorkspaceFiles(
+  workspaceId: string
+): Promise<WorkspaceFile[]> {
+  if (!/^[0-9a-f-]{36}$/i.test(workspaceId)) return [];
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase.rpc("get_project_workspace_files", {
+    requested_workspace_id: workspaceId,
+  });
+  return error ? [] : workspaceFiles(data);
+}
+
+export async function getWorkspaceSubmission(
+  workspaceId: string
+): Promise<WorkspaceSubmission | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(workspaceId)) return null;
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase.rpc(
+    "get_project_workspace_submission",
+    { requested_workspace_id: workspaceId }
+  );
+  return error ? null : submission(data);
+}
+
+export async function getWorkspaceTask(
+  taskId: string
+): Promise<WorkspaceTaskDetail | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(taskId)) return null;
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase.rpc("get_project_workspace_task", {
+    requested_task_id: taskId,
+  });
+  const row = error ? null : record(data);
+  const id = text(row?.id);
+  if (!row || !id) return null;
+  return {
+    id,
+    workspaceId: text(row.workspace_id),
+    title: text(row.title),
+    description: text(row.description),
+    state: knownTaskState(row.state),
+    priority:
+      row.priority === "low" || row.priority === "high"
+        ? row.priority
+        : "normal",
+    dueDate: stringOrNull(row.due_date),
+    acceptanceCriteria: text(row.acceptance_criteria),
+    dependencyTaskIds: Array.isArray(row.dependency_task_ids)
+      ? row.dependency_task_ids.filter(
+          (value): value is string => typeof value === "string"
+        )
+      : [],
+    isAssignedToCurrentActor: row.is_assigned_to_current_actor === true,
+    canEdit: row.can_edit === true,
+    canTransition: row.can_transition === true,
+  };
 }

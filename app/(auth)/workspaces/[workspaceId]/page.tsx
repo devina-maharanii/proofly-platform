@@ -4,7 +4,11 @@ import { notFound, redirect } from "next/navigation";
 
 import { ProjectWorkspaceView } from "@/components/workspace/project-workspace";
 import { getVerifiedAuthSession } from "@/lib/supabase/server";
-import { getProjectWorkspace } from "@/lib/workspace/context";
+import {
+  getProjectWorkspace,
+  getWorkspaceFiles,
+  getWorkspaceSubmission,
+} from "@/lib/workspace/context";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -21,7 +25,17 @@ export default async function WorkspacePage({
       `/sign-in?next=${encodeURIComponent(`/workspaces/${workspaceId}`)}`
     );
   }
-  const workspace = await getProjectWorkspace(workspaceId);
+  const [workspace, files, submission] = await Promise.all([
+    getProjectWorkspace(workspaceId),
+    getWorkspaceFiles(workspaceId),
+    getWorkspaceSubmission(workspaceId),
+  ]);
   if (!workspace) notFound();
-  return <ProjectWorkspaceView workspace={workspace} />;
+  return (
+    <ProjectWorkspaceView
+      workspace={workspace}
+      files={files}
+      submission={submission}
+    />
+  );
 }

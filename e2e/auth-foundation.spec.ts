@@ -125,6 +125,20 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
       /\/sign-in\?next=%2Fworkspaces%2F123e4567-e89b-42d3-a456-426614174000/
     );
 
+    await page.goto(
+      "/workspaces/123e4567-e89b-42d3-a456-426614174000/tasks/123e4567-e89b-42d3-a456-426614174001"
+    );
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fworkspaces%2F123e4567-e89b-42d3-a456-426614174000%2Ftasks%2F123e4567-e89b-42d3-a456-426614174001/
+    );
+
+    await page.goto(
+      "/workspaces/123e4567-e89b-42d3-a456-426614174000/files/123e4567-e89b-42d3-a456-426614174002"
+    );
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fworkspaces%2F123e4567-e89b-42d3-a456-426614174000%2Ffiles%2F123e4567-e89b-42d3-a456-426614174002/
+    );
+
     await page.goto("/projects/prj_0123456789abcdef01234567/apply");
     await expect(page).toHaveURL(
       /\/sign-in\?next=%2Fprojects%2Fprj_0123456789abcdef01234567%2Fapply/

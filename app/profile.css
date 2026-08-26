@@ -2271,3 +2271,186 @@
     gap: 0.15rem;
   }
 }
+
+/* Phase 26 style: private delivery is a bounded evidence ledger—artifact versions, task state, and submission preview stay inspectable without turning the workspace into chat, a file drive, or a generic project-management suite. */
+.workspace-delivery-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.workspace-compact-form,
+.workspace-submission-form,
+.workspace-submit-form,
+.workspace-files,
+.workspace-submission-preview,
+.workspace-task-detail {
+  display: grid;
+  gap: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 1rem;
+}
+.workspace-compact-form h2,
+.workspace-compact-form h3,
+.workspace-submission h3,
+.workspace-submission-preview h4,
+.workspace-submission-preview h5,
+.workspace-files h3 {
+  margin: 0;
+}
+.workspace-compact-form > p,
+.workspace-submission > p,
+.workspace-files > p,
+.workspace-submission-preview p,
+.workspace-task-detail > p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+.workspace-compact-form label,
+.workspace-submission-form > label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--ink-muted);
+  font: 600 0.69rem/1.35 var(--font-geist-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.workspace-compact-form input,
+.workspace-compact-form select,
+.workspace-compact-form textarea,
+.workspace-submission-form input,
+.workspace-submission-form select,
+.workspace-submission-form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--fog);
+  color: var(--ink);
+  padding: 0.65rem;
+  font: 500 0.88rem/1.45 var(--font-geist-sans);
+  text-transform: none;
+}
+.workspace-compact-form input:focus,
+.workspace-compact-form select:focus,
+.workspace-compact-form textarea:focus,
+.workspace-submission-form input:focus,
+.workspace-submission-form select:focus,
+.workspace-submission-form textarea:focus {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+.workspace-submission-form fieldset {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  border: 1px solid var(--line);
+  padding: 0.85rem;
+}
+.workspace-submission-form fieldset label,
+.workspace-submission-form > label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: start;
+  gap: 0.55rem;
+  color: var(--ink);
+  font: 500 0.8rem/1.45 var(--font-geist-sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.workspace-submission-form input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.1rem;
+  accent-color: var(--cobalt);
+}
+.workspace-files > ul,
+.workspace-files > ul ol,
+.workspace-submit-form ul {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.workspace-files > ul > li,
+.workspace-files > ul ol li,
+.workspace-submit-form li {
+  display: grid;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--line);
+  padding: 0.7rem 0;
+}
+.workspace-files > ul > li > div {
+  display: grid;
+  gap: 0.15rem;
+}
+.workspace-files span,
+.workspace-files a {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+.workspace-files a,
+.workspace-task-list a,
+.workspace-task-detail a {
+  color: var(--ink);
+  text-underline-offset: 0.2rem;
+}
+.workspace-files a:hover,
+.workspace-task-list a:hover,
+.workspace-task-detail a:hover {
+  color: var(--cobalt);
+}
+.workspace-submission {
+  display: grid;
+  gap: 1rem;
+}
+.workspace-submit-form {
+  border-top: 3px solid var(--success);
+  background: var(--surface-subtle);
+}
+.workspace-submit-form h4 {
+  margin: 0;
+}
+.workspace-submit-form ul {
+  padding-left: 1.05rem;
+  list-style: decimal;
+}
+.workspace-submission-preview {
+  border-top: 3px solid var(--cobalt);
+}
+.workspace-submission-preview article {
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+}
+.workspace-submission-preview article:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.workspace-task-detail {
+  max-width: 58rem;
+  margin: 0 auto;
+}
+.workspace-task-detail .profile-section-heading {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+@media (max-width: 900px) {
+  .workspace-delivery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .workspace-compact-form,
+  .workspace-submission-form,
+  .workspace-submit-form,
+  .workspace-files,
+  .workspace-submission-preview,
+  .workspace-task-detail {
+    padding: 0.85rem;
+  }
+}

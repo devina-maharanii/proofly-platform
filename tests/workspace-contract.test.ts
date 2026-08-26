@@ -120,20 +120,16 @@ describe("Phase 25 protected Project Workspace contract", () => {
     expect(context).not.toContain('from("project_workspaces")');
   });
 
-  it("shows bounded work and review entry points without implementing messaging, uploads, submission creation, reviewer scoring, contracts, payments, code execution, or AI tools", () => {
+  it("keeps the original shell boundaries while delegating approved task, private-file, and submission controls to the dedicated Phase 26 delivery surface", () => {
     for (const requiredCopy of [
-      "Task and delivery entry points",
-      "Not enabled in this workspace shell",
-      "Private access is not enabled",
       "Evaluation remains contextual and human-led",
       "Private state and access record",
+      "later-review-ready submission package",
     ]) {
       expect(surface).toContain(requiredCopy);
     }
     for (const forbiddenSymbol of [
       "sendMessageAction",
-      "uploadWorkspaceFile",
-      "createWorkspaceSubmission",
       "scoreSubmission",
       "createContract",
       "createPayment",

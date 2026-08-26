@@ -1,4 +1,4 @@
-/** Phase 25 contract: Workspaces are private project execution shells; presentation never creates a submission, review, payment, file, or AI decision. */
+/** Phase 26 contract: Workspaces keep participant-scoped tasks, private artifact versions, and versioned submission packages; reviewer decisions, payments, messaging, execution, and AI remain absent. */
 
 export const workspaceStates = [
   "preparing",
@@ -15,7 +15,13 @@ export type WorkspaceAccessRole =
   "talent_participant" | "company_participant" | "reviewer";
 export type WorkspaceMemberStatus = "active" | "removed";
 export type WorkspaceTaskState =
-  "not_started" | "in_progress" | "blocked" | "completed";
+  | "backlog"
+  | "ready"
+  | "in_progress"
+  | "blocked"
+  | "in_review"
+  | "done"
+  | "cancelled";
 
 export type WorkspaceProjectContext = Readonly<{
   publicId: string;
@@ -55,6 +61,86 @@ export type WorkspaceTask = Readonly<{
   description: string;
   state: WorkspaceTaskState;
   isAssignedToCurrentActor: boolean;
+}>;
+
+export type WorkspaceTaskDetail = WorkspaceTask &
+  Readonly<{
+    workspaceId: string;
+    priority: "low" | "normal" | "high";
+    dueDate: string | null;
+    acceptanceCriteria: string;
+    dependencyTaskIds: string[];
+    canEdit: boolean;
+    canTransition: boolean;
+  }>;
+
+export type WorkspaceFileVersion = Readonly<{
+  id: string;
+  versionNumber: number;
+  originalFilename: string;
+  contentType: string;
+  sizeBytes: number;
+  scanState: "pending" | "clean" | "rejected";
+  accessScope: "participants" | "review_material";
+  createdAt: string | null;
+  canDownload: boolean;
+}>;
+
+export type WorkspaceFile = Readonly<{
+  id: string;
+  taskId: string | null;
+  displayName: string;
+  description: string;
+  lifecycleState: "active" | "archived";
+  isOwnedByCurrentActor: boolean;
+  createdAt: string | null;
+  updatedAt: string | null;
+  versions: WorkspaceFileVersion[];
+}>;
+
+export type WorkspaceSubmissionVersion = Readonly<{
+  id: string;
+  versionNumber: number;
+  summary: string;
+  problemInterpretation: string;
+  approachAndDecisions: string;
+  deliverables: string;
+  demoOrRepositoryLink: string | null;
+  knownLimitations: string;
+  completionContext: string;
+  ownershipConfirmed: boolean;
+  attributionConfirmed: boolean;
+  createdAt: string | null;
+  files: ReadonlyArray<
+    Readonly<{
+      id: string;
+      fileId: string;
+      displayName: string;
+      versionNumber: number;
+      originalFilename: string;
+      contentType: string;
+      sizeBytes: number;
+      scanState: "pending" | "clean" | "rejected";
+      canDownload: boolean;
+    }>
+  >;
+}>;
+
+export type WorkspaceSubmission = Readonly<{
+  id: string;
+  workspaceId: string;
+  taskId: string | null;
+  state:
+    | "draft"
+    | "submitted"
+    | "under_review"
+    | "changes_requested"
+    | "resubmitted"
+    | "accepted"
+    | "rejected";
+  currentVersionNumber: number;
+  canEdit: boolean;
+  versions: WorkspaceSubmissionVersion[];
 }>;
 
 export type WorkspaceActivity = Readonly<{
@@ -127,10 +213,13 @@ export const workspaceRoleLabel = (role: WorkspaceAccessRole) =>
 export const workspaceTaskStateLabel = (state: WorkspaceTaskState) =>
   (
     ({
-      not_started: "Not started",
+      backlog: "Backlog",
+      ready: "Ready",
       in_progress: "In progress",
       blocked: "Blocked",
-      completed: "Completed",
+      in_review: "In review",
+      done: "Done",
+      cancelled: "Cancelled",
     }) as const
   )[state];
 

@@ -5,13 +5,15 @@ import { useActionState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
 import { transitionProjectWorkspaceAction } from "@/lib/workspace/actions";
+import { WorkspaceDelivery } from "@/components/workspace/workspace-delivery";
 import {
   initialWorkspaceActionState,
   workspaceRoleLabel,
   workspaceStateLabel,
-  workspaceTaskStateLabel,
   workspaceTransitions,
   type ProjectWorkspace,
+  type WorkspaceFile,
+  type WorkspaceSubmission,
 } from "@/lib/workspace/types";
 
 const dateText = (value: string | null) => {
@@ -129,12 +131,18 @@ function NextAction({ workspace }: Readonly<{ workspace: ProjectWorkspace }>) {
 
 export function ProjectWorkspaceView({
   workspace,
-}: Readonly<{ workspace: ProjectWorkspace }>) {
+  files,
+  submission,
+}: Readonly<{
+  workspace: ProjectWorkspace;
+  files: WorkspaceFile[];
+  submission: WorkspaceSubmission | null;
+}>) {
   return (
     <AuthShell
       eyebrow="Project workspace"
       title={workspace.project.title}
-      description="A private, participant-scoped execution context. It keeps the original project brief visible without granting access to files, submissions, review decisions, messaging, contracts, payments, or AI tools."
+      description="A private, participant-scoped execution context. It keeps the original project brief visible alongside bounded tasks, private artifact versions, and a later-review-ready submission package."
     >
       <nav
         className="profile-nav workspace-nav"
@@ -245,60 +253,15 @@ export function ProjectWorkspaceView({
             <StateControl workspace={workspace} />
           </section>
 
-          <section className="profile-section" id="work">
-            <div className="profile-section-heading">
-              <p className="profile-index">02 · Work</p>
-              <h2>Task and delivery entry points</h2>
-              <p>
-                Project milestones appear as structured task context. Task
-                edits, file uploads, external links, and submission creation
-                remain deliberately unavailable until their approved phases.
-              </p>
-            </div>
-            {workspace.tasks.length ? (
-              <ol className="workspace-task-list">
-                {workspace.tasks.map(task => (
-                  <li key={task.id}>
-                    <div>
-                      <h3>{task.title}</h3>
-                      <p>
-                        {task.description ||
-                          "No additional task boundary recorded."}
-                      </p>
-                    </div>
-                    <span className="profile-state-badge">
-                      {workspaceTaskStateLabel(task.state)}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p className="profile-empty-copy">
-                No milestone task is recorded yet. The original deliverable and
-                acceptance criteria remain above.
-              </p>
-            )}
-            <div className="workspace-entry-grid">
-              <article>
-                <p className="profile-kicker">Submission entry</p>
-                <h3>Not enabled in this workspace shell</h3>
-                <p>
-                  Required format:{" "}
-                  {workspace.project.submissionFormat || "Not recorded"}. A
-                  submission is not created by a note, link, or client claim.
-                </p>
-              </article>
-              <article>
-                <p className="profile-kicker">Files and external links</p>
-                <h3>Private access is not enabled</h3>
-                <p>
-                  No project file or external-link record is exposed here. This
-                  avoids publishing private work before a secure file contract
-                  exists.
-                </p>
-              </article>
-            </div>
-          </section>
+          <WorkspaceDelivery
+            workspaceId={workspace.id}
+            tasks={workspace.tasks}
+            files={files}
+            submission={submission}
+            canManageTasks={workspace.permissions.canManageTasks}
+            canUploadFiles={workspace.permissions.canUploadFiles}
+            canCreateSubmission={workspace.permissions.canCreateSubmission}
+          />
 
           <section className="profile-section" id="review">
             <div className="profile-section-heading">
@@ -380,9 +343,9 @@ export function ProjectWorkspaceView({
             <p className="profile-kicker">Privacy and scope</p>
             <h2>Participant context only</h2>
             <p>
-              Access is checked again on every private read. Removed
-              participants no longer receive workspace data. Private files
-              remain unavailable.
+              Access is checked again on every private read and before every
+              signed file download. Removed participants no longer receive
+              workspace data or renewed private-file access.
             </p>
             <p>
               This workspace does not decide hiring, approve proof, create a
