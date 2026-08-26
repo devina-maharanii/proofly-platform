@@ -124,3 +124,11 @@
 - [x] Validate the workflow configuration and preserve its existing quality/security commands.
 - [ ] Commit and push only the CI repair to `main`.
 - [ ] Verify the resulting GitHub Actions run completes successfully.
+
+## Phase 24 — Project Application
+
+- [x] Read the Phase 24 attachments, Phases 17/18/21/22/23 foundations, master guide, and all relevant product, data, security, API/event, privacy, fairness, design, and test contracts.
+- [x] Define the talent-owned application states, draft/submission/withdrawal rules, privacy snapshots, evidence sharing choices, deadline and duplicate constraints, company receipt, retention, and explicitly deferred workflows.
+- [x] Implement only the focused Talent application draft, evidence selection, concise project questions, terms confirmation, preview, submit, waiting/status, withdrawal, and authorized company receipt surfaces.
+- [x] Add and run application validation, duplicate/deadline/state checks, snapshot privacy, evidence visibility, RLS, company authorization, retention, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 24 commit on `main`.

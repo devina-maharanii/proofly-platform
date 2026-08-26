@@ -13,10 +13,15 @@ const protectedPaths = new Set([
   "/profile",
   "/reset-password",
   "/settings",
+  "/applications",
 ]);
 
 const isProtectedPath = (pathname: string) =>
-  protectedPaths.has(pathname) || pathname.startsWith("/profile/");
+  protectedPaths.has(pathname) ||
+  pathname.startsWith("/profile/") ||
+  pathname.startsWith("/applications/") ||
+  pathname.startsWith("/company/applications/") ||
+  /^\/projects\/prj_[a-f0-9]{20,40}\/apply$/.test(pathname);
 
 export async function proxy(request: NextRequest) {
   const config = getPublicSupabaseConfig();
@@ -71,5 +76,9 @@ export const config = {
     "/profile/:path*",
     "/reset-password",
     "/settings",
+    "/applications",
+    "/applications/:path*",
+    "/company/applications/:path*",
+    "/projects/:path*/apply",
   ],
 };

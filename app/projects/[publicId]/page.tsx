@@ -1,5 +1,6 @@
 /** Phase 22 public route: only a published direct Project/Challenge snapshot may resolve; unavailable or restricted records remain non-disclosing. */
 import type { Metadata } from "next";
+import type { Route } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -11,6 +12,7 @@ import {
 } from "@/lib/project/context";
 import { publicProjectPath } from "@/lib/project/types";
 import { authorizeActiveContext } from "@/lib/roles/context";
+import { projectApplicationPath } from "@/lib/application/types";
 
 type PublicProjectPageProps = Readonly<{
   params: Promise<{ publicId: string }>;
@@ -69,6 +71,8 @@ export default async function PublicProjectPage({
       project={project}
       canSave={talentAuthorization.ok}
       saved={savedProjectIds.includes(project.publicId)}
+      canApply={talentAuthorization.ok}
+      applicationPath={projectApplicationPath(project.publicId) as Route}
     />
   );
 }

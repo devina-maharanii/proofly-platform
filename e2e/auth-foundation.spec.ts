@@ -84,7 +84,7 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
     ).toHaveAttribute("href", "/sign-up?intent=talent");
   });
 
-  test("rejects unauthenticated access to protected session, onboarding, profile, evidence, and reset-password boundaries", async ({
+  test("rejects unauthenticated access to protected session, onboarding, profile, evidence, application, company-receipt, and reset-password boundaries", async ({
     page,
   }) => {
     await page.goto("/auth/continue");
@@ -104,6 +104,26 @@ test.describe("Phase 11 role-neutral authentication foundation", () => {
 
     await page.goto("/profile/evidence/new");
     await expect(page).toHaveURL(/\/sign-in\?next=%2Fprofile%2Fevidence%2Fnew/);
+
+    await page.goto("/applications");
+    await expect(page).toHaveURL(/\/sign-in\?next=%2Fapplications/);
+
+    await page.goto("/applications/123e4567-e89b-42d3-a456-426614174000");
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fapplications%2F123e4567-e89b-42d3-a456-426614174000/
+    );
+
+    await page.goto(
+      "/company/applications/123e4567-e89b-42d3-a456-426614174000"
+    );
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fcompany%2Fapplications%2F123e4567-e89b-42d3-a456-426614174000/
+    );
+
+    await page.goto("/projects/prj_0123456789abcdef01234567/apply");
+    await expect(page).toHaveURL(
+      /\/sign-in\?next=%2Fprojects%2Fprj_0123456789abcdef01234567%2Fapply/
+    );
 
     await page.goto("/reset-password");
     await expect(page).toHaveURL(/\/sign-in\?next=%2Freset-password/);

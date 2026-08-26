@@ -94,16 +94,18 @@ describe("Phase 23 deterministic project discovery contract", () => {
     expect(hardeningMigration).toContain("user_id = (select auth.uid())");
   });
 
-  it("keeps public index metadata canonical while setting query-specific and saved views to noindex, and preserves a non-operative project detail boundary", () => {
+  it("keeps public index metadata canonical while setting query-specific and saved views to noindex, and exposes only the later-approved private application entry for accepting projects", () => {
     expect(indexPage).toContain('alternates: { canonical: "/projects" }');
     expect(indexPage).toContain("hasQuerySpecificState");
     expect(indexPage).toContain("index: false, follow: false");
+    expect(publicView).toContain("Start private application");
+    expect(publicView).toContain('project.state === "accepting_applications"');
+    expect(publicView).toContain(
+      "This project is not currently accepting applications."
+    );
     expect(publicView).toMatch(
-      /Participation and\s+application submission are not enabled in this phase\./
+      /does not offer messaging.*workspace.*contract.*payment/i
     );
-    expect(publicView).toMatch(/does not accept\s+applications/);
-    expect(publicView).not.toMatch(
-      /apply now|start application|send message|pay now/i
-    );
+    expect(publicView).not.toMatch(/apply now|send message|pay now/i);
   });
 });

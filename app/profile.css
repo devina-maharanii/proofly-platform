@@ -1922,3 +1922,158 @@
     gap: 0.3rem;
   }
 }
+
+/* Phase 24 style: applications remain compact private evidence ledgers; terms, context, state, and evidence selection outrank conversion pressure or workflow theatre. */
+.application-layout,
+.application-detail-grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(19rem, 0.85fr);
+}
+.application-project-prompt {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1rem 0 0;
+  border-left: 3px solid var(--cobalt);
+  padding: 0.75rem 0 0.75rem 0.85rem;
+  background: color-mix(in srgb, var(--cobalt) 3%, var(--surface-subtle));
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+.application-project-prompt strong {
+  color: var(--ink);
+}
+.application-evidence-select,
+.application-status-ledger ol {
+  display: grid;
+  gap: 0;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.application-evidence-select li,
+.application-status-ledger li {
+  border-bottom: 1px solid var(--line);
+  padding: 0.75rem 0;
+}
+.application-evidence-select .profile-checkbox {
+  align-items: start;
+}
+.application-evidence-select strong,
+.application-evidence-select small {
+  display: block;
+}
+.application-evidence-select small {
+  margin-top: 0.18rem;
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+.application-preview-evidence {
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
+}
+.application-preview-evidence > p {
+  margin: 0;
+  color: var(--ink-muted);
+  font: 600 0.68rem/1.35 var(--font-geist-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.application-preview-evidence ul {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.65rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.application-preview-evidence li {
+  display: grid;
+  gap: 0.14rem;
+}
+.application-preview-evidence span {
+  color: var(--ink-muted);
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+.application-terms-list {
+  margin-top: 1.25rem;
+}
+.application-checklist {
+  border-top-color: var(--cobalt);
+}
+.application-submit-card {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  border-top: 3px solid var(--success);
+  padding: 1rem;
+  background: var(--surface-subtle);
+}
+.application-submit-card h2,
+.application-submit-card p {
+  margin: 0;
+}
+.application-submit-card > p:not(.profile-kicker) {
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+.application-owner-list small {
+  display: block;
+  margin-top: 0.25rem;
+}
+.application-detail-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+.application-detail-main {
+  display: grid;
+  gap: 1.25rem;
+}
+.application-detail-section {
+  border-top: 3px solid var(--ink);
+}
+.application-status-section {
+  border-top-color: var(--cobalt);
+}
+.application-withdraw-form {
+  display: grid;
+  justify-items: start;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.application-status-ledger li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.application-status-ledger li span {
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.application-terms-receipt p:not(.profile-kicker) {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.application-company-receipt {
+  max-width: 54rem;
+  border-top: 3px solid var(--cobalt);
+}
+@media (max-width: 900px) {
+  .application-layout,
+  .application-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 680px) {
+  .application-status-ledger li {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

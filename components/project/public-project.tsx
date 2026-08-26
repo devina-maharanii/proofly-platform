@@ -1,5 +1,6 @@
 /** Phase 22 style: public Project/Challenge pages are evidence-led project records, not a job board, application funnel, invitation flow, messaging surface, contract, or payment promise. */
 import Link from "next/link";
+import type { Route } from "next";
 
 import { canonicalSkillLabel } from "@/lib/profile/types";
 import { ProjectSaveControl } from "@/components/project/project-discovery";
@@ -23,8 +24,17 @@ export function PublicProjectView({
   project,
   canSave = false,
   saved = false,
-}: Readonly<{ project: PublicProject; canSave?: boolean; saved?: boolean }>) {
+  canApply = false,
+  applicationPath,
+}: Readonly<{
+  project: PublicProject;
+  canSave?: boolean;
+  saved?: boolean;
+  canApply?: boolean;
+  applicationPath?: Route;
+}>) {
   const paused = project.state === "paused";
+  const acceptingApplications = project.state === "accepting_applications";
   return (
     <main className="public-profile-page public-project-page">
       <header className="public-profile-header">
@@ -59,9 +69,24 @@ export function PublicProjectView({
               initiallySaved={saved}
               canSave={canSave}
             />
+            {acceptingApplications ? (
+              canApply && applicationPath ? (
+                <Link className="button button-primary" href={applicationPath}>
+                  Start private application
+                </Link>
+              ) : (
+                <Link
+                  className="button button-primary"
+                  href={`/sign-in?next=${encodeURIComponent(`/projects/${project.publicId}/apply`)}`}
+                >
+                  Sign in to apply
+                </Link>
+              )
+            ) : null}
             <p>
-              Save this public context for later review. Participation and
-              application submission are not enabled in this phase.
+              {acceptingApplications
+                ? "Applications use a concise private evidence snapshot. Eligibility and deadline checks run again on the server; submission never promises a response or outcome."
+                : "Save this public context for later review. This project is not currently accepting applications."}
             </p>
           </div>
           <dl className="public-profile-intro-data project-public-summary">
@@ -252,13 +277,15 @@ export function PublicProjectView({
 
           <section className="public-profile-section company-public-boundary">
             <p className="profile-kicker">Scope boundary</p>
-            <h2>This page does not enable participation</h2>
+            <h2>
+              {acceptingApplications
+                ? "A focused private application may be available"
+                : "This page does not enable participation"}
+            </h2>
             <p>
-              It is a direct project context record. It does not accept
-              applications, issue or accept invitations, offer messaging,
-              provide a workspace, take a submission, assign a reviewer, form a
-              contract, process payment, or make a hiring decision or response
-              guarantee.
+              {acceptingApplications
+                ? "The application entry captures only selected profile context, evidence, practical availability, concise project answers, and confirmed terms. This page still does not offer messaging, a workspace, a work submission, reviewer assignment, a contract, payment, or a hiring decision or response guarantee."
+                : "It is a direct project context record. It does not accept applications, issue or accept invitations, offer messaging, provide a workspace, take a submission, assign a reviewer, form a contract, process payment, or make a hiring decision or response guarantee."}
             </p>
           </section>
         </aside>

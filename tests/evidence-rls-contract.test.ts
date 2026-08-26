@@ -130,9 +130,10 @@ describe("Phase 18 work-evidence privacy and lifecycle contract", () => {
 
   it("keeps private evidence routes protected while public detail stays outside the protected matcher", () => {
     expect(proxy).toContain(
-      'protectedPaths.has(pathname) || pathname.startsWith("/profile/")'
+      'protectedPaths.has(pathname) ||\n  pathname.startsWith("/profile/")'
     );
     expect(proxy).toContain('"/profile/:path*"');
+    expect(proxy).toContain('"/applications/:path*"');
     expect(proxy).not.toContain('"/evidence/:path*"');
   });
 
