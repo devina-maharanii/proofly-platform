@@ -84,3 +84,6 @@ Use a bold **proof marker**: a cobalt vertical rule interrupted by a small graph
 - Authentication surfaces use the same proof rail, compact mono evidence stamps, and intentional cobalt signal line as the public evidence ledger.
 - The auth wordmark always pairs the cobalt vertical marker and graphite node with the custom Proofly `/ evidence` treatment; a generic letter-in-a-box is prohibited.
 - Account-entry actions name the specific evidence decision: building proof, inspecting evidence, or requesting reviewer context rather than generic selection language.
+- Project loading and unavailable states retain the Proofly proof marker, compact wordmark treatment, and an explicit source, state, review, privacy-boundary, or next-action cue.
+- Loading language names accountable context work in progress, such as assembling source, review, and provenance context, rather than generic waiting.
+- Project and authentication-adjacent waiting surfaces use a readable proof rail with restrained cobalt only for the active ledger signal.

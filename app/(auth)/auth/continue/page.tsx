@@ -1,5 +1,6 @@
 /** Proofly Phase 11 protected boundary fixture: a verified session has no implied role or product access. */
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
+import Link from "next/link";
 
 import { AuthShell } from "@/components/auth/auth-shell";
 import { RoleContextSwitcher } from "@/components/roles/context-switcher";
@@ -65,9 +66,17 @@ export default async function AuthContinuePage({
           </a>
         ) : null}
         {context?.active?.role === "company_member" ? (
-          <a className="button button-primary" href="/company/profile">
-            Edit company profile
-          </a>
+          <>
+            <a className="button button-primary" href="/company/profile">
+              Edit company profile
+            </a>
+            <Link
+              className="button button-secondary"
+              href={"/company/projects/new" as Route}
+            >
+              Create a project
+            </Link>
+          </>
         ) : null}
         <a className="button button-secondary" href="/settings">
           Account settings

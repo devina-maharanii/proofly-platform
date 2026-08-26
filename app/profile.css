@@ -1107,3 +1107,342 @@
     gap: 0.3rem;
   }
 }
+
+/* Phase 22 style: project definition is a precision-editorial record where scope, fairness, and state are more prominent than conversion or workflow affordances. */
+.project-editor-layout {
+  grid-template-columns: minmax(0, 1.75fr) minmax(19rem, 0.85fr);
+}
+.project-type-guidance {
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border-left: 3px solid var(--cobalt);
+  background: color-mix(in srgb, var(--cobalt) 4%, var(--surface-subtle));
+}
+.project-type-guidance h3,
+.project-type-guidance p {
+  margin: 0;
+}
+.project-type-guidance h3 {
+  font-size: 1rem;
+}
+.project-type-guidance > p:not(.profile-kicker) {
+  margin-top: 0.45rem;
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+.project-skill-summary {
+  margin: 1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.project-structured-fieldset {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.2rem 0 0;
+  padding: 1rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: var(--surface-subtle);
+}
+.project-structured-fieldset legend {
+  padding: 0 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.project-structured-fieldset > p {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.project-structured-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.project-structured-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 0.65rem;
+  align-items: end;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+.project-structured-row label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.project-structured-row input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--fog);
+  color: var(--ink);
+  padding: 0.62rem 0.68rem;
+  font: 400 0.85rem/1.4 var(--font-geist-sans);
+}
+.project-structured-fieldset .button {
+  justify-self: start;
+  font-size: 0.8rem;
+}
+.project-preview-surface .profile-preview-meta dd {
+  max-width: 15rem;
+  overflow-wrap: anywhere;
+}
+.public-project-page .public-profile-intro {
+  border-top: 3px solid var(--cobalt);
+}
+.public-project-content {
+  grid-template-columns: minmax(0, 1.3fr) minmax(19rem, 0.7fr);
+}
+.project-public-intro h1 {
+  max-width: 56rem;
+}
+.project-public-organization {
+  margin: 0.25rem 0 0;
+  color: var(--ink-muted);
+  font: 600 0.76rem/1.4 var(--font-geist-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.project-public-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+.project-paused-note {
+  margin: 1.25rem 0 0;
+  padding: 0.85rem;
+  border-left: 2px solid var(--ink-muted);
+  background: var(--surface-subtle);
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+.project-public-section {
+  border-top: 3px solid var(--ink);
+}
+.project-public-copy {
+  margin: 0.85rem 0 0;
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+.project-public-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1.3rem;
+  border-top: 1px solid var(--line);
+}
+.project-public-detail-grid > div {
+  padding: 1rem 1rem 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-public-detail-grid > div:nth-child(even) {
+  padding-left: 1rem;
+  padding-right: 0;
+  border-left: 1px solid var(--line);
+}
+.project-public-detail-grid h3,
+.project-public-skills h3 {
+  margin: 0;
+  color: var(--ink-muted);
+  font: 600 0.68rem/1.35 var(--font-geist-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.project-public-detail-grid p {
+  margin: 0.45rem 0 0;
+  color: var(--ink);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+.project-public-milestones,
+.project-public-dimensions {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.project-public-milestones li,
+.project-public-dimensions li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.project-public-milestones strong,
+.project-public-dimensions strong {
+  flex: 0 1 12rem;
+}
+.project-public-milestones span,
+.project-public-dimensions span {
+  color: var(--ink-muted);
+}
+.project-public-evaluation {
+  border-top-color: var(--cobalt);
+}
+.project-public-fairness {
+  border-top-color: var(--success);
+}
+.project-public-skills .company-public-tags {
+  margin-bottom: 1.1rem;
+}
+@media (max-width: 900px) {
+  .project-editor-layout,
+  .public-project-content {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 680px) {
+  .project-structured-row,
+  .project-public-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-structured-row .profile-remove {
+    justify-self: start;
+  }
+  .project-public-detail-grid > div:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .project-public-summary {
+    grid-template-columns: 1fr !important;
+  }
+  .project-public-milestones li,
+  .project-public-dimensions li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}
+
+/* Phase 22 loading state: direct project context is assembled as a readable proof ledger, not a generic wait shell. */
+.project-context-loading {
+  min-height: 100dvh;
+  padding: clamp(1.5rem, 4vw, 4.5rem);
+  background: var(--fog);
+  color: var(--ink);
+}
+.project-context-loading-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ink);
+  font: 700 1.15rem/1 var(--font-geist-sans);
+}
+.project-context-loading-brand > span:last-child {
+  color: var(--ink-muted);
+  font: 500 0.72rem/1 var(--font-geist-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.project-context-loading-marker {
+  position: relative;
+  display: inline-flex;
+  width: 1.6rem;
+  height: 1.8rem;
+  align-items: center;
+  border-left: 3px solid var(--cobalt);
+}
+.project-context-loading-marker i {
+  position: absolute;
+  left: -0.42rem;
+  width: 0.58rem;
+  height: 0.58rem;
+  border: 2px solid var(--fog);
+  border-radius: 50%;
+  background: var(--ink);
+}
+.project-context-loading-content {
+  max-width: 48rem;
+  margin-top: clamp(5rem, 15vh, 11rem);
+  border-top: 3px solid var(--cobalt);
+  padding-top: 1.2rem;
+}
+.project-context-loading-content h1 {
+  max-width: 42rem;
+  margin: 0.6rem 0 0;
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+.project-context-loading-content > p:not(.profile-kicker) {
+  max-width: 41rem;
+  margin: 1.2rem 0 0;
+  color: var(--ink-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.project-context-loading-rail {
+  display: grid;
+  gap: 0;
+  max-width: 39rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.project-context-loading-rail li {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0.8rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-context-loading-rail li > span {
+  color: var(--cobalt);
+  font: 700 0.7rem/1.4 var(--font-geist-mono);
+}
+.project-context-loading-rail strong,
+.project-context-loading-rail small {
+  display: block;
+}
+.project-context-loading-rail strong {
+  font-size: 0.88rem;
+}
+.project-context-loading-rail small {
+  margin-top: 0.2rem;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .project-context-loading-content,
+  .project-context-loading-rail li {
+    animation: project-context-reveal 360ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+  .project-context-loading-rail li:nth-child(2) {
+    animation-delay: 55ms;
+  }
+  .project-context-loading-rail li:nth-child(3) {
+    animation-delay: 110ms;
+  }
+}
+@keyframes project-context-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 680px) {
+  .project-context-loading {
+    padding: 1.25rem;
+  }
+  .project-context-loading-content {
+    margin-top: 5rem;
+  }
+}

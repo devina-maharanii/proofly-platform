@@ -101,3 +101,11 @@
 - [x] Implement only the company data model, editor, modular preview, authorized owner/member actions, attribution controls, draft/ready/publish/hide lifecycle, public route, and public company renderer.
 - [x] Add authorization, RLS, attribution-history, privacy, lifecycle, validation, public metadata, keyboard, mobile, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 21 commit on `main`.
+
+## Phase 22 — Project Creation
+
+- [x] Read the Phase 22 attachments, Phases 04/12/15/16/21 foundations, design system, project/domain/data/security/API/event contracts, and applicable project guidance.
+- [x] Define organization-owned Project/Challenge types, required fields, canonical taxonomy selection, private/public or invitation visibility, stable route, lifecycle, state transitions, authorization, audit, and fairness contract without discovery, applications, messaging, payments, reviewer queues, or contracts.
+- [x] Implement only authorized project draft persistence, modular creation/editor flow, actual preview, skill selector, deliverables, evaluation configuration, opportunity/fairness disclosure, ethical validation, publishing, pausing, closing, archiving, and public/invitation rendering.
+- [x] Add authorization, RLS, attachment-access, privacy, taxonomy, lifecycle, timebox, protected-characteristic, compensation/IP, response-expectation, metadata, keyboard, mobile, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 22 commit on `main`.
