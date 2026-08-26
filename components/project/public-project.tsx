@@ -2,6 +2,7 @@
 import Link from "next/link";
 
 import { canonicalSkillLabel } from "@/lib/profile/types";
+import { ProjectSaveControl } from "@/components/project/project-discovery";
 import {
   projectStateLabel,
   projectTypeLabel,
@@ -20,12 +21,17 @@ function CompensationCopy({ project }: Readonly<{ project: PublicProject }>) {
 
 export function PublicProjectView({
   project,
-}: Readonly<{ project: PublicProject }>) {
+  canSave = false,
+  saved = false,
+}: Readonly<{ project: PublicProject; canSave?: boolean; saved?: boolean }>) {
   const paused = project.state === "paused";
   return (
     <main className="public-profile-page public-project-page">
       <header className="public-profile-header">
         <Link href="/">Proofly</Link>
+        {/* The managed typed-route manifest can lag a newly created App Router route; this remains a static internal navigation. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/projects">Explore projects</a>
         <span>Project context record</span>
       </header>
       <article className="public-profile-content public-project-content">
@@ -47,6 +53,17 @@ export function PublicProjectView({
             </span>
           </div>
           <p className="public-profile-headline">{project.oneSentenceGoal}</p>
+          <div className="project-public-actions">
+            <ProjectSaveControl
+              publicId={project.publicId}
+              initiallySaved={saved}
+              canSave={canSave}
+            />
+            <p>
+              Save this public context for later review. Participation and
+              application submission are not enabled in this phase.
+            </p>
+          </div>
           <dl className="public-profile-intro-data project-public-summary">
             <div>
               <dt>Project type</dt>

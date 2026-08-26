@@ -25,6 +25,13 @@ export const publicRouteContract = [
     description: siteConfig.description,
     indexable: true,
   },
+  {
+    pathname: "/projects",
+    title: "Explore published project context | Proofly",
+    description:
+      "Search transparent published software project context by governed skills, timebox, compensation label, and stated company context.",
+    indexable: true,
+  },
 ] as const;
 
 export function canonicalUrl(pathname = "/") {

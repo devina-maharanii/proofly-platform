@@ -109,3 +109,11 @@
 - [x] Implement only authorized project draft persistence, modular creation/editor flow, actual preview, skill selector, deliverables, evaluation configuration, opportunity/fairness disclosure, ethical validation, publishing, pausing, closing, archiving, and public/invitation rendering.
 - [x] Add authorization, RLS, attachment-access, privacy, taxonomy, lifecycle, timebox, protected-characteristic, compensation/IP, response-expectation, metadata, keyboard, mobile, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 22 commit on `main`.
+
+## Phase 23 — Project Discovery and Search
+
+- [x] Read the Phase 23 attachments, Phases 16/21/22 foundations, master guide, and all relevant product, data, security, API/event, design, accessibility, and test contracts.
+- [x] Define deterministic public-project search, URL filters, transparent result explanations, visibility boundaries, saved-project ownership, recent-search privacy, index/query strategy, and clear Phase 23 exclusions.
+- [x] Implement only project discovery index, search/filter controls, scannable detail, saved-project behavior, URL state, loading/empty/error states, and permission-safe public or authorized visibility handling.
+- [x] Add and run discovery, RLS, search/index, fairness, URL, saved-project, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
+- [x] Commit and push exactly one Phase 23 commit on `main`.

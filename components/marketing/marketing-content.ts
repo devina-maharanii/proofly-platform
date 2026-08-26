@@ -45,6 +45,7 @@ export const homepageCopy = {
 } as const;
 
 export const primaryNavItems = [
+  { href: "/projects", label: "Explore projects" },
   { href: "#talent", label: "For talent" },
   { href: "#companies", label: "For companies" },
   { href: "#how-it-works", label: "How it works" },

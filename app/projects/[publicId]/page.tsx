@@ -5,8 +5,12 @@ import { cache } from "react";
 
 import { canonicalUrl, siteConfig } from "@/app/seo";
 import { PublicProjectView } from "@/components/project/public-project";
-import { getPublicProject } from "@/lib/project/context";
+import {
+  getPublicProject,
+  getTalentSavedProjectIds,
+} from "@/lib/project/context";
 import { publicProjectPath } from "@/lib/project/types";
+import { authorizeActiveContext } from "@/lib/roles/context";
 
 type PublicProjectPageProps = Readonly<{
   params: Promise<{ publicId: string }>;
@@ -52,7 +56,19 @@ export default async function PublicProjectPage({
   params,
 }: PublicProjectPageProps) {
   const { publicId } = await params;
-  const project = await getCachedPublicProject(publicId);
+  const [project, talentAuthorization] = await Promise.all([
+    getCachedPublicProject(publicId),
+    authorizeActiveContext({ role: "talent" }),
+  ]);
   if (!project) notFound();
-  return <PublicProjectView project={project} />;
+  const savedProjectIds = talentAuthorization.ok
+    ? await getTalentSavedProjectIds()
+    : [];
+  return (
+    <PublicProjectView
+      project={project}
+      canSave={talentAuthorization.ok}
+      saved={savedProjectIds.includes(project.publicId)}
+    />
+  );
 }

@@ -18,8 +18,16 @@ describe("homepage content contract", () => {
     expect(homepageCopy.proofSteps.at(-1)?.title).toBe("Move toward paid work");
   });
 
-  it("keeps public navigation constrained to implemented homepage destinations", () => {
-    expect(primaryNavItems).toHaveLength(4);
-    expect(primaryNavItems.every(item => item.href.startsWith("#"))).toBe(true);
+  it("keeps public navigation constrained to implemented homepage destinations and the approved project discovery index", () => {
+    expect(primaryNavItems).toHaveLength(5);
+    expect(primaryNavItems).toContainEqual({
+      href: "/projects",
+      label: "Explore projects",
+    });
+    expect(
+      primaryNavItems
+        .filter(item => item.href !== "/projects")
+        .every(item => item.href.startsWith("#"))
+    ).toBe(true);
   });
 });

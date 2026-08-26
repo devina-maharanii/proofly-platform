@@ -13,9 +13,12 @@ import {
 
 import {
   initialProjectActionState,
+  initialProjectSaveActionState,
   privateCompanyProjectPath,
   publicProjectPath,
   type ProjectActionState,
+  type ProjectDiscoveryFilters,
+  type ProjectSaveActionState,
   type ProjectState,
 } from "./types";
 import {
@@ -83,6 +86,87 @@ function refreshProject(projectId?: string, publicId?: string) {
   revalidatePath("/sitemap.xml");
   if (projectId) revalidatePath(privateCompanyProjectPath(projectId));
   if (publicId) revalidatePath(publicProjectPath(publicId));
+}
+
+function refreshDiscovery(publicId?: string) {
+  revalidatePath("/projects");
+  revalidatePath("/projects/[publicId]", "page");
+  if (publicId) revalidatePath(publicProjectPath(publicId));
+}
+
+async function talentDiscoveryCommand(action: "mutation" | "search") {
+  const [session, authorization, supabase] = await Promise.all([
+    getVerifiedAuthSession(),
+    authorizeActiveContext({ role: "talent" }),
+    createServerSupabaseClient(),
+  ]);
+  if (!session || !supabase || !authorization.ok) return null;
+  const limit = securityRateLimiter.check(
+    action,
+    session.userId,
+    await requestAddress()
+  );
+  return limit.ok ? supabase : null;
+}
+
+export async function toggleSavedProjectAction(
+  _previousState: ProjectSaveActionState = initialProjectSaveActionState,
+  formData: FormData
+): Promise<ProjectSaveActionState> {
+  void _previousState;
+  const publicId = formData.get("publicId");
+  if (typeof publicId !== "string" || !/^prj_[a-f0-9]{20,40}$/.test(publicId)) {
+    return { status: "error", message: "This project is unavailable to save." };
+  }
+  const supabase = await talentDiscoveryCommand("mutation");
+  if (!supabase) {
+    return {
+      status: "error",
+      message: "Switch to an active talent context to save a public project.",
+    };
+  }
+  const { data, error } = await supabase.rpc("toggle_talent_saved_project", {
+    requested_public_id: publicId,
+  });
+  if (error || typeof data !== "boolean") {
+    return {
+      status: "error",
+      message:
+        "The saved-project change could not be completed safely. Try again.",
+    };
+  }
+  refreshDiscovery(publicId);
+  return {
+    status: "success",
+    saved: data,
+    message: data
+      ? "Project saved for later review."
+      : "Project removed from saved projects.",
+  };
+}
+
+export async function recordRecentProjectSearchAction(
+  query: string,
+  filters: ProjectDiscoveryFilters
+) {
+  const supabase = await talentDiscoveryCommand("search");
+  if (!supabase) return;
+  await supabase.rpc("record_talent_project_search", {
+    requested_query: query.trim().slice(0, 160),
+    requested_filters: {
+      skill: filters.skill,
+      family: filters.skillFamily,
+      level: filters.skillLevelContext,
+      type: filters.projectType,
+      timebox: filters.timebox,
+      compensation: filters.compensation,
+      mode: filters.workMode,
+      timezone: filters.timezone,
+      deadline: filters.deadline,
+      company_size: filters.companySize,
+      sort: filters.sort,
+    },
+  });
 }
 
 function projectPayload(project: ProjectInput) {

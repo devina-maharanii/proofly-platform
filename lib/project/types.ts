@@ -145,6 +145,100 @@ export type PublicProject = Readonly<{
   updatedAt: string | null;
 }>;
 
+/** Phase 23 discovery contract: result order comes only from public text relevance, matched governed skills, freshness, and a visible sort choice. */
+export const projectDiscoverySorts = ["relevance", "newest"] as const;
+export type ProjectDiscoverySort = (typeof projectDiscoverySorts)[number];
+
+export const projectDiscoveryTimeboxes = [
+  "up_to_8",
+  "up_to_20",
+  "up_to_40",
+  "over_40",
+] as const;
+export type ProjectDiscoveryTimebox =
+  (typeof projectDiscoveryTimeboxes)[number];
+
+export const projectDiscoveryDeadlines = [
+  "any",
+  "next_7_days",
+  "next_30_days",
+] as const;
+export type ProjectDiscoveryDeadline =
+  (typeof projectDiscoveryDeadlines)[number];
+
+export const projectDiscoveryWorkModes = [
+  "any",
+  "remote",
+  "hybrid",
+  "onsite",
+] as const;
+export type ProjectDiscoveryWorkMode =
+  (typeof projectDiscoveryWorkModes)[number];
+
+export type ProjectDiscoveryFilters = Readonly<{
+  query: string;
+  skill: CanonicalSkillKey | "";
+  skillFamily: string;
+  skillLevelContext: string;
+  projectType: Exclude<ProjectType, "private_invite_only"> | "";
+  timebox: ProjectDiscoveryTimebox | "";
+  compensation: CompensationStatus | "";
+  workMode: ProjectDiscoveryWorkMode;
+  timezone: string;
+  deadline: ProjectDiscoveryDeadline;
+  companySize: string;
+  sort: ProjectDiscoverySort;
+  savedOnly: boolean;
+}>;
+
+export type ProjectDiscoveryItem = Readonly<{
+  publicId: string;
+  projectType: Exclude<ProjectType, "private_invite_only">;
+  state: "published" | "accepting_applications";
+  title: string;
+  oneSentenceGoal: string;
+  requiredSkills: CanonicalSkillKey[];
+  helpfulSkills: CanonicalSkillKey[];
+  timeboxHours: number;
+  compensationStatus: CompensationStatus;
+  workPurpose: WorkPurpose;
+  ownershipTerms: string;
+  applicationDeadline: string;
+  experienceContext: string;
+  organizationName: string;
+  organizationSlug: string;
+  companySize: string;
+  timezoneOverlap: string;
+  workLocationPreference: string;
+  publishedAt: string | null;
+  updatedAt: string | null;
+  relevance: number;
+  matchReasons: string[];
+}>;
+
+export type ProjectDiscoveryResult = Readonly<{
+  items: ProjectDiscoveryItem[];
+  nextCursor: string | null;
+  rateLimitedForSeconds: number | null;
+}>;
+
+export type RecentProjectSearch = Readonly<{
+  query: string;
+  filters: Partial<ProjectDiscoveryFilters>;
+  lastUsedAt: string | null;
+}>;
+
+export type ProjectSaveActionState = Readonly<{
+  status: "idle" | "success" | "error";
+  message: string;
+  saved?: boolean;
+}>;
+
+export const initialProjectSaveActionState: ProjectSaveActionState = {
+  status: "idle",
+  message: "",
+};
+
 export type ProjectActionState = Readonly<{
   status: "idle" | "success" | "error";
   message: string;

@@ -1,18 +1,32 @@
 /** Phase 22 server-only readers: every private Project/Challenge lookup derives membership scope; public readers return approved public snapshots only and never an invitation, application, or workspace. */
 import "server-only";
 
+import { headers } from "next/headers";
+
 import { authorizeActiveContext, getRoleContext } from "@/lib/roles/context";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { securityRateLimiter } from "@/lib/security/rate-limit";
+import {
+  createServerSupabaseClient,
+  getVerifiedAuthSession,
+} from "@/lib/supabase/server";
 
 import {
   emptyCompanyProject,
   type CompanyProject,
   type CompanyProjectContext,
   type EvaluationDimension,
+  type ProjectDiscoveryFilters,
+  type ProjectDiscoveryItem,
+  type ProjectDiscoveryResult,
   type ProjectMilestone,
   type ProjectPublication,
   type PublicProject,
+  type RecentProjectSearch,
 } from "./types";
+import {
+  discoveryFilterPayload,
+  type ProjectDiscoveryUrlState,
+} from "./discovery";
 
 function text(value: unknown, fallback = "") {
   return typeof value === "string" ? value : fallback;
@@ -310,5 +324,232 @@ export async function getPublicProjectSitemap() {
     return /^prj_[a-f0-9]{20,40}$/.test(publicId)
       ? [{ publicId, updatedAt: text(row.updated_at) || null }]
       : [];
+  });
+}
+
+type DiscoveryCursor = Readonly<{
+  rank: number;
+  updatedAt: string;
+  publicId: string;
+}>;
+
+function parseDiscoveryCursor(value: string): DiscoveryCursor | null {
+  if (!value || value.length > 420) return null;
+  try {
+    const raw = Buffer.from(value, "base64url").toString("utf8");
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const rank = numberOrNull(parsed.rank);
+    const updatedAt = text(parsed.updated_at);
+    const publicId = text(parsed.public_id);
+    return rank === null ||
+      !updatedAt ||
+      !/^prj_[a-f0-9]{20,40}$/.test(publicId)
+      ? null
+      : { rank, updatedAt, publicId };
+  } catch {
+    return null;
+  }
+}
+
+function createDiscoveryCursor(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const row = value as Record<string, unknown>;
+  const rank = numberOrNull(row.rank);
+  const updatedAt = text(row.updated_at);
+  const publicId = text(row.public_id);
+  if (rank === null || !updatedAt || !/^prj_[a-f0-9]{20,40}$/.test(publicId)) {
+    return null;
+  }
+  return Buffer.from(
+    JSON.stringify({ rank, updated_at: updatedAt, public_id: publicId })
+  ).toString("base64url");
+}
+
+function discoveryReasons(
+  row: Record<string, unknown>,
+  filters: ProjectDiscoveryFilters
+) {
+  const requiredSkills = stringList(row.required_skills);
+  const reasons: string[] = [];
+  if (filters.query) reasons.push("Matches your text search");
+  if (filters.skill) {
+    reasons.push(
+      requiredSkills.includes(filters.skill)
+        ? "Lists your selected skill as required"
+        : "Lists your selected skill as helpful"
+    );
+  }
+  if (filters.skillFamily) reasons.push("Matches the selected skill family");
+  if (filters.projectType) reasons.push("Matches the selected project type");
+  if (filters.timebox) reasons.push("Fits the selected timebox");
+  if (filters.compensation) reasons.push("Matches the compensation filter");
+  if (filters.workMode !== "any") reasons.push("Matches the work-mode filter");
+  if (filters.timezone) reasons.push("Matches the timezone-overlap filter");
+  if (filters.deadline !== "any") reasons.push("Fits the deadline window");
+  if (filters.companySize) reasons.push("Matches the company-size filter");
+  if (reasons.length === 0) {
+    reasons.push(
+      filters.sort === "newest"
+        ? "Ordered by most recently updated public context"
+        : "Ordered by public context relevance and freshness"
+    );
+  }
+  return reasons.slice(0, 3);
+}
+
+function discoveryItem(
+  row: Record<string, unknown>,
+  filters: ProjectDiscoveryFilters
+): ProjectDiscoveryItem | null {
+  const publicId = text(row.public_id);
+  const state = text(row.state);
+  const projectType = knownType(row.project_type);
+  if (
+    !/^prj_[a-f0-9]{20,40}$/.test(publicId) ||
+    (state !== "published" && state !== "accepting_applications") ||
+    projectType === "private_invite_only"
+  ) {
+    return null;
+  }
+  return {
+    publicId,
+    projectType,
+    state,
+    title: text(row.title),
+    oneSentenceGoal: text(row.one_sentence_goal),
+    requiredSkills: stringList(
+      row.required_skills
+    ) as ProjectDiscoveryItem["requiredSkills"],
+    helpfulSkills: stringList(
+      row.helpful_skills
+    ) as ProjectDiscoveryItem["helpfulSkills"],
+    timeboxHours: numberOrNull(row.timebox_hours) ?? 0,
+    compensationStatus:
+      row.compensation_status === "paid_defined" ||
+      row.compensation_status === "unpaid_evaluation"
+        ? row.compensation_status
+        : "paid_to_be_agreed",
+    workPurpose:
+      row.work_purpose === "production_need"
+        ? "production_need"
+        : "evaluation_exercise",
+    ownershipTerms: text(row.ownership_terms),
+    applicationDeadline: text(row.application_deadline),
+    experienceContext: text(row.experience_context),
+    organizationName: text(row.organization_name),
+    organizationSlug: text(row.organization_slug),
+    companySize: text(row.company_size),
+    timezoneOverlap: text(row.timezone_overlap),
+    workLocationPreference: text(row.work_location_preference),
+    publishedAt: text(row.published_at) || null,
+    updatedAt: text(row.updated_at) || null,
+    relevance: numberOrNull(row.relevance) ?? 0,
+    matchReasons: discoveryReasons(row, filters),
+  };
+}
+
+async function discoveryRequestAddress() {
+  const requestHeaders = await headers();
+  return (
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    requestHeaders.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
+export async function getPublicProjectDiscovery(
+  search: ProjectDiscoveryUrlState
+): Promise<ProjectDiscoveryResult> {
+  const session = await getVerifiedAuthSession();
+  const limit = securityRateLimiter.check(
+    "search",
+    session?.userId ?? "anonymous",
+    await discoveryRequestAddress()
+  );
+  if (!limit.ok) {
+    return {
+      items: [],
+      nextCursor: null,
+      rateLimitedForSeconds: limit.retryAfterSeconds,
+    };
+  }
+  const supabase = await createServerSupabaseClient();
+  if (!supabase)
+    return { items: [], nextCursor: null, rateLimitedForSeconds: null };
+  const cursor = parseDiscoveryCursor(search.cursor);
+  if (search.cursor && !cursor) {
+    return { items: [], nextCursor: null, rateLimitedForSeconds: null };
+  }
+  const { data, error } = await supabase.rpc("get_public_project_discovery", {
+    requested_query: search.query,
+    requested_filters: discoveryFilterPayload(search),
+    requested_cursor_rank: cursor?.rank ?? null,
+    requested_cursor_updated_at: cursor?.updatedAt ?? null,
+    requested_cursor_public_id: cursor?.publicId ?? null,
+    requested_limit: 12,
+    requested_saved_only: search.savedOnly,
+  });
+  if (error || !data || typeof data !== "object" || Array.isArray(data)) {
+    return { items: [], nextCursor: null, rateLimitedForSeconds: null };
+  }
+  const row = data as Record<string, unknown>;
+  const items = Array.isArray(row.items)
+    ? row.items
+        .flatMap(item =>
+          item && typeof item === "object" && !Array.isArray(item)
+            ? [discoveryItem(item as Record<string, unknown>, search)]
+            : []
+        )
+        .filter((item): item is ProjectDiscoveryItem => item !== null)
+    : [];
+  return {
+    items,
+    nextCursor: createDiscoveryCursor(row.next_cursor),
+    rateLimitedForSeconds: null,
+  };
+}
+
+export async function getTalentSavedProjectIds() {
+  const authorization = await authorizeActiveContext({ role: "talent" });
+  const supabase = await createServerSupabaseClient();
+  if (!authorization.ok || !supabase) return [];
+  const { data, error } = await supabase.rpc("get_talent_saved_project_ids", {
+    maximum_count: 100,
+  });
+  return error || !Array.isArray(data)
+    ? []
+    : data.filter(
+        (value): value is string =>
+          typeof value === "string" && /^prj_[a-f0-9]{20,40}$/.test(value)
+      );
+}
+
+export async function getTalentRecentProjectSearches(): Promise<
+  RecentProjectSearch[]
+> {
+  const authorization = await authorizeActiveContext({ role: "talent" });
+  const supabase = await createServerSupabaseClient();
+  if (!authorization.ok || !supabase) return [];
+  const { data, error } = await supabase.rpc(
+    "get_talent_recent_project_searches",
+    { maximum_count: 8 }
+  );
+  if (error || !Array.isArray(data)) return [];
+  return data.flatMap(item => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+    const row = item as Record<string, unknown>;
+    const filters =
+      row.filters &&
+      typeof row.filters === "object" &&
+      !Array.isArray(row.filters)
+        ? (row.filters as Partial<ProjectDiscoveryFilters>)
+        : {};
+    return [
+      {
+        query: text(row.query).slice(0, 160),
+        filters,
+        lastUsedAt: text(row.last_used_at) || null,
+      },
+    ];
   });
 }
