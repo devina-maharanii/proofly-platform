@@ -117,3 +117,10 @@
 - [x] Implement only project discovery index, search/filter controls, scannable detail, saved-project behavior, URL state, loading/empty/error states, and permission-safe public or authorized visibility handling.
 - [x] Add and run discovery, RLS, search/index, fairness, URL, saved-project, accessibility, mobile, regression, formatting, lint, strict TypeScript, browser, build, security, and final diff validation.
 - [x] Commit and push exactly one Phase 23 commit on `main`.
+
+## CI Repair — GitHub Actions pnpm Setup
+
+- [x] Inspect the failing `Security and quality` workflow and define the minimal supported pnpm bootstrap correction.
+- [x] Validate the workflow configuration and preserve its existing quality/security commands.
+- [ ] Commit and push only the CI repair to `main`.
+- [ ] Verify the resulting GitHub Actions run completes successfully.
