@@ -164,3 +164,11 @@
 - [x] Implement only controlled rubric authoring, version creation, private version history, contextual guidance, calibration records, visibility controls, immutable historical use, and respectful recovery states; exclude review queues, decisions, reputation, payments, and AI scoring.
 - [x] Add and run rubric lifecycle, versioning, immutability, authorization, visibility, RLS, audit, privacy, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 28 commit on `main`.
+
+## Phase 29 — Verification Workflow
+
+- [x] Read the Phase 29 attachments, all source-of-truth documents, and relevant evidence, project, application, workspace, reviewer, rubric, proof, security, data, API/event, privacy, design, and test foundations.
+- [x] Define the human-accountable verification lifecycle, eligibility, conflict-free assignment, locked rubric/submission relationship, dimensional observations, decision evidence, changes-requested/resubmission, not-verified, appeal, revocation, audit, visibility, and explicit exclusions.
+- [x] Implement only controlled verification eligibility, assignment, reviewer observations and decision interface, talent status and resubmission path, proof creation trigger, separate appeal and authorized revocation flow, immutable audit, and respectful private/public states; exclude automated decisions, reputation, payments, analytics, and AI review.
+- [x] Add and run verification lifecycle, conflict, self-review, blocked organization, rubric/version lock, immutable history, decision/accountability, privacy, visibility, RLS, audit, appeal, revocation, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 29 commit on `main`.

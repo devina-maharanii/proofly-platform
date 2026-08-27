@@ -417,7 +417,7 @@ export async function submitProjectWorkspaceSubmissionAction(
   return {
     status: "success",
     message:
-      "Submission recorded. It is ready for the later human review workflow; no review decision or proof is created yet.",
+      "Submission recorded. A company owner may now prepare the exact version for qualified human-review assignment; no decision or public Proof is created yet.",
   };
 }
 

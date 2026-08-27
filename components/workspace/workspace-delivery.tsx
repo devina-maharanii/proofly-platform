@@ -1,6 +1,6 @@
 "use client";
 
-/** Phase 26 style: calm, participant-scoped work delivery with bounded task controls, private artifact versions, explicit submission preview, and no review decisions, chat, payment, execution, or AI. */
+/** Evidence Ledger Editorial — Phase 29 retains calm participant-scoped work delivery, immutable submission versions, and human-only verification boundaries without scores, AI, payment, or public-proof defaults. */
 import Link from "next/link";
 import type { Route } from "next";
 import { useActionState } from "react";
@@ -278,9 +278,9 @@ function SubmissionEditor({
     <div className="workspace-submission">
       <h3>Versioned submission package</h3>
       <p>
-        Preview the same bounded package a later authorized reviewer may
-        receive. Saving a draft does not submit it, create proof, or produce a
-        review decision.
+        Preview the bounded package an authorized human reviewer may receive.
+        Saving a draft does not submit it, create proof, or produce a review
+        decision.
       </p>
       {editable ? (
         <form className="workspace-submission-form" action={saveAction}>
@@ -512,8 +512,8 @@ export function WorkspaceDelivery({
         <h2>Tasks, private artifacts, and submission versions</h2>
         <p>
           Keep work bounded to the visible project context. Private artifacts
-          remain participant-scoped; a submitted version is ready for a later
-          human review, not an approval or proof.
+          remain participant-scoped; a submitted version can be prepared for a
+          qualified human review, not an approval or public Proof.
         </p>
       </div>
       <TaskList

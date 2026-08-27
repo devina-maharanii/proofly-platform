@@ -11,6 +11,9 @@ import {
   canManageOrganization,
   canPerformAdminAction,
   canPublishResource,
+  canRecordVerificationDecision,
+  canRequestVerificationAppeal,
+  canRevokeVerification,
   canReviewSubmission,
   type PermissionActor,
   type ProtectedResource,
@@ -124,6 +127,23 @@ describe("Phase 15 defense-in-depth authorization", () => {
         workflowState: "completed",
       })
     ).toBe(false);
+    expect(
+      canRecordVerificationDecision(reviewer, {
+        submissionOwnerUserId: "talent-user",
+        assignedReviewerUserId: "reviewer-user",
+        reviewerIsActiveAndQualified: true,
+        hasDeclaredConflict: false,
+        verificationState: "verified",
+      })
+    ).toBe(false);
+    expect(
+      canRequestVerificationAppeal(reviewer, {
+        talentUserId: "talent-user",
+        verificationState: "not_verified",
+        hasExistingAppeal: false,
+      })
+    ).toBe(false);
+    expect(canRevokeVerification(unverifiedAdmin, "verified")).toBe(false);
   });
 
   it("keeps the authorization adapter server-only and returns stable private-denial vocabulary", () => {

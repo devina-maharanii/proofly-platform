@@ -5,6 +5,11 @@ import { notFound, redirect } from "next/navigation";
 import { ProjectWorkspaceView } from "@/components/workspace/project-workspace";
 import { getVerifiedAuthSession } from "@/lib/supabase/server";
 import {
+  getVerificationReviewerCandidates,
+  getTalentEvidencePublicationChoices,
+  getWorkspaceVerification,
+} from "@/lib/verification/context";
+import {
   getProjectWorkspace,
   getWorkspaceFiles,
   getWorkspaceSubmission,
@@ -25,17 +30,29 @@ export default async function WorkspacePage({
       `/sign-in?next=${encodeURIComponent(`/workspaces/${workspaceId}`)}`
     );
   }
-  const [workspace, files, submission] = await Promise.all([
+  const [workspace, files, submission, verification] = await Promise.all([
     getProjectWorkspace(workspaceId),
     getWorkspaceFiles(workspaceId),
     getWorkspaceSubmission(workspaceId),
+    getWorkspaceVerification(workspaceId),
   ]);
   if (!workspace) notFound();
+  const [reviewerCandidates, evidenceChoices] = await Promise.all([
+    verification && workspace.accessRole === "company_participant"
+      ? getVerificationReviewerCandidates(verification.id)
+      : [],
+    workspace.accessRole === "talent_participant"
+      ? getTalentEvidencePublicationChoices()
+      : [],
+  ]);
   return (
     <ProjectWorkspaceView
       workspace={workspace}
       files={files}
       submission={submission}
+      verification={verification}
+      reviewerCandidates={reviewerCandidates}
+      evidenceChoices={evidenceChoices}
     />
   );
 }

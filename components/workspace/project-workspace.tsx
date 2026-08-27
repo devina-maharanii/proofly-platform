@@ -5,6 +5,12 @@ import { useActionState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
 import { transitionProjectWorkspaceAction } from "@/lib/workspace/actions";
+import { VerificationWorkspacePanel } from "@/components/verification/verification-workflow";
+import type {
+  TalentEvidencePublicationChoice,
+  VerificationRecord,
+  VerificationReviewerCandidate,
+} from "@/lib/verification/types";
 import { WorkspaceDelivery } from "@/components/workspace/workspace-delivery";
 import {
   initialWorkspaceActionState,
@@ -133,10 +139,16 @@ export function ProjectWorkspaceView({
   workspace,
   files,
   submission,
+  verification,
+  reviewerCandidates,
+  evidenceChoices,
 }: Readonly<{
   workspace: ProjectWorkspace;
   files: WorkspaceFile[];
   submission: WorkspaceSubmission | null;
+  verification: VerificationRecord | null;
+  reviewerCandidates: readonly VerificationReviewerCandidate[];
+  evidenceChoices: readonly TalentEvidencePublicationChoice[];
 }>) {
   return (
     <AuthShell
@@ -151,6 +163,7 @@ export function ProjectWorkspaceView({
         <a href="#overview">Overview</a>
         <a href="#work">Work</a>
         <a href="#review">Review context</a>
+        <a href="#verification">Verification</a>
         <a href="#activity">Activity</a>
       </nav>
       <div className="workspace-layout">
@@ -263,14 +276,24 @@ export function ProjectWorkspaceView({
             canCreateSubmission={workspace.permissions.canCreateSubmission}
           />
 
+          <VerificationWorkspacePanel
+            workspaceId={workspace.id}
+            accessRole={workspace.accessRole}
+            submissionState={submission?.state ?? null}
+            verification={verification}
+            candidates={reviewerCandidates}
+            lockedRubric={workspace.reviewContext.lockedRubric}
+            evidenceChoices={evidenceChoices}
+          />
+
           <section className="profile-section" id="review">
             <div className="profile-section-heading">
-              <p className="profile-index">03 · Review context</p>
+              <p className="profile-index">04 · Review context</p>
               <h2>Evaluation remains contextual and human-led</h2>
               <p>
-                These criteria explain the work context only. This page has no
-                reviewer assignment, score, feedback, decision, or AI review
-                tool.
+                The locked rubric and accountable human-verification status are
+                visible here. Reviewer observations remain private unless their
+                configured feedback visibility permits sharing.
               </p>
             </div>
             <dl className="workspace-review-list">
@@ -309,7 +332,7 @@ export function ProjectWorkspaceView({
 
           <section className="profile-section" id="activity">
             <div className="profile-section-heading">
-              <p className="profile-index">04 · Activity</p>
+              <p className="profile-index">05 · Activity</p>
               <h2>Private state and access record</h2>
               <p>
                 Activity records meaningful workspace changes. It is not a chat

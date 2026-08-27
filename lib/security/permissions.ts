@@ -33,6 +33,21 @@ export type ReviewAuthorization = Readonly<{
   workflowState: "assigned" | "in_progress" | "completed" | "withdrawn";
 }>;
 
+export type VerificationDecisionAuthorization = Readonly<{
+  submissionOwnerUserId: string;
+  assignedReviewerUserId: string | null;
+  reviewerIsActiveAndQualified: boolean;
+  hasDeclaredConflict: boolean;
+  verificationState:
+    "under_review" | "appealed" | "verified" | "not_verified" | "revoked";
+}>;
+
+export type VerificationAppealAuthorization = Readonly<{
+  talentUserId: string;
+  verificationState: "not_verified" | "appealed" | "verified" | "revoked";
+  hasExistingAppeal: boolean;
+}>;
+
 function isAuthenticated(
   actor: PermissionActor
 ): actor is PermissionActor & { userId: string } {
@@ -124,6 +139,46 @@ export function canReviewSubmission(
     (review.workflowState === "assigned" ||
       review.workflowState === "in_progress")
   );
+}
+
+/** A final verification decision requires the exact active, qualified human assignee and a live review state. */
+export function canRecordVerificationDecision(
+  actor: PermissionActor,
+  review: VerificationDecisionAuthorization
+) {
+  return (
+    isAuthenticated(actor) &&
+    actor.activeRole === "reviewer" &&
+    actor.capabilities.includes("reviewer") &&
+    review.reviewerIsActiveAndQualified &&
+    review.assignedReviewerUserId === actor.userId &&
+    review.submissionOwnerUserId !== actor.userId &&
+    !review.hasDeclaredConflict &&
+    (review.verificationState === "under_review" ||
+      review.verificationState === "appealed")
+  );
+}
+
+/** Talent may ask for one separate appeal only after a not-verified outcome; the request never rewrites the decision. */
+export function canRequestVerificationAppeal(
+  actor: PermissionActor,
+  verification: VerificationAppealAuthorization
+) {
+  return (
+    isAuthenticated(actor) &&
+    actor.activeRole === "talent" &&
+    actor.userId === verification.talentUserId &&
+    verification.verificationState === "not_verified" &&
+    !verification.hasExistingAppeal
+  );
+}
+
+/** Revocation is an accountable administrative action against an active verified record, never an automated outcome. */
+export function canRevokeVerification(
+  actor: PermissionActor,
+  verificationState: "verified" | "not_verified" | "appealed" | "revoked"
+) {
+  return canPerformAdminAction(actor) && verificationState === "verified";
 }
 
 /** Requires the active matching organization context with its explicit owner permission. */

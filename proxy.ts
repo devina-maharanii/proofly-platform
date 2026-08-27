@@ -17,6 +17,7 @@ const protectedPaths = new Set([
   "/reviewer/application",
   "/reviewer/opportunities",
   "/admin/reviewers",
+  "/admin/verifications",
 ]);
 
 const isProtectedPath = (pathname: string) =>
@@ -25,6 +26,7 @@ const isProtectedPath = (pathname: string) =>
   pathname.startsWith("/applications/") ||
   pathname.startsWith("/reviewer/") ||
   pathname.startsWith("/admin/reviewers") ||
+  pathname.startsWith("/admin/verifications") ||
   pathname.startsWith("/company/projects/") ||
   pathname.startsWith("/company/applications/") ||
   pathname.startsWith("/workspaces/") ||
@@ -87,6 +89,7 @@ export const config = {
     "/applications/:path*",
     "/reviewer/:path*",
     "/admin/reviewers/:path*",
+    "/admin/verifications/:path*",
     "/company/projects/:path*",
     "/company/applications/:path*",
     "/workspaces/:path*",
