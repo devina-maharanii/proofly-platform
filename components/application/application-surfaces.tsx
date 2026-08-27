@@ -7,6 +7,7 @@ import type { Route } from "next";
 import { useActionState, useEffect, useMemo, useState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
+import { ContextConversationButton } from "@/components/communication/messaging-surfaces";
 import {
   saveProjectApplicationAction,
   submitProjectApplicationAction,
@@ -804,6 +805,13 @@ export function ApplicationDetail({
               ) : null}
             </dl>
             <ApplicationWithdrawalControl application={application} />
+            {!retained ? (
+              <ContextConversationButton
+                contextType="application"
+                contextEntityId={application.id}
+                label="Open application conversation"
+              />
+            ) : null}
           </section>
           <SnapshotDetail application={application} />
         </main>
@@ -865,7 +873,14 @@ export function CompanyApplicationReceiptView({
             <strong>Retention:</strong> {receipt.retentionNotice}
           </p>
         ) : (
-          <SnapshotDetail application={receipt} />
+          <>
+            <SnapshotDetail application={receipt} />
+            <ContextConversationButton
+              contextType="application"
+              contextEntityId={receipt.id}
+              label="Open application conversation"
+            />
+          </>
         )}
       </section>
     </AuthShell>

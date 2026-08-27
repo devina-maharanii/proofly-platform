@@ -94,6 +94,12 @@
 - [x] Classify the local public-route loading-shell observation: it also reproduces on the existing Phase 18 evidence unavailable route; deterministic server-response and production-build checks validate Phase 20’s unavailable response instead.
 - [x] Commit and push exactly one Phase 20 commit on `main`.
 
+### Phase 20 post-release audit
+
+- [x] Confirm the actual GitHub `main` commit message, parent, and release tree match the validated Phase 20 tree.
+- [x] Reconfirm the applied Supabase migration and the intended RLS/no-direct-policy boundary for public Proof storage.
+- [x] Recheck scope exclusions, public metadata/state behavior, and the recorded validation evidence; disclose the remaining authenticated real-profile journey limitation accurately.
+
 ## Phase 21 — Company Profile
 
 - [x] Read the Phase 21 attachments, Phases 12/14/15/20 foundations, design system, company/domain/data/security/API/event contracts, and relevant project guidance.
@@ -180,3 +186,11 @@
 - [x] Implement only append-only Proof Graph/reputation persistence, provenance, public contextual proof timeline and skill-to-evidence views, private audit view, Talent visibility control, and company-outcome consent handling.
 - [x] Add and run graph, provenance, self-claim, append-only, correction, withdrawal, revocation, consent, privacy, accessibility, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 30 commit on `main`.
+
+## Phase 31 — Messaging and Notifications
+
+- [x] Read the Phase 31 attachments, master guide, all source-of-truth documents, and the required authentication, authorization, project, workspace, reviewer, verification, and Proof foundations.
+- [x] Define only object-linked conversation, participant, message, attachment, read-state, notification, preference, safety, moderation, delivery, and explicit anti-spam/anti-social-network boundaries.
+- [x] Implement only secure contextual conversations, messages, private attachment references, typed notification events and preferences, read/unread controls, block/report/mute/archive/leave behavior, bounded moderator review, and provider-independent delivery boundaries.
+- [x] Add and run authorization, RLS, idempotency, redaction/history, attachment, rate-limit, abuse, notification, preference, privacy, accessibility, realtime/reconnect, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 31 commit on `main`.

@@ -4,6 +4,7 @@
 import { useActionState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
+import { ContextConversationButton } from "@/components/communication/messaging-surfaces";
 import { transitionProjectWorkspaceAction } from "@/lib/workspace/actions";
 import { VerificationWorkspacePanel } from "@/components/verification/verification-workflow";
 import type {
@@ -374,6 +375,11 @@ export function ProjectWorkspaceView({
               This workspace does not decide hiring, approve proof, create a
               contract, move money, or make an automated decision.
             </p>
+            <ContextConversationButton
+              contextType="workspace"
+              contextEntityId={workspace.id}
+              label="Open workspace conversation"
+            />
           </section>
         </aside>
       </div>

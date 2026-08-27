@@ -1112,3 +1112,399 @@
     justify-content: start;
   }
 }
+
+/* Phase 31 communication: private, context-stamped ledger rows and restrained cobalt actions; never a social feed or notification-growth surface. */
+.communication-page {
+  width: min(100% - 2rem, 78rem);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem) 0;
+}
+
+.communication-page-header {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 52rem;
+  margin-bottom: 2.2rem;
+  padding-left: clamp(0.8rem, 2vw, 1.4rem);
+  border-left: 2px solid var(--cobalt);
+}
+
+.communication-page-header h1,
+.communication-page-header p,
+.communication-section-heading h2,
+.communication-preferences h2 {
+  margin: 0;
+}
+
+.communication-page-header h1 {
+  max-width: 17ch;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.communication-page-header > p:not(.profile-kicker),
+.communication-empty,
+.communication-preferences p,
+.communication-composer p,
+.communication-message p,
+.communication-report-list p {
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.communication-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.communication-ledger,
+.communication-aside,
+.communication-preferences,
+.communication-notifications,
+.communication-composer,
+.communication-attachment-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.communication-aside {
+  padding-left: clamp(0.9rem, 2vw, 1.4rem);
+  border-left: 1px solid var(--line);
+}
+
+.communication-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.communication-section-heading span,
+.communication-context,
+.communication-inbox-row small,
+.communication-notifications small,
+.communication-live-state,
+.communication-message header span,
+.communication-message time {
+  color: var(--ink-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.communication-inbox-list,
+.communication-notifications ol,
+.communication-message-list,
+.communication-report-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.communication-inbox-list {
+  border-top: 1px solid var(--line);
+}
+
+.communication-inbox-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.communication-inbox-row:hover strong,
+.communication-inbox-row:focus-visible strong,
+.communication-notifications a:hover,
+.communication-notifications a:focus-visible {
+  color: var(--cobalt);
+}
+
+.communication-inbox-row strong {
+  grid-column: 1;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.communication-inbox-row > span:not(.communication-context) {
+  grid-row: 2;
+  grid-column: 1;
+  color: var(--ink-muted);
+  font-size: 0.77rem;
+}
+
+.communication-inbox-row b,
+.communication-inbox-row em {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: var(--cobalt);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.63rem;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.communication-notifications li {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.communication-notifications a,
+.communication-back {
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.communication-notifications li > div,
+.communication-lifecycle-controls,
+.communication-message-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.communication-notifications button,
+.communication-lifecycle-controls button,
+.communication-message-actions button,
+.communication-message-actions summary {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cobalt);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.communication-preferences {
+  margin-top: 1rem;
+  padding-top: 1.4rem;
+  border-top: 2px solid var(--cobalt);
+}
+
+.communication-preference-page {
+  width: min(100%, 34rem);
+  padding-left: clamp(0.9rem, 2vw, 1.4rem);
+  border-left: 1px solid var(--line);
+}
+
+.communication-preferences form,
+.communication-attachment-form,
+.communication-message-actions details form,
+.communication-report-list form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.communication-preferences label,
+.communication-attachment-form label,
+.communication-message-actions label,
+.communication-report-list label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 620;
+}
+
+.communication-preferences label:has(input[type="checkbox"]) {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.communication-preferences input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--cobalt);
+}
+
+.communication-preferences input:not([type="checkbox"]),
+.communication-preferences select,
+.communication-composer textarea,
+.communication-attachment-form input[type="file"],
+.communication-message-actions textarea,
+.communication-report-list select,
+.communication-report-list textarea {
+  width: 100%;
+  min-height: 2.65rem;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.communication-composer {
+  margin-top: 2rem;
+  padding-top: 1.4rem;
+  border-top: 2px solid var(--cobalt);
+}
+
+.communication-composer label,
+.communication-composer textarea {
+  font-weight: 650;
+}
+
+.communication-composer textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.communication-message-list {
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.communication-message {
+  display: grid;
+  gap: 0.65rem;
+  max-width: min(100%, 48rem);
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--line-strong);
+  background: var(--surface-subtle);
+}
+
+.communication-message-list li[data-own="true"] .communication-message {
+  margin-left: auto;
+  border-left-color: var(--cobalt);
+  background: color-mix(in srgb, var(--cobalt) 6%, var(--surface));
+}
+
+.communication-message header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.65rem;
+}
+
+.communication-message header strong {
+  margin-right: auto;
+  font-size: 0.8rem;
+}
+
+.communication-message p,
+.communication-message ul {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.communication-message ul {
+  display: grid;
+  gap: 0.35rem;
+  padding-left: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+
+.communication-message ul a {
+  color: var(--cobalt);
+}
+.communication-message ul span {
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+}
+.communication-attachment-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px dashed var(--line-strong);
+}
+.communication-attachment-form p {
+  margin: 0;
+}
+.communication-status {
+  margin: 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--cobalt);
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+.communication-status[data-status="error"] {
+  border-color: var(--danger, #b42318);
+  color: var(--danger, #b42318);
+}
+.communication-status[data-status="success"] {
+  border-color: var(--success, #117a65);
+}
+.communication-report-list {
+  gap: 1rem;
+}
+.communication-report-list article {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-block: 1px solid var(--line);
+}
+.communication-report-list blockquote {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--cobalt);
+  font-style: normal;
+  line-height: 1.6;
+}
+.communication-launcher {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 760px) {
+  .communication-page {
+    width: min(100% - 1.5rem, 78rem);
+  }
+  .communication-layout {
+    grid-template-columns: 1fr;
+  }
+  .communication-aside {
+    padding-top: 1.5rem;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+  .communication-inbox-row {
+    grid-template-columns: 1fr;
+  }
+  .communication-inbox-row b,
+  .communication-inbox-row em {
+    grid-row: auto;
+    grid-column: auto;
+    justify-self: start;
+  }
+  .communication-message-list li[data-own="true"] .communication-message {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .communication-page *,
+  .communication-page *::before,
+  .communication-page *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
