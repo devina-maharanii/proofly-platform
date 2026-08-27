@@ -143,6 +143,33 @@ export type WorkspaceSubmission = Readonly<{
   versions: WorkspaceSubmissionVersion[];
 }>;
 
+export type LockedWorkspaceRubricDimension = Readonly<{
+  id: string;
+  position: number;
+  name: string;
+  description: string;
+  skillKeys: readonly string[];
+  weight: number;
+  priority: "essential" | "important" | "supporting";
+  observableCriteria: readonly string[];
+  evidenceExamples: readonly string[];
+  commonFailureModes: readonly string[];
+  reviewerGuidance: string | null;
+  feedbackVisibility:
+    "talent_and_company" | "company_only" | "reviewer_private";
+  descriptors: readonly Readonly<{
+    level: string;
+    description: string;
+  }>[];
+}>;
+
+export type LockedWorkspaceRubric = Readonly<{
+  rubricVersionId: string;
+  versionNumber: number;
+  lockedAt: string | null;
+  dimensions: readonly LockedWorkspaceRubricDimension[];
+}>;
+
 export type WorkspaceActivity = Readonly<{
   eventType: string;
   previousState: WorkspaceState | null;
@@ -167,6 +194,7 @@ export type ProjectWorkspace = Readonly<{
     reviewMethod: string;
     reviewerExpectations: string;
     reviewState: string;
+    lockedRubric: LockedWorkspaceRubric | null;
   }>;
   activity: WorkspaceActivity[];
   permissions: Readonly<{

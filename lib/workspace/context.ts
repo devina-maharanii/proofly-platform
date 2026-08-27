@@ -18,10 +18,20 @@ import type {
   WorkspaceSubmission,
   WorkspaceSubmissionVersion,
   WorkspaceTaskDetail,
+  LockedWorkspaceRubric,
 } from "./types";
 
 const text = (value: unknown, fallback = "") =>
   typeof value === "string" ? value : fallback;
+
+const stringList = (value: unknown, maximum: number) =>
+  Array.isArray(value)
+    ? value
+        .filter(item => typeof item === "string")
+        .map(item => item.trim())
+        .filter(Boolean)
+        .slice(0, maximum)
+    : [];
 
 const record = (value: unknown): Record<string, unknown> | null =>
   value && typeof value === "object" && !Array.isArray(value)
@@ -218,6 +228,7 @@ function workspace(value: unknown): ProjectWorkspace | null {
       reviewMethod: text(reviewContext.review_method),
       reviewerExpectations: text(reviewContext.reviewer_expectations),
       reviewState: text(reviewContext.review_state),
+      lockedRubric: null,
     },
     activity: activity(row.activity),
     permissions: {
@@ -227,6 +238,80 @@ function workspace(value: unknown): ProjectWorkspace | null {
       canCreateSubmission: permissions.can_create_submission === true,
       reviewMaterialAssigned: permissions.review_material_assigned === true,
     },
+  };
+}
+
+function lockedRubric(value: unknown): LockedWorkspaceRubric | null {
+  const row = record(value);
+  const rubricVersionId = text(row?.rubric_version_id);
+  const versionNumber = row?.version_number;
+  if (!row || !rubricVersionId || typeof versionNumber !== "number")
+    return null;
+  const dimensions: LockedWorkspaceRubric["dimensions"] = Array.isArray(
+    row.dimensions
+  )
+    ? row.dimensions.flatMap(item => {
+        const dimension = record(item);
+        const id = text(dimension?.id);
+        const name = text(dimension?.name).slice(0, 120);
+        const position = dimension?.position;
+        const weight = dimension?.weight;
+        if (
+          !dimension ||
+          !id ||
+          !name ||
+          typeof position !== "number" ||
+          typeof weight !== "number"
+        ) {
+          return [];
+        }
+        const descriptors = Array.isArray(dimension.descriptors)
+          ? dimension.descriptors.flatMap(descriptor => {
+              const descriptorRecord = record(descriptor);
+              const level = text(descriptorRecord?.level);
+              const description = text(descriptorRecord?.description).slice(
+                0,
+                500
+              );
+              return level && description ? [{ level, description }] : [];
+            })
+          : [];
+        return [
+          {
+            id,
+            position,
+            name,
+            description: text(dimension.description).slice(0, 700),
+            skillKeys: stringList(dimension.skill_keys, 5),
+            weight,
+            priority:
+              dimension.priority === "essential" ||
+              dimension.priority === "supporting"
+                ? (dimension.priority as "essential" | "supporting")
+                : ("important" as const),
+            observableCriteria: stringList(dimension.observable_criteria, 6),
+            evidenceExamples: stringList(dimension.evidence_examples, 5),
+            commonFailureModes: stringList(dimension.common_failure_modes, 5),
+            reviewerGuidance:
+              typeof dimension.reviewer_guidance === "string"
+                ? dimension.reviewer_guidance.slice(0, 900)
+                : null,
+            feedbackVisibility:
+              dimension.feedback_visibility === "company_only" ||
+              dimension.feedback_visibility === "reviewer_private"
+                ? (dimension.feedback_visibility as
+                    "company_only" | "reviewer_private")
+                : ("talent_and_company" as const),
+            descriptors,
+          },
+        ];
+      })
+    : [];
+  return {
+    rubricVersionId,
+    versionNumber,
+    lockedAt: stringOrNull(row.locked_at),
+    dimensions,
   };
 }
 
@@ -247,8 +332,16 @@ export async function getProjectWorkspace(
   );
   const capabilities = capabilityError ? null : record(capabilityData);
   if (!capabilities) return null;
+  const { data: lockedRubricData, error: lockedRubricError } =
+    await supabase.rpc("get_workspace_locked_rubric", {
+      requested_workspace_id: workspaceId,
+    });
   return {
     ...parsed,
+    reviewContext: {
+      ...parsed.reviewContext,
+      lockedRubric: lockedRubricError ? null : lockedRubric(lockedRubricData),
+    },
     permissions: {
       canChangeState: capabilities.can_change_state === true,
       canManageTasks: capabilities.can_manage_tasks === true,

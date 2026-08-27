@@ -2,6 +2,7 @@
 
 /** Phase 25 style: a dense but calm precision-editorial organization project editor; it keeps scope, fairness, and lifecycle legible while linking only to an authorized workspace shell, never messaging, reviews, contracts, payments, or AI tools. */
 import Link from "next/link";
+import type { Route } from "next";
 import { useActionState, useMemo, useState } from "react";
 
 import { AuthShell } from "@/components/auth/auth-shell";
@@ -814,6 +815,22 @@ export function CompanyProjectEditor({
                 evaluation.
               </small>
             </label>
+            {initialProject.id && context.canEdit ? (
+              <p className="project-rubric-handoff">
+                <Link
+                  href={
+                    `/company/projects/${initialProject.id}/rubric` as Route
+                  }
+                >
+                  Author a versioned project rubric
+                </Link>{" "}
+                <span>
+                  Create contextual descriptors, calibration guidance, and
+                  explicit feedback visibility. This does not assign reviewers
+                  or start a review.
+                </span>
+              </p>
+            ) : null}
             <StructuredList
               kind="dimension"
               label="Evaluation dimensions and priority"

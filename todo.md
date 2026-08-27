@@ -156,3 +156,11 @@
 - [x] Implement only reviewer application/profile/evidence/conflict surfaces, policy agreement, private admin review queue and state controls, reviewer opportunity access guard, respectful recovery states, and responsive keyboard-safe behavior.
 - [x] Add and run reviewer application, state, conflict, self-review, blocked-organization, policy, admin authorization, RLS, audit, privacy, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 27 commit on `main`.
+
+## Phase 28 — Review Rubric
+
+- [x] Read the Phase 28 attachments, all source-of-truth documents, relevant reviewer, project, workspace, submission, security, data, API/event, design, and test foundations, plus applicable operational guidance.
+- [x] Define the scoped rubric lifecycle, immutable version and historical-use boundary, versioned dimensions and descriptors, contextual guidance, calibration, visibility, controlled authoring permissions, audit, and explicit exclusions.
+- [x] Implement only controlled rubric authoring, version creation, private version history, contextual guidance, calibration records, visibility controls, immutable historical use, and respectful recovery states; exclude review queues, decisions, reputation, payments, and AI scoring.
+- [x] Add and run rubric lifecycle, versioning, immutability, authorization, visibility, RLS, audit, privacy, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 28 commit on `main`.
