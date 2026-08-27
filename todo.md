@@ -94,12 +94,6 @@
 - [x] Classify the local public-route loading-shell observation: it also reproduces on the existing Phase 18 evidence unavailable route; deterministic server-response and production-build checks validate Phase 20’s unavailable response instead.
 - [x] Commit and push exactly one Phase 20 commit on `main`.
 
-### Phase 20 post-release audit
-
-- [x] Confirm the actual GitHub `main` commit message, parent, and release tree match the validated Phase 20 tree.
-- [x] Reconfirm the applied Supabase migration and the intended RLS/no-direct-policy boundary for public Proof storage.
-- [x] Recheck scope exclusions, public metadata/state behavior, and the recorded validation evidence; disclose the remaining authenticated real-profile journey limitation accurately.
-
 ## Phase 21 — Company Profile
 
 - [x] Read the Phase 21 attachments, Phases 12/14/15/20 foundations, design system, company/domain/data/security/API/event contracts, and relevant project guidance.
@@ -194,6 +188,7 @@
 - [x] Implement only secure contextual conversations, messages, private attachment references, typed notification events and preferences, read/unread controls, block/report/mute/archive/leave behavior, bounded moderator review, and provider-independent delivery boundaries.
 - [x] Add and run authorization, RLS, idempotency, redaction/history, attachment, rate-limit, abuse, notification, preference, privacy, accessibility, realtime/reconnect, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 31 commit on `main`.
+
 ## Phase 32 — Explainable Talent Matching
 
 - [x] Read the Phase 32 attachments, master guide, all matching source-of-truth documents, and required Phases 16–24 and 29–31 foundations before changes.
@@ -201,3 +196,11 @@
 - [x] Implement only privacy-preserving proof-based recommendations, project-requirement normalization, reciprocal views, correction/dismiss/report/override controls, and an optional reviewable AI adapter boundary.
 - [x] Add and run protected-attribute, private-message, stale/revoked proof, missing-data, provenance, authorization, consent withdrawal, deterministic baseline, accessibility, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 32 commit on `main`.
+
+## Phase 33 — Paid Trials and Contracts
+
+- [x] Read the Phase 33 attachments, master guide, all source-of-truth documents, and required project, application, workspace, proof, matching, communication, security, payment, and dispute foundations before changes.
+- [x] Define only versioned paid-trial, milestone-contract, and ongoing-contract records; explicit lifecycle, immutable terms, milestone, acceptance, safe access, cancellation, termination, dispute, resolution, and legal/payment boundaries.
+- [x] Implement only role-authorized proposal, negotiation, acceptance, milestone delivery, access grant, cancellation, termination, dispute, support-review, and immutable audit workflows; leave payment execution for Phase 34.
+- [x] Add and run lifecycle, authorization, immutable history, private terms, access expiry, evidence preservation, dispute, browser, accessibility, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 33 commit on `main`.

@@ -1,6 +1,6 @@
 "use client";
 
-/** Phase 24 style: the application is a concise evidence-led private record, not a proposal marketplace, resume duplicate, recruiter queue, messaging feed, or automated hiring funnel. */
+/** Phase 24/33 Evidence Ledger Editorial style: the application remains a concise evidence-led private record; its limited engagement entry never turns it into a marketplace, generic chat, public contract, or automated hiring funnel. */
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Route } from "next";
@@ -13,6 +13,7 @@ import {
   submitProjectApplicationAction,
   withdrawProjectApplicationAction,
 } from "@/lib/application/actions";
+import { CompanyEngagementProposalEntry } from "@/components/engagement/engagement-surfaces";
 import {
   applicationPath,
   applicationStateLabel,
@@ -880,6 +881,7 @@ export function CompanyApplicationReceiptView({
               contextEntityId={receipt.id}
               label="Open application conversation"
             />
+            <CompanyEngagementProposalEntry receipt={receipt} />
           </>
         )}
       </section>
