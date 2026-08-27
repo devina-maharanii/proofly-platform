@@ -2,6 +2,7 @@
 
 /** Evidence Ledger Editorial — Phase 30 keeps consent decisions and audit provenance in the Talent’s private dossier. */
 import { useActionState } from "react";
+import type { Route } from "next";
 import Link from "next/link";
 
 import {
@@ -108,6 +109,9 @@ export function PrivateProofGraphAudit({
             public Proof. This page is private. It never publishes a record
             without your separate consent.
           </p>
+          <Link className="button button-secondary" href={"/matching" as Route}>
+            Review explainable project recommendations
+          </Link>
         </section>
 
         <section

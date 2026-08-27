@@ -194,3 +194,10 @@
 - [x] Implement only secure contextual conversations, messages, private attachment references, typed notification events and preferences, read/unread controls, block/report/mute/archive/leave behavior, bounded moderator review, and provider-independent delivery boundaries.
 - [x] Add and run authorization, RLS, idempotency, redaction/history, attachment, rate-limit, abuse, notification, preference, privacy, accessibility, realtime/reconnect, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 31 commit on `main`.
+## Phase 32 — Explainable Talent Matching
+
+- [x] Read the Phase 32 attachments, master guide, all matching source-of-truth documents, and required Phases 16–24 and 29–31 foundations before changes.
+- [x] Define only versioned matching inputs, consent and visibility controls, deterministic retrieval/fit rules, explainability, correction, feedback, audit, evaluation, and AI-assistance boundaries.
+- [x] Implement only privacy-preserving proof-based recommendations, project-requirement normalization, reciprocal views, correction/dismiss/report/override controls, and an optional reviewable AI adapter boundary.
+- [x] Add and run protected-attribute, private-message, stale/revoked proof, missing-data, provenance, authorization, consent withdrawal, deterministic baseline, accessibility, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 32 commit on `main`.

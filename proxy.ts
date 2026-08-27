@@ -14,6 +14,8 @@ const protectedPaths = new Set([
   "/reset-password",
   "/settings",
   "/proof",
+  "/matching",
+  "/admin/matching",
   "/messages",
   "/notifications",
   "/applications",
@@ -30,10 +32,12 @@ const isProtectedPath = (pathname: string) =>
   pathname.startsWith("/applications/") ||
   pathname.startsWith("/messages/") ||
   pathname.startsWith("/notifications/") ||
+  pathname.startsWith("/matching/") ||
   pathname.startsWith("/reviewer/") ||
   pathname.startsWith("/admin/reviewers") ||
   pathname.startsWith("/admin/verifications") ||
   pathname.startsWith("/admin/communication") ||
+  pathname.startsWith("/admin/matching") ||
   pathname.startsWith("/company/projects/") ||
   pathname.startsWith("/company/applications/") ||
   pathname.startsWith("/workspaces/") ||
@@ -93,6 +97,8 @@ export const config = {
     "/reset-password",
     "/settings",
     "/proof",
+    "/matching",
+    "/matching/:path*",
     "/messages",
     "/messages/:path*",
     "/notifications",
@@ -103,6 +109,7 @@ export const config = {
     "/admin/reviewers/:path*",
     "/admin/verifications/:path*",
     "/admin/communication/:path*",
+    "/admin/matching/:path*",
     "/company/projects/:path*",
     "/company/applications/:path*",
     "/workspaces/:path*",

@@ -831,6 +831,22 @@ export function CompanyProjectEditor({
                 </span>
               </p>
             ) : null}
+            {initialProject.id && context.canEdit ? (
+              <p className="project-rubric-handoff">
+                <Link
+                  href={
+                    `/company/projects/${initialProject.id}/matching` as Route
+                  }
+                >
+                  Configure explainable evidence matching
+                </Link>{" "}
+                <span>
+                  Set versioned proof expectations for this project. Matching is
+                  consented and deterministic; it never changes an application
+                  or hiring decision.
+                </span>
+              </p>
+            ) : null}
             <StructuredList
               kind="dimension"
               label="Evaluation dimensions and priority"
