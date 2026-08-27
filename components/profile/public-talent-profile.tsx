@@ -11,6 +11,8 @@ import {
 import type { PublicGithubContext } from "@/lib/github/types";
 import type { PublicTalentProfile } from "@/lib/profile/context";
 import { canonicalSkillLabel } from "@/lib/profile/types";
+import { PublicProofGraphView } from "@/components/proof-graph/public-proof-graph";
+import type { PublicProofGraph } from "@/lib/proof-graph/types";
 import type { PublicTalentProof } from "@/lib/proof/context";
 
 function formatPublicDate(value: string | null) {
@@ -40,12 +42,14 @@ export function PublicTalentProfileView({
   evidence,
   proofs,
   github,
+  graph,
   shareUrl,
 }: Readonly<{
   profile: PublicTalentProfile;
   evidence: PublicWorkEvidenceListItem[];
   proofs: PublicTalentProof[];
   github: PublicGithubContext | null;
+  graph: PublicProofGraph;
   shareUrl: string;
 }>) {
   const hasGithubContext = Boolean(github?.repositories.length);
@@ -212,6 +216,7 @@ export function PublicTalentProfileView({
               </p>
             )}
           </section>
+          <PublicProofGraphView graph={graph} />
         </div>
 
         <aside

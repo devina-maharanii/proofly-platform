@@ -1189,3 +1189,240 @@ h3 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Evidence Ledger Editorial / Phase 30: source-linked Proof graph and private consent audit, never a scorecard. */
+.public-proof-graph {
+  display: grid;
+  gap: 1.5rem;
+}
+.proof-graph-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.proof-graph-summary div {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 98px;
+  padding: 1rem;
+  border-right: 1px solid var(--line);
+}
+.proof-graph-summary div:last-child {
+  border-right: 0;
+}
+.proof-graph-summary dt,
+.proof-graph-timeline dt,
+.proof-audit-ledger span {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.proof-graph-summary dd {
+  margin: 0;
+  color: var(--cobalt);
+  font-family: var(--font-mono);
+  font-size: 1.65rem;
+  font-weight: 650;
+}
+.proof-graph-timeline,
+.proof-audit-ledger {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.proof-graph-timeline li,
+.proof-audit-ledger li {
+  position: relative;
+  padding: 1.25rem 1.25rem 1.25rem 1.65rem;
+  border-bottom: 1px solid var(--line);
+}
+.proof-graph-timeline li::before,
+.proof-audit-ledger li::before {
+  position: absolute;
+  top: 1.6rem;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  content: "";
+}
+.proof-graph-timeline h3,
+.proof-graph-skill-evidence h3,
+.proof-graph-context h3 {
+  font-size: 1.05rem;
+}
+.proof-graph-timeline dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1.25rem;
+  margin: 1rem 0 0;
+}
+.proof-graph-timeline dl div {
+  display: grid;
+  gap: 0.18rem;
+}
+.proof-graph-timeline dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+.proof-graph-timeline a,
+.proof-graph-skill-evidence a {
+  color: var(--cobalt);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--cobalt) 35%, transparent);
+  text-underline-offset: 3px;
+}
+.proof-graph-skill-evidence,
+.proof-graph-context {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.proof-graph-skill-evidence ul,
+.proof-graph-context ul,
+.proof-audit-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.proof-graph-skill-evidence li {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(110px, 0.45fr) minmax(
+      0,
+      1.4fr
+    );
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--line);
+}
+.proof-graph-skill-evidence li > span,
+.proof-graph-context li > p,
+.proof-audit-list small,
+.proof-audit-ledger small {
+  color: var(--ink-muted);
+  font-size: 0.79rem;
+}
+.proof-graph-skill-evidence li > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+}
+.proof-graph-context li,
+.proof-audit-list li {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-surface-sm);
+  background: var(--surface);
+}
+.proof-graph-context li p,
+.proof-audit-list li > p:not(.profile-index) {
+  margin-bottom: 0;
+}
+.proof-audit-page {
+  min-height: 100dvh;
+  padding: 1.25rem var(--page-gutter) 4rem;
+}
+.proof-audit-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100%, 1100px);
+  margin: 0 auto;
+  padding: 0.75rem 0 1.25rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+.proof-audit-header a {
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.proof-audit-content {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1.45fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  width: min(100%, 1100px);
+  margin: 0 auto;
+  padding-top: clamp(3rem, 7vw, 6rem);
+}
+.proof-audit-intro h1 {
+  max-width: 11ch;
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+}
+.proof-audit-intro > p:last-child {
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+.proof-audit-section {
+  margin-bottom: 3.5rem;
+}
+.proof-audit-section h2 {
+  max-width: 16ch;
+  font-size: clamp(1.75rem, 3vw, 2.65rem);
+}
+.proof-audit-control {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.proof-audit-control .button {
+  width: max-content;
+  min-height: 42px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.82rem;
+}
+.proof-audit-control p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+.proof-audit-ledger li > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.proof-audit-ledger li > div span {
+  color: var(--cobalt);
+}
+.proof-audit-ledger p {
+  margin: 0.5rem 0;
+  color: var(--ink-muted);
+}
+@media (max-width: 767px) {
+  .proof-graph-summary,
+  .proof-graph-timeline dl,
+  .proof-audit-content {
+    grid-template-columns: 1fr;
+  }
+  .proof-graph-summary div {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .proof-graph-summary div:last-child {
+    border-bottom: 0;
+  }
+  .proof-graph-skill-evidence li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .proof-audit-content {
+    gap: 2.75rem;
+  }
+}

@@ -11,6 +11,7 @@ import {
   getPublicTalentProfile,
   publicTalentProfilePath,
 } from "@/lib/profile/context";
+import { getPublicTalentProofGraph } from "@/lib/proof-graph/context";
 import { getPublicTalentProofs } from "@/lib/proof/context";
 
 type PublicProfilePageProps = Readonly<{
@@ -70,10 +71,11 @@ export default async function PublicTalentProfilePage({
   const profile = await getCachedPublicTalentProfile(handle);
   if (!profile) notFound();
 
-  const [evidence, proofs, github] = await Promise.all([
+  const [evidence, proofs, github, graph] = await Promise.all([
     getPublicTalentWorkEvidence(profile.handle),
     getPublicTalentProofs(profile.handle),
     getPublicGithubContext(profile.handle),
+    getPublicTalentProofGraph(profile.handle),
   ]);
 
   return (
@@ -82,6 +84,7 @@ export default async function PublicTalentProfilePage({
       evidence={evidence}
       proofs={proofs}
       github={github}
+      graph={graph}
       shareUrl={canonicalUrl(publicTalentProfilePath(profile.handle))}
     />
   );

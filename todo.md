@@ -172,3 +172,11 @@
 - [x] Implement only controlled verification eligibility, assignment, reviewer observations and decision interface, talent status and resubmission path, proof creation trigger, separate appeal and authorized revocation flow, immutable audit, and respectful private/public states; exclude automated decisions, reputation, payments, analytics, and AI review.
 - [x] Add and run verification lifecycle, conflict, self-review, blocked organization, rubric/version lock, immutable history, decision/accountability, privacy, visibility, RLS, audit, appeal, revocation, accessibility, mobile, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 29 commit on `main`.
+
+## Phase 30 — Reputation and Proof Graph
+
+- [x] Read the Phase 30 attachments, master guide, all source-of-truth documents, and Phases 16, 18, 20, and 29 foundations before changes.
+- [x] Define only explainable Proof Graph nodes, source-bound relationships, contextual reputation events, visibility, consent, audit, and explicit no-ranking/no-AI boundaries.
+- [x] Implement only append-only Proof Graph/reputation persistence, provenance, public contextual proof timeline and skill-to-evidence views, private audit view, Talent visibility control, and company-outcome consent handling.
+- [x] Add and run graph, provenance, self-claim, append-only, correction, withdrawal, revocation, consent, privacy, accessibility, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 30 commit on `main`.

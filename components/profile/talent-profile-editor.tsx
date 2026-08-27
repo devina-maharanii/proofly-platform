@@ -272,6 +272,7 @@ export function TalentProfileEditor({
         <a href="#links">Links</a>
         <a href="#preview">Preview</a>
         <Link href={"/profile/evidence" as Route}>Work evidence</Link>
+        <Link href={"/proof" as Route}>Proof audit</Link>
       </nav>
       <div className="profile-layout">
         <form action={saveAction} className="profile-editor-form">
