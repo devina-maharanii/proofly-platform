@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { EngagementDetailView } from "@/components/engagement/engagement-surfaces";
+import { EngagementPaymentPanel } from "@/components/payments/payment-surfaces";
 import { getParticipantEngagement } from "@/lib/engagement/context";
+import { getEngagementPaymentStatus } from "@/lib/payments/context";
 import { getVerifiedAuthSession } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +19,15 @@ export default async function EngagementPage({
     redirect(
       `/sign-in?next=${encodeURIComponent(`/engagements/${engagementId}`)}`
     );
-  const engagement = await getParticipantEngagement(engagementId);
+  const [engagement, paymentStatus] = await Promise.all([
+    getParticipantEngagement(engagementId),
+    getEngagementPaymentStatus(engagementId),
+  ]);
   if (!engagement) notFound();
-  return <EngagementDetailView engagement={engagement} />;
+  return (
+    <>
+      <EngagementDetailView engagement={engagement} />
+      <EngagementPaymentPanel engagement={engagement} status={paymentStatus} />
+    </>
+  );
 }

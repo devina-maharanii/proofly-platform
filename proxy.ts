@@ -24,8 +24,11 @@ const protectedPaths = new Set([
   "/admin/reviewers",
   "/admin/verifications",
   "/admin/engagements/disputes",
+  "/admin/payments/reconciliation",
   "/admin/communication/reports",
   "/engagements",
+  "/company/billing",
+  "/payouts",
 ]);
 
 const isProtectedPath = (pathname: string) =>
@@ -39,11 +42,14 @@ const isProtectedPath = (pathname: string) =>
   pathname.startsWith("/admin/reviewers") ||
   pathname.startsWith("/admin/verifications") ||
   pathname.startsWith("/admin/engagements") ||
+  pathname.startsWith("/admin/payments") ||
   pathname.startsWith("/admin/communication") ||
   pathname.startsWith("/admin/matching") ||
   pathname.startsWith("/company/projects/") ||
+  pathname.startsWith("/company/billing") ||
   pathname.startsWith("/company/applications/") ||
   pathname.startsWith("/engagements/") ||
+  pathname.startsWith("/payouts") ||
   pathname.startsWith("/workspaces/") ||
   /^\/projects\/prj_[a-f0-9]{20,40}\/apply$/.test(pathname);
 
@@ -113,11 +119,14 @@ export const config = {
     "/admin/reviewers/:path*",
     "/admin/verifications/:path*",
     "/admin/engagements/:path*",
+    "/admin/payments/:path*",
     "/admin/communication/:path*",
     "/admin/matching/:path*",
     "/company/projects/:path*",
+    "/company/billing/:path*",
     "/company/applications/:path*",
     "/engagements/:path*",
+    "/payouts/:path*",
     "/workspaces/:path*",
     "/projects/:path*/apply",
   ],

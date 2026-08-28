@@ -94,6 +94,12 @@
 - [x] Classify the local public-route loading-shell observation: it also reproduces on the existing Phase 18 evidence unavailable route; deterministic server-response and production-build checks validate Phase 20’s unavailable response instead.
 - [x] Commit and push exactly one Phase 20 commit on `main`.
 
+### Phase 20 post-release audit
+
+- [x] Confirm the actual GitHub `main` commit message, parent, and release tree match the validated Phase 20 tree.
+- [x] Reconfirm the applied Supabase migration and the intended RLS/no-direct-policy boundary for public Proof storage.
+- [x] Recheck scope exclusions, public metadata/state behavior, and the recorded validation evidence; disclose the remaining authenticated real-profile journey limitation accurately.
+
 ## Phase 21 — Company Profile
 
 - [x] Read the Phase 21 attachments, Phases 12/14/15/20 foundations, design system, company/domain/data/security/API/event contracts, and relevant project guidance.
@@ -204,3 +210,14 @@
 - [x] Implement only role-authorized proposal, negotiation, acceptance, milestone delivery, access grant, cancellation, termination, dispute, support-review, and immutable audit workflows; leave payment execution for Phase 34.
 - [x] Add and run lifecycle, authorization, immutable history, private terms, access expiry, evidence preservation, dispute, browser, accessibility, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
 - [x] Commit and push exactly one Phase 33 commit on `main`.
+
+## Phase 34 — Payments and Payouts
+
+- [x] Read the Phase 34 attachments, master guide, specified Phase 15/25/26/29/30/33 foundations, payment/compliance documents, and official provider capability guidance; no Phase 37 source is available, so reviewer economics remains policy-disabled and fail-closed.
+- [x] Define and apply only provider-agnostic sandbox payment, payout, funding, release, refund, ledger, reconciliation, webhook, dispute, company billing, and launch-market compliance records with RLS and immutable audit boundaries; reviewer economics remains policy-disabled because Phase 37 source is unavailable.
+- [x] Implement only secure provider adapter/configuration, signed server-side webhook ingestion, guarded checkout/onboarding/release/refund/payout actions, reconciliation/dead-letter administration, and private financial status/receipt surfaces.
+- [x] Add and run money arithmetic, idempotency, provider-event ordering, forged webhook, payout/risk, authorization, privacy, accessibility, browser, regression, formatting, lint, strict TypeScript, build, security, audit, and final diff validation.
+- [x] Commit and push exactly one Phase 34 commit on `main`.
+- [x] Fix the discovered release RPC/schema column mismatch and verify the release path against the applied payment schema.
+- [x] Fix the discovered refund RPC/schema column mismatch and verify refund event persistence against the applied payment schema.
+- [x] Add targeted release/refund RPC contract coverage and re-run the complete validation suite.
